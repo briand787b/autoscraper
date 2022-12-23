@@ -1,13 +1,23 @@
 # AutoTrader
 
-# Data Collection Method
+## Data Collection Method
 Autotrader embeds JSON data in the returned HTML.  The most efficient way to gather data appears to be from this embedded JSON blob.
 
-## Listings
-GET https://www.mallofgeorgiaford.com/apis/widget/AUTO_INVENTORY_USED_GRID:inventory-data-bus1/getInventory
+### Inventory
+Autotrader has essentially unlimited inventory so there is no point in an unfiltered inventory search
 
-## Filtered Listings
+### Filtered Inventory
+By model and location:
+(Using path)
+https://www.autotrader.com/cars-for-sale/all-cars/ford/f150/dunwoody-ga-30338
+https://www.autotrader.com/cars-for-sale/all-cars/chevrolet/colorado/dunwoody-ga-30338
+(Using query params)
+https://www.autotrader.com/cars-for-sale/all-cars?zip=30338&makeCodeList=CHEV&modelCodeList=COLORADO
 
+### Individual Listing 
+By listing ID:
+https://www.autotrader.com/cars-for-sale/vehicledetails.xhtml?listingId=649061993
 
-## Individual Listing 
-GET https://www.mallofgeorgiaford.com/used/Ford/2015-Ford-Explorer-a72b2c7c0a0e0a9919d887d5627ba370.htm
+### Parsing JSON
+Path to inventory (using jq):
+jq '.initialState.inventory."<listing_id>"' <filename>
