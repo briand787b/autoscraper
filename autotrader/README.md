@@ -25,13 +25,14 @@ curl 'https://www.autotrader.com/cars-for-sale/awd-4wd/2020/toyota/tundra/atlant
 curl 'https://www.autotrader.com/cars-for-sale/truck/ford/f150/atlanta-ga-30338?requestId=2281868035&maxMileage=100000&driveGroup=AWD4WD&bodyStyleSubtypeCodes=FULLSIZE_CREW%2BCOMPACT_CREW&vhrTypes=NO_ACCIDENTS&sellerTypes=p&searchRadius=200&startYear=2018&endYear=2020&marketExtension=include&maxPrice=40000&isNewSearch=true&showAccelerateBanner=false&sortBy=relevance&numRecords=25'
 
 # Playing with filtering
-curl 'https://www.autotrader.com/cars-for-sale/all-cars/ford/f150/atlanta-ga-30338?searchRadius=200&isNewSearch=true&marketExtension=include&showAccelerateBanner=false&sortBy=relevance&numRecords=25'
+curl 'https://www.autotrader.com/cars-for-sale/all-cars/ford/f150/atlanta-ga-30338?searchRadius=200&sortBy=relevance&numRecords=100'
 ```
 
-Filtering Options
-| Name | Desc | Type |
-|------|------|------|
-| searchRadius | Max Miles From Src Zip | query params |
+#### Query Parameters
+| Name | Value | Desc | 
+|------|-------|------|
+| Search Radius | searchRadius | Max Miles From Src Zip |
+| Sort | sortBy | sorting order; <key><modifier> where modifier in [ASC, DESC] and key in [derivedprice, distance, mileage, year]
 
 ### Individual Listing 
 By listing ID:
