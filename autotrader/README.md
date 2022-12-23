@@ -18,7 +18,20 @@ curl 'https://www.autotrader.com/cars-for-sale/all-cars/chevrolet/colorado/dunwo
 
 # Using query params
 curl 'https://www.autotrader.com/cars-for-sale/all-cars?zip=30338&makeCodeList=CHEV&modelCodeList=COLORADO'
+
+# Heavily filtered
+curl 'https://www.autotrader.com/cars-for-sale/awd-4wd/2020/toyota/tundra/atlanta-ga-30338?requestId=FULLSIZE_CREW%2BCOMPACT_CREW&extColorsSimple=BLUE&engineCodes=8CLDR&searchRadius=0&trimCodeList=TUNDRA%7C1794%20Edition&marketExtension=include&bodyStyleSubtypeCodes=FULLSIZE_CREW%2BCOMPACT_CREW&isNewSearch=true&showAccelerateBanner=false&sortBy=relevance&numRecords=25'
+curl 'https://www.autotrader.com/cars-for-sale/awd-4wd/2020/toyota/tundra/atlanta-ga-30338?requestId=1224&extColorsSimple=BLUE&maxMileage=100000&bodyStyleSubtypeCodes=FULLSIZE_CREW%2BCOMPACT_CREW&engineCodes=8CLDR&vhrTypes=NO_ACCIDENTS&searchRadius=0&trimCodeList=TUNDRA%7C1794%20Edition&marketExtension=include&featureCodes=1224&isNewSearch=true&showAccelerateBanner=false&sortBy=relevance&numRecords=25'
+curl 'https://www.autotrader.com/cars-for-sale/truck/ford/f150/atlanta-ga-30338?requestId=2281868035&maxMileage=100000&driveGroup=AWD4WD&bodyStyleSubtypeCodes=FULLSIZE_CREW%2BCOMPACT_CREW&vhrTypes=NO_ACCIDENTS&sellerTypes=p&searchRadius=200&startYear=2018&endYear=2020&marketExtension=include&maxPrice=40000&isNewSearch=true&showAccelerateBanner=false&sortBy=relevance&numRecords=25'
+
+# Playing with filtering
+curl 'https://www.autotrader.com/cars-for-sale/all-cars/ford/f150/atlanta-ga-30338?searchRadius=200&isNewSearch=true&marketExtension=include&showAccelerateBanner=false&sortBy=relevance&numRecords=25'
 ```
+
+Filtering Options
+| Name | Desc | Type |
+|------|------|------|
+| searchRadius | Max Miles From Src Zip | query params |
 
 ### Individual Listing 
 By listing ID:
@@ -32,3 +45,6 @@ Path to inventory (using jq):
 ```bash
 jq '.initialState.inventory."<listing_id>"' <filename>
 ```
+
+## Jargon
+* vhr -> Vehicle History Record?
