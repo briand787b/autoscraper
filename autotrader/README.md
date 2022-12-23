@@ -32,7 +32,10 @@ curl 'https://www.autotrader.com/cars-for-sale/all-cars/ford/f150/atlanta-ga-303
 | Name | Value | Desc | 
 |------|-------|------|
 | Search Radius | searchRadius | Max Miles From Src Zip |
-| Sort | sortBy | sorting order; <key><modifier> where modifier in [ASC, DESC] and key in [derivedprice, distance, mileage, year]
+| Sort | sortBy | sorting order; `key``modifier` where key in [derivedprice, distance, mileage, year, relevance(no modifier)] and modifier in [ASC, DESC] |
+| Number of Records | numRecords | Number of records to retrieve per request |
+| Features | featureCodes | Comma-separated list of feature ids to filter on.  examples: {appleCarPlay: 1326, androidAuto: 1327, adaptiveCruiseControl: 1313, bluetooth: 1211, backupCamera: 1224, sunroof: 1132}|
+
 
 ### Individual Listing 
 By listing ID:
