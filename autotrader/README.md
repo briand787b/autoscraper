@@ -4,7 +4,7 @@
 Autotrader embeds JSON data in the returned HTML.  The most efficient way to gather data appears to be from this embedded JSON blob.
 
 ### Reference Data
-Autotrader frontend calls out to a JSON API to get general reference data.  This data is saved in the [link](/autotrader/ref.json ref.json) file
+Autotrader frontend calls out to a JSON API to get general reference data.  This data is saved in the [link](/autotrader/ref.json "ref.json") file
 
 ### Inventory
 Autotrader has essentially unlimited inventory so there is no point in an unfiltered inventory search
