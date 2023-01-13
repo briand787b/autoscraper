@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 
-# TODO
-# Fields to get:  packages
-
 import json
+import re
 import sys
 
-invfile = 'examples/100_items.json'
+default_invfile = 'examples/100_items.json'
 
 
-def main(file: str):
-    with open(file, 'r') as f:
+re_bed_len = re.compile('[0-9]+-Inch Bed')
+re_carplay = re.compile('[c|C]ar[p|P]lay')
+
+
+def main(filename: str):
+    with open(filename, 'r') as f:
         payload = json.load(f)
 
     parse(payload)
@@ -20,13 +22,14 @@ def parse(payload: dict):
     try:
         inventory = payload['initialState']['inventory']
     except KeyError as e:
-        e.add_note('did not receive full doc, assuming inv sub-doc')
+        e.add_note('did not receive full payload')
         raise
 
     inv_items = []
     for id, inv in inventory.items():
         inv_items.append({
             'autotrader_id': id,
+            'carplay': carplay(inv),
             'color': color(inv),
             'drive_type': drive_type(inv),
             'engine': engine(inv),
@@ -39,11 +42,24 @@ def parse(payload: dict):
             'packages': pkgs(inv),
             'price': price(inv),
             'trim': trim(inv),
+            'truck_bed': truck_bed(inv),
+            'truck_cab': truck_cab(inv),
+            'vin': vin(inv),
             'zip': zip(inv),
         })
 
     print(json.dumps(inv_items[-1], indent=4))
     print(f'count: {len(inv_items)}')
+
+
+def carplay(inv: dict):
+    features = inv.get('features', [])
+    qvFeatures = inv.get('quickViewFeatures', [])
+    for f in features + qvFeatures:
+        if re_carplay.search(f):
+            return True
+
+    return False
 
 
 def color(inv: dict):
@@ -76,6 +92,7 @@ def engine(inv: dict):
             log(inv, log(inv, 'could not find engine key'))
 
     return eng
+
 
 def features(inv: dict):
     try:
@@ -165,57 +182,75 @@ def mpg_hwy(inv: dict):
 
     return mpg
 
-def pkgs(inv: dict):
-    try:
-        p = inv['packages']
-    except KeyError as e:
-        log(inv, f'could not find packages key: {e}')
-        return None
 
-    return p
+def pkgs(inv: dict):
+    return inv.get('packages')
+
 
 def price(inv: dict):
-    price = None
     try:
         p_str = inv['pricingDetail']['salePrice']
         price = int(p_str)
+        return price
     except KeyError as e:
         log(inv, f'could not find pricing key "{e}"')
     except TypeError as e:
         log(inv, f'could not convert price str {p_str} to int')
-    finally:
-        return price
+
 
 def trim(inv: dict):
     try:
         t = inv['trim']
         if type(t) == str:
             return t.lower()
-        
-        t = t['name'].lower()
+
+        return t['name'].lower()
     except KeyError as e:
         log(inv, f'could not find trim key: {e}')
-        return None
 
-    return t
+
+def truck_bed(inv: dict):
+    try:
+        return inv['truckBedLength'].lower()
+    except KeyError as e:
+        try:
+            for feature in inv['quickViewFeatures']:
+                if re_bed_len.search(feature):
+                    return feature
+
+            return None
+        except KeyError as e:
+            log(inv, f'could not find truck bed length key: {e}')
+
+
+def truck_cab(inv: dict):
+    try:
+        return inv['specifications']['truckCabSize']['value'].lower()
+    except KeyError as e:
+        log(inv, f'could not find truck cab size field: {e}')
+
+
+def vin(inv: dict):
+    try:
+        return inv['vin'].upper()
+    except KeyError as e:
+        log(inv, f'could not find vin key: {e}')
+
 
 def zip(inv: dict):
     try:
-        zip = inv['zip']
+        return inv['zip']
     except KeyError:
         try:
-            zip = inv['owner']['location']['address']['zip']
+            return inv['owner']['location']['address']['zip']
         except KeyError:
             log(inv, 'could not find zip code field')
-            return None
-
-    return zip
 
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:
         file = sys.argv[1]
     else:
-        file = invfile
+        file = default_invfile
 
     main(file)
