@@ -45,6 +45,7 @@ def parse(payload: dict):
             'truck_bed': truck_bed(inv),
             'truck_cab': truck_cab(inv),
             'vin': vin(inv),
+            'year': year(inv),
             'zip': zip(inv),
         })
 
@@ -73,35 +74,24 @@ def color(inv: dict):
 
 
 def drive_type(inv: dict):
-    dt = ''
     try:
-        dt = inv['specifications']['driveType']['value']
+        return inv['specifications']['driveType']['value'].lower()
     except:
         log(inv, 'could not get drive type')
-    finally:
-        return dt.lower()
 
 
 def engine(inv: dict):
     try:
-        eng = inv['engine']['name'].lower()
+        return inv['engine']['name'].lower()
     except KeyError:
         try:
-            eng = inv['specifications']['engine']['value'].lower()
+            return inv['specifications']['engine']['value'].lower()
         except KeyError:
             log(inv, log(inv, 'could not find engine key'))
 
-    return eng
-
 
 def features(inv: dict):
-    try:
-        feat = inv['features']
-    except KeyError as e:
-        log(inv, f'could not find features key: {e}')
-        return None
-
-    return feat
+    return inv.get('features')
 
 
 def log(inv: dict, msg: str):
@@ -113,9 +103,9 @@ def log(inv: dict, msg: str):
 
 
 def manufacturer(inv: dict):
-    mfg = ''
+    mfg = None
     try:
-        mfg = inv['make']
+        mfg = inv['make'].lower()
         mfg = mfg['name'].lower()
     except KeyError as e:
         log(inv, f'could not get manufacturer key: {e}')
@@ -126,18 +116,15 @@ def manufacturer(inv: dict):
 def mileage(inv: dict):
     try:
         m_str = inv['specifications']['mileage']['value']
-        m = int(m_str.replace(',', ''))
+        return int(m_str.replace(',', ''))
     except Exception as e:
         log(inv, f'could not get mileage {e}')
-        return None
-
-    return m
 
 
 def model(inv: dict):
-    m = ''
+    m = None
     try:
-        m = inv['model']
+        m = inv['model'].lower()
         m = m['name'].lower()
     except KeyError as e:
         log(inv, f'could not find model key: {e}')
@@ -216,7 +203,7 @@ def truck_bed(inv: dict):
         try:
             for feature in inv['quickViewFeatures']:
                 if re_bed_len.search(feature):
-                    return feature
+                    return feature.lower()
 
             return None
         except KeyError as e:
@@ -237,6 +224,15 @@ def vin(inv: dict):
         log(inv, f'could not find vin key: {e}')
 
 
+def year(inv: dict):
+    try:
+        return int(inv['year'])
+    except KeyError:
+        log(inv, 'could not get year key')
+    except TypeError as e:
+        log(inv, f'could not cast {e} to int')
+
+
 def zip(inv: dict):
     try:
         return inv['zip']
@@ -248,6 +244,7 @@ def zip(inv: dict):
 
 
 if __name__ == '__main__':
+    print(f'{len(sys.argv) = }')
     if len(sys.argv) == 2:
         file = sys.argv[1]
     else:
