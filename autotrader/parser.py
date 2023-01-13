@@ -244,7 +244,6 @@ def zip(inv: dict):
 
 
 if __name__ == '__main__':
-    print(f'{len(sys.argv) = }')
     if len(sys.argv) == 2:
         file = sys.argv[1]
     else:
