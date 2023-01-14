@@ -11,8 +11,6 @@ import time
 
 # TODO: Add realistic headers to scraper
 
-JSON_ASSIGNMENT = 'window.__BONNET_DATA__'
-
 # query params
 #
 # number of records to retrieve
@@ -27,9 +25,28 @@ MAX_PRICE_DEFAULT_VALUE = 50_000
 # how many records to skip
 SKIP_KEY = 'firstRecord'
 
+# scrape targets
+#
+# Trucks
+TARGET_F150 = 'f150'
+TARGET_SILVERADO = 'silverado'
+TARGET_RAM = 'ram'
+# SUVs
+TARGET_EXPEDITION = 'expedition'
+TARGET_TAHOE = 'tahoe'
+TARGET_SUBURBAN = 'suburban'
+# Cars
+TARGET_458_SPYDER = '458_spyder'
 
-def scrape_all():
-    scrape_f150()
+
+def scrape_model(target: str):
+    target = target.lower()
+    if target == TARGET_F150:
+        return scrape_f150()
+    elif target == TARGET_458_SPYDER:
+        return scrape_458_spyder()
+    else:
+        raise Exception(f'scraper for {target} not implemented')
 
 
 def scrape_f150():
@@ -57,7 +74,7 @@ def default_params():
     }
 
 
-def scrape_url(base_url: str, params: dict = {}):
+def scrape_url(base_url: str, params: dict = default_params()):
     print('initial retrieval of records')
     resp = httpx.get(base_url, params=params)
     payload, next = scrape_doc(resp.text)
@@ -75,10 +92,11 @@ def scrape_url(base_url: str, params: dict = {}):
     return inv_list
 
 
-def scrape_doc(doc: str):
-    bs = BeautifulSoup(doc, 'html.parser')
-    data = bs.find('script', text=re.compile(JSON_ASSIGNMENT)).get_text()
-    payload = data.split(JSON_ASSIGNMENT + '=')[1]
+def scrape_doc(document: str):
+    DATA_LOC = 'window.__BONNET_DATA__'
+    bs = BeautifulSoup(document, 'html.parser')
+    data = bs.find('script', text=re.compile(DATA_LOC)).get_text()
+    payload = data.split(DATA_LOC + '=')[1]
     with open('examples/output.json', 'w') as file:
         file.write(payload)
 
@@ -97,18 +115,6 @@ def next(bs: BeautifulSoup):
     end = int(counts[0].split('-')[1])
     if end < max:
         return end
-
-
-def test_scrape_doc():
-    with open('examples/resp.html', 'r') as file:
-        doc = file.read()
-
-    return scrape_doc(doc)
-
-
-def test_scrape_url():
-    print('about to scrape 458 spyder records')
-    scrape_458_spyder()
 
 
 if __name__ == '__main__':
