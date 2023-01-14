@@ -13,14 +13,12 @@ re_carplay = re.compile('[c|C]ar[p|P]lay')
 
 def main(filename: str):
     with open(filename, 'r') as f:
-        payload = f.read()
+        payload = json.load(f)
 
     parse(payload)
 
 
-def parse(payload_str: str):
-    payload = json.loads(payload_str)
-
+def parse(payload: dict):
     try:
         inventory = payload['initialState']['inventory']
     except KeyError as e:
