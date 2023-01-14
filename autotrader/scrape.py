@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import httpx
 import json
 import parse
+import random
 import re
 import sys
 import time
@@ -16,13 +17,13 @@ JSON_ASSIGNMENT = 'window.__BONNET_DATA__'
 #
 # number of records to retrieve
 NUM_RECORDS_KEY = 'numRecords'
-NUM_RECORDS_DEFAULT_VALUE = 5
+NUM_RECORDS_DEFAULT_VALUE = 100
 # how many miles to search
 SEARCH_RADIUS_KEY = 'searchRadius'
 SEARCH_RADIUS_DEFAULT_VALUE = 500
 # maximum price in USD
 MAX_PRICE_KEY = 'maxPrice'
-MAX_PRICE_DEFAULT_VALUE = 500_000
+MAX_PRICE_DEFAULT_VALUE = 50_000
 # how many records to skip
 SKIP_KEY = 'firstRecord'
 
@@ -39,6 +40,8 @@ def scrape_f150():
 
 def scrape_458_spyder():
     params = default_params()
+    params[MAX_PRICE_KEY] = 500_000
+    params[NUM_RECORDS_KEY] = 5
     print('about to scrape url')
     scrape_url(
         'https://www.autotrader.com/cars-for-sale/all-cars/ferrari/458-spider/atlanta-ga-30338',
@@ -61,8 +64,9 @@ def scrape_url(base_url: str, params: dict = {}):
     inv_list = parse.parse(payload)
 
     while next:
-        print('scraping next page')
-        time.sleep(1)
+        dur = random.randint(1, 10)
+        print(f'scraping next page in {dur} secs')
+        time.sleep(dur)
         params[SKIP_KEY] = next
         resp = httpx.get(base_url, params=params)
         payload, next = scrape_doc(resp.text)
