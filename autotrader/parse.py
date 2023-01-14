@@ -4,7 +4,7 @@ import json
 import re
 import sys
 
-default_invfile = 'examples/100_items.json'
+DEFAULT_INVFILE = 'examples/100_items.json'
 
 
 re_bed_len = re.compile('[0-9]+-Inch Bed')
@@ -13,12 +13,14 @@ re_carplay = re.compile('[c|C]ar[p|P]lay')
 
 def main(filename: str):
     with open(filename, 'r') as f:
-        payload = json.load(f)
+        payload = f.read()
 
     parse(payload)
 
 
-def parse(payload: dict):
+def parse(payload_str: str):
+    payload = json.loads(payload_str)
+
     try:
         inventory = payload['initialState']['inventory']
     except KeyError as e:
@@ -51,6 +53,7 @@ def parse(payload: dict):
 
     print(json.dumps(inv_items[-1], indent=4))
     print(f'count: {len(inv_items)}')
+    return inv_items
 
 
 def carplay(inv: dict):
@@ -247,6 +250,6 @@ if __name__ == '__main__':
     if len(sys.argv) == 2:
         file = sys.argv[1]
     else:
-        file = default_invfile
+        file = DEFAULT_INVFILE
 
     main(file)
