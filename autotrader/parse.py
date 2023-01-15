@@ -104,14 +104,14 @@ def log(inv: dict, msg: str):
 
 
 def manufacturer(inv: dict):
-    mfg = None
     try:
-        mfg = inv['make'].lower()
-        mfg = mfg['name'].lower()
+        mfg = inv['make']
+        if type(mfg) == str:
+            return mfg.lower()
+
+        return mfg['name'].lower()
     except KeyError as e:
         log(inv, f'could not get manufacturer key: {e}')
-    finally:
-        return mfg
 
 
 def mileage(inv: dict):
@@ -123,14 +123,14 @@ def mileage(inv: dict):
 
 
 def model(inv: dict):
-    m = None
     try:
-        m = inv['model'].lower()
-        m = m['name'].lower()
+        mfg = inv['model']
+        if type(mfg) == str:
+            return mfg.lower()
+
+        return mfg['name'].lower()
     except KeyError as e:
-        log(inv, f'could not find model key: {e}')
-    finally:
-        return m
+        log(inv, f'could not get model key: {e}')
 
 
 def mpg_city(inv: dict):

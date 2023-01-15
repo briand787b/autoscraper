@@ -3,8 +3,8 @@
 from bs4 import BeautifulSoup
 import httpx
 import json
-import parse
-import random
+from parse import parse
+from random import randint
 import re
 import sys
 import time
@@ -31,6 +31,10 @@ SKIP_KEY = 'firstRecord'
 TARGET_F150 = 'f150'
 TARGET_SILVERADO = 'silverado'
 TARGET_RAM = 'ram'
+TARGET_TITAN = 'titan'
+TARGET_TUNDRA = 'tundra'
+TARGET_COLORADO = 'colorado'
+TARGET_TACOMA = 'tacoma'
 # SUVs
 TARGET_EXPEDITION = 'expedition'
 TARGET_TAHOE = 'tahoe'
@@ -50,9 +54,9 @@ def scrape_model(target: str):
 
 
 def scrape_f150():
+    raise Exception('not implemented')
     params = default_params()
-    inv_list = scrape_url('base_f150_url', params)
-    print(f'inv list will now be saved to database: {inv_list[-1]}')
+    return scrape_url('base_f150_url', params)
 
 
 def scrape_458_spyder():
@@ -60,7 +64,7 @@ def scrape_458_spyder():
     params[MAX_PRICE_KEY] = 500_000
     params[NUM_RECORDS_KEY] = 5
     print('about to scrape url')
-    scrape_url(
+    return scrape_url(
         'https://www.autotrader.com/cars-for-sale/all-cars/ferrari/458-spider/atlanta-ga-30338',
         params,
     )
@@ -77,17 +81,16 @@ def default_params():
 def scrape_url(base_url: str, params: dict = default_params()):
     print('initial retrieval of records')
     resp = httpx.get(base_url, params=params)
-    payload, next = scrape_doc(resp.text)
-    inv_list = parse.parse(payload)
+    inv_list, next = scrape_doc(resp.text)
 
     while next:
-        dur = random.randint(1, 10)
+        dur = randint(1, 10)
         print(f'scraping next page in {dur} secs')
         time.sleep(dur)
         params[SKIP_KEY] = next
         resp = httpx.get(base_url, params=params)
-        payload, next = scrape_doc(resp.text)
-        inv_list += parse.parse(payload)
+        next_list, next = scrape_doc(resp.text)
+        inv_list += next_list
 
     return inv_list
 
@@ -100,7 +103,7 @@ def scrape_doc(document: str):
     with open('examples/output.json', 'w') as file:
         file.write(payload)
 
-    return json.loads(payload), next(bs)
+    return parse(json.loads(payload)), next(bs)
 
 
 def next(bs: BeautifulSoup):

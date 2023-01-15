@@ -1,17 +1,23 @@
 #!/usr/bin/env python3
 
 import scrape
+import db
 
 
 def main():
-    test_scrape_url()
+    # test_scrape_url()
+    test_scrape_doc()
 
 
 def test_scrape_doc():
+    eng = db.engine()
+
     with open('examples/resp.html', 'r') as file:
         doc = file.read()
 
-    scrape.scrape_doc(doc)
+    inv_list, _ = scrape.scrape_doc(doc)
+    print(f'num items: {len(inv_list)}')
+    db.save_listings(eng, inv_list)
 
 
 def test_scrape_url():
