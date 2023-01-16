@@ -92,7 +92,11 @@ def engine(inv: dict):
 
 
 def features(inv: dict):
-    return inv.get('features')
+    featrs = inv.get('features', [])
+    try:
+        return [f['name'] for f in featrs]
+    except Exception:
+        return featrs
 
 
 def log(inv: dict, msg: str):
@@ -172,7 +176,11 @@ def mpg_hwy(inv: dict):
 
 
 def pkgs(inv: dict):
-    return inv.get('packages')
+    packages = inv.get('packages', [])
+    try:
+        return [p['name'] for p in packages]
+    except Exception:
+        return packages
 
 
 def price(inv: dict):
