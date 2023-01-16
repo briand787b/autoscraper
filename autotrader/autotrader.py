@@ -5,17 +5,25 @@ import db
 from sqlalchemy.engine import Engine
 
 
+### TODO:
+# 1. add checkpoints
+
 def main():
+    # test_scrape_url()
+    # test_scrape_doc()
+
     eng = db.engine()
-    # test_scrape_url(eng)
-    # test_scrape_doc(eng)
-    
-    inv_list = scrape.f150()
-    db.save_listings(eng, inv_list)
+    for target in scrape.all_targets():
+        try:
+            inv_list = scrape.scrape_model(target)
+            db.save_listings(eng, inv_list)
+        except Exception as e:
+            print(f'failed to scrape target ({target}): {e}')
+            raise # I want to be alerted of any failures while testing
 
 
-
-def test_scrape_doc(eng: Engine):
+def test_scrape_doc():
+    eng = db.engine()
     with open('examples/resp.html', 'r') as file:
         doc = file.read()
 
@@ -24,7 +32,8 @@ def test_scrape_doc(eng: Engine):
     db.save_listings(eng, inv_list)
 
 
-def test_scrape_url(eng: Engine):
+def test_scrape_url():
+    eng = db.engine()
     print('about to scrape 458 spyder records')
     inv_list = scrape.scrape_458_spyder()
     db.save_listings(eng, inv_list)

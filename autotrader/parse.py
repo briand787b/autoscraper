@@ -11,7 +11,10 @@ re_bed_len = re.compile('[0-9]+-Inch Bed')
 re_carplay = re.compile('[c|C]ar[p|P]lay')
 
 
+# Entrypoints
+
 def main(filename: str):
+    '''main should only be called as part of manual testing'''
     with open(filename, 'r') as f:
         payload = json.load(f)
 
@@ -19,6 +22,10 @@ def main(filename: str):
 
 
 def parse(payload: dict):
+    '''
+    parse is the entrypoint into this module.  It takes a dictionary,
+    typically originating from a JSON document, and pulls values from it.
+    '''
     try:
         inventory = payload['initialState']['inventory']
     except KeyError as e:
@@ -27,32 +34,42 @@ def parse(payload: dict):
 
     inv_items = []
     for id, inv in inventory.items():
-        inv_items.append({
-            'autotrader_id': id,
-            'carplay': carplay(inv),
-            'color': color(inv),
-            'drive_type': drive_type(inv),
-            'engine': engine(inv),
-            'features': features(inv),
-            'make': manufacturer(inv),
-            'mileage': mileage(inv),
-            'model': model(inv),
-            'mpg_city': mpg_city(inv),
-            'mpg_hwy': mpg_hwy(inv),
-            'packages': pkgs(inv),
-            'price': price(inv),
-            'trim': trim(inv),
-            'truck_bed': truck_bed(inv),
-            'truck_cab': truck_cab(inv),
-            'vin': vin(inv),
-            'year': year(inv),
-            'zip': zip(inv),
-        })
+        try:
+            inv_items.append({
+                'autotrader_id': id,
+                'carplay': carplay(inv),
+                'color': color(inv),
+                'drive_type': drive_type(inv),
+                'engine': engine(inv),
+                'features': features(inv),
+                'make': manufacturer(inv),
+                'mileage': mileage(inv),
+                'model': model(inv),
+                'mpg_city': mpg_city(inv),
+                'mpg_hwy': mpg_hwy(inv),
+                'packages': pkgs(inv),
+                'price': price(inv),
+                'trim': trim(inv),
+                'truck_bed': truck_bed(inv),
+                'truck_cab': truck_cab(inv),
+                'vin': vin(inv),
+                'year': year(inv),
+                'zip': zip(inv),
+            })
+        except Exception as e:
+            log(inv, f'uncaught exception: {e}')
+            raise
 
-    print(json.dumps(inv_items[-1], indent=4))
+    if len(inv_items) < 1:
+        raise Exception('no items returned from scrape; this should never happen')
+
     print(f'count: {len(inv_items)}')
+    print(json.dumps(inv_items[-1], indent=4))
+
     return inv_items
 
+
+# Internal
 
 def carplay(inv: dict):
     features = inv.get('features', [])
