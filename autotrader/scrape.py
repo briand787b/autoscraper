@@ -9,7 +9,9 @@ import re
 import sys
 import time
 
-# TODO: Add realistic headers to scraper
+# TODO:
+# 1. Add realistic headers to scraper
+# 2. Make scraper more resilient to failures
 
 # query params
 #
@@ -18,7 +20,7 @@ NUM_RECORDS_KEY = 'numRecords'
 NUM_RECORDS_DEFAULT_VALUE = 100
 # how many miles to search
 SEARCH_RADIUS_KEY = 'searchRadius'
-SEARCH_RADIUS_DEFAULT_VALUE = 500
+SEARCH_RADIUS_DEFAULT_VALUE = 250
 # maximum price in USD
 MAX_PRICE_KEY = 'maxPrice'
 MAX_PRICE_DEFAULT_VALUE = 50_000
@@ -46,28 +48,33 @@ TARGET_458_SPYDER = '458_spyder'
 def scrape_model(target: str):
     target = target.lower()
     if target == TARGET_F150:
-        return scrape_f150()
+        return f150()
     elif target == TARGET_458_SPYDER:
-        return scrape_458_spyder()
+        return f458_spyder()
     else:
         raise Exception(f'scraper for {target} not implemented')
 
 
-def scrape_f150():
-    raise Exception('not implemented')
-    params = default_params()
-    return scrape_url('base_f150_url', params)
+def f150():
+    F150_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/ford/f150/atlanta-ga-30338'
+    inv_list = scrape_url(F150_4WD_URL)
+    return inv_list
 
 
-def scrape_458_spyder():
+def f458_spyder():
+    F458_SPYDER_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/ferrari/458-spider/atlanta-ga-30338'
+
     params = default_params()
     params[MAX_PRICE_KEY] = 500_000
     params[NUM_RECORDS_KEY] = 5
     print('about to scrape url')
-    return scrape_url(
-        'https://www.autotrader.com/cars-for-sale/all-cars/ferrari/458-spider/atlanta-ga-30338',
-        params,
-    )
+    return scrape_url(F458_SPYDER_URL, params)
+
+
+def titan():
+    TITAN_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/nissan/titan/atlanta-ga-30338'
+    inv_list = scrape_url(TITAN_4WD_URL)
+    return inv_list
 
 
 def default_params():
