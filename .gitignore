@@ -1,6 +1,7 @@
 **/examples
 database/
 *.db
+**/diags
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -4,6 +4,9 @@ import sqlalchemy as db
 from sqlalchemy.engine import Engine
 from sqlalchemy.exc import IntegrityError
 
+# TODO
+# commit multiple features in each tx
+
 
 def engine():
     return db.create_engine("sqlite:///autotrader.db", echo=True)
@@ -60,60 +63,52 @@ def save_listings(eng: Engine, listings: list):
 
 def save_features(eng: Engine, listings: list):
     for listing in listings:
-        features = listing.get('features', [])
-        if type(features) != list:
+        vin = listing['vin']
+        ftrs = listing.get('features', [])
+        if type(ftrs) != list or len(ftrs) < 1:
             continue
 
-        for feature in features:
-            try:
-                with eng.connect() as conn:
-                    conn.execute('''
-                        INSERT INTO vehicle_features
-                        (
-                            vin,
-                            feature
-                        ) 
-                        VALUES
-                        (
-                            :vin,
-                            :feature
-                        );
-                    ''',
-                                 {
-                                     'vin': listing['vin'],
-                                     'feature': feature,
-                                 })
-            except IntegrityError:
-                continue
+        try:
+            with eng.connect() as conn:
+                conn.execute('''
+                    INSERT INTO vehicle_features
+                    (
+                        vin,
+                        feature
+                    ) 
+                    VALUES
+                    (
+                        :vin,
+                        :ftr
+                    );
+                ''', [{'vin': vin, 'ftr': f} for f in ftrs])
+        except IntegrityError:
+            continue
 
 
 def save_packages(eng: Engine, listings: list):
     for listing in listings:
+        vin = listing['vin']
         pkgs = listing.get('packages', [])
-        if type(pkgs) != list:
+        if type(pkgs) != list or len(pkgs) < 1:
             continue
 
-        for pkg in pkgs:
-            try:
-                with eng.connect() as conn:
-                    conn.execute('''
-                        INSERT INTO vehicle_packages
-                        (
-                            vin,
-                            package
-                        ) 
-                        VALUES
-                        (
-                            :vin,
-                            :package
-                        );
-                    ''',
-                                 {
-                                     'vin': listing['vin'],
-                                     'package': pkg,
-                                 })
-            except IntegrityError:
-                continue
+        try:
+            with eng.connect() as conn:
+                conn.execute('''
+                    INSERT INTO vehicle_packages
+                    (
+                        vin,
+                        package
+                    ) 
+                    VALUES
+                    (
+                        :vin,
+                        :pkg
+                    );
+                ''', [{'vin': vin, 'pkg': p} for p in pkgs])
+        except IntegrityError:
+            continue
 
 
 def create_tables(eng: Engine):

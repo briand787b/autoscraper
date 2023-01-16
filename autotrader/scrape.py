@@ -51,14 +51,14 @@ def all_targets():
     '''
     return [
         # Trucks
-        # TARGET_COLORADO,
-        # TARGET_F150,
-        # TARGET_FRONTIER,
-        # TARGET_RAM,
-        # TARGET_SILVERADO,
-        # TARGET_TACOMA,
-        # TARGET_TITAN,
-        # TARGET_TUNDRA,
+        TARGET_COLORADO,
+        TARGET_F150,
+        TARGET_FRONTIER,
+        TARGET_RAM,
+        TARGET_SILVERADO,
+        TARGET_TACOMA,
+        TARGET_TITAN,
+        TARGET_TUNDRA,
         # SUVs
         TARGET_EXPEDITION,
         TARGET_GX460,
@@ -88,6 +88,8 @@ def scrape_model(target: str):
         return gx460()
     elif target == TARGET_RAM:
         return ram()
+    elif target == TARGET_SILVERADO:
+        return silverado()
     elif target == TARGET_SEQUOIA:
         return sequoia()
     elif target == TARGET_SUBURBAN:
@@ -147,6 +149,10 @@ def ram():
     return scrape_url(RAM_4WD_URL)
 
 
+def silverado():
+    SILVERADO_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/chevrolet/silverado-1500/atlanta-ga-30338'
+    return scrape_url(SILVERADO_4WD_URL)
+
 def sequoia():
     SEQUOIA_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/toyota/sequoia/atlanta-ga-30338'
     return scrape_url(SEQUOIA_4WD_URL)
@@ -193,7 +199,8 @@ def default_params():
 def scrape_url(base_url: str, params: dict = default_params()):
     '''Scrapes specified AutoTrader URL'''
     resp = send_req(base_url, params)
-    inv_list, next_skip = scrape_doc(resp)
+    inv_list, _ = scrape_doc(resp)
+    next_skip = 0
 
     while next_skip:
         dur = randint(60, 70)
@@ -204,10 +211,13 @@ def scrape_url(base_url: str, params: dict = default_params()):
         next_list, next_skip = scrape_doc(resp)
         inv_list += next_list
 
+    with open('diags/inventory_list.json', 'w') as file:
+        json.dump(inv_list, file)
+
     return inv_list
 
 def send_req(base_url: str, params: dict):
-    client = httpx.Client(timeout=None)
+    client = httpx.Client(timeout=120) # long, but not infinite
     req = httpx.Request('GET', base_url, params=params, headers={
         'User-Agent':'Mozilla/5.0 (X11; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0',
         'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
@@ -217,7 +227,7 @@ def send_req(base_url: str, params: dict):
     })
     print(f'[DEBUG] about to send request: {req}')
     resp = client.send(req)
-    with open('examples/response.html', 'w') as file:
+    with open('diags/response.html', 'w') as file:
         file.write(resp.text)
     
     if resp.status_code > 299:
@@ -226,15 +236,16 @@ def send_req(base_url: str, params: dict):
     return resp.text
 
 def scrape_doc(document: str):
-    '''Scrapes an AutoTrader listing search results HTML document'''
+    '''Scrapes an AutoTrader HTML document containing vehicle search results '''
     DATA_LOC = 'window.__BONNET_DATA__'
     bs = BeautifulSoup(document, 'html.parser')
     data = bs.find('script', text=re.compile(DATA_LOC)).get_text()
     payload = data.split(DATA_LOC + '=')[1]
-    with open('examples/output.json', 'w') as file:
+    with open('diags/response_data.json', 'w') as file:
         file.write(payload)
 
-    return parse(json.loads(payload)), next_skip(bs)
+    payload_json = json.loads(payload)
+    return parse(payload_json), next_skip(bs)
 
 
 def next_skip(bs: BeautifulSoup):

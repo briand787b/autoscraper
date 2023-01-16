@@ -34,34 +34,31 @@ def parse(payload: dict):
 
     inv_items = []
     for id, inv in inventory.items():
-        try:
-            inv_items.append({
-                'autotrader_id': id,
-                'carplay': carplay(inv),
-                'color': color(inv),
-                'drive_type': drive_type(inv),
-                'engine': engine(inv),
-                'features': features(inv),
-                'make': manufacturer(inv),
-                'mileage': mileage(inv),
-                'model': model(inv),
-                'mpg_city': mpg_city(inv),
-                'mpg_hwy': mpg_hwy(inv),
-                'packages': pkgs(inv),
-                'price': price(inv),
-                'trim': trim(inv),
-                'truck_bed': truck_bed(inv),
-                'truck_cab': truck_cab(inv),
-                'vin': vin(inv),
-                'year': year(inv),
-                'zip': zip(inv),
-            })
-        except Exception as e:
-            log(inv, f'uncaught exception: {e}')
-            raise
+        inv_items.append({
+            'autotrader_id': id,
+            'carplay': carplay(inv),
+            'color': color(inv),
+            'drive_type': drive_type(inv),
+            'engine': engine(inv),
+            'features': features(inv),
+            'make': manufacturer(inv),
+            'mileage': mileage(inv),
+            'model': model(inv),
+            'mpg_city': mpg_city(inv),
+            'mpg_hwy': mpg_hwy(inv),
+            'packages': pkgs(inv),
+            'price': price(inv),
+            'trim': trim(inv),
+            'truck_bed': truck_bed(inv),
+            'truck_cab': truck_cab(inv),
+            'vin': vin(inv),
+            'year': year(inv),
+            'zip': zip(inv),
+        })
 
     if len(inv_items) < 1:
-        raise Exception('no items returned from scrape; this should never happen')
+        raise Exception(
+            'no items returned from scrape; this should never happen')
 
     print(f'count: {len(inv_items)}')
     print(json.dumps(inv_items[-1], indent=4))
