@@ -46,6 +46,7 @@ def parse(payload: dict):
             'model': model(inv),
             'mpg_city': mpg_city(inv),
             'mpg_hwy': mpg_hwy(inv),
+            'owner': owner(inv),
             'packages': pkgs(inv),
             'price': price(inv),
             'trim': trim(inv),
@@ -188,6 +189,15 @@ def mpg_hwy(inv: dict):
 
     return mpg
 
+def owner(inv: dict):
+    try:
+        return inv['ownerName']
+    except KeyError:
+        try:
+            return inv['owner']['name']
+        except KeyError as e:
+            log(inv, f'could not get owner key: {e}')
+
 
 def pkgs(inv: dict):
     packages = inv.get('packages', [])
@@ -201,7 +211,7 @@ def price(inv: dict):
     try:
         p_str = inv['pricingDetail']['salePrice']
         price = int(p_str)
-        return price
+        return price if price > 0 else None
     except KeyError as e:
         log(inv, f'could not find pricing key "{e}"')
     except TypeError as e:

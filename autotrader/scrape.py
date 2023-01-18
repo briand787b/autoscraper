@@ -9,8 +9,6 @@ import re
 import sys
 import time
 
-# TODO:
-# Make scraper more resilient to failures
 
 # query params
 #
@@ -19,12 +17,24 @@ NUM_RECORDS_KEY = 'numRecords'
 NUM_RECORDS_DEFAULT_VALUE = 100
 # how many miles to search
 SEARCH_RADIUS_KEY = 'searchRadius'
-SEARCH_RADIUS_DEFAULT_VALUE = 300
+SEARCH_RADIUS_DEFAULT_VALUE = 400
 # maximum price in USD
 MAX_PRICE_KEY = 'maxPrice'
-MAX_PRICE_DEFAULT_VALUE = 50_000
+MAX_PRICE_DEFAULT_VALUE = 40_000
+# maximum number of miles
+MAX_MILEAGE_KEY = 'maxMileage'
+MAX_MILEAGE_DEFAULT_VALUE = 100_000
 # how many records to skip
 SKIP_KEY = 'firstRecord'
+# Crew cab key/value pair
+BODYSTYLE_SUBTYPE_KEY = 'bodyStyleSubtypeCodes'
+BODYSTYLE_SUBTYPE_CREW_CAB = 'FULLSIZE_CREW+COMPACT_CREW'
+# engine displacement range
+ENGINE_DISPLACEMENT_KEY = 'engineDisplacement'
+ENGINE_DISPLACEMENT_5L = '5.0-5.9'
+# engine cylinders
+ENGINE_CYL_KEY = 'engineCodes'
+ENGINE_CYL_8 = '8CLDR'
 
 # scrape targets
 #
@@ -43,6 +53,10 @@ TARGET_GX460 = 'gx460'
 TARGET_SEQUOIA = 'sequoia'
 TARGET_SUBURBAN = 'suburban'
 TARGET_TAHOE = 'tahoe'
+# Minivans
+TARGET_ODYSSEY = 'odyssey'
+TARGET_SEDONA = 'sedona'
+TARGET_SIENNA = 'sienna'
 
 
 def all_targets():
@@ -65,6 +79,10 @@ def all_targets():
         TARGET_SEQUOIA,
         TARGET_SUBURBAN,
         TARGET_TAHOE,
+        # Minivans
+        TARGET_ODYSSEY,
+        TARGET_SEDONA,
+        TARGET_SIENNA,
     ]
 
 # Typical entrypoints
@@ -86,12 +104,18 @@ def scrape_model(target: str):
         return frontier()
     elif target == TARGET_GX460:
         return gx460()
+    elif target == TARGET_ODYSSEY:
+        return odyssey()
     elif target == TARGET_RAM:
         return ram()
     elif target == TARGET_SILVERADO:
         return silverado()
     elif target == TARGET_SEQUOIA:
         return sequoia()
+    elif target == TARGET_SEDONA:
+        return sedona()
+    elif target == TARGET_SIENNA:
+        return sienna()
     elif target == TARGET_SUBURBAN:
         return suburban()
     elif target == TARGET_TAHOE:
@@ -108,79 +132,86 @@ def scrape_model(target: str):
 
 def colorado():
     COLORADO_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/chevrolet/colorado/atlanta-ga-30338'
-    return scrape_url(COLORADO_4WD_URL)
+    return scrape_url(COLORADO_4WD_URL, default_truck_params())
 
 
 def expedition():
     EXPEDITION_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/ford/expedition/atlanta-ga-30338'
-    return scrape_url(EXPEDITION_4WD_URL)
+    return scrape_url(EXPEDITION_4WD_URL, default_params())
 
 
 def f150():
     F150_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/ford/f150/atlanta-ga-30338'
-    inv_list = scrape_url(F150_4WD_URL)
+    inv_list = scrape_url(F150_4WD_URL, default_truck_params())
     return inv_list
-
-
-def f458_spyder():
-    '''
-    This demonstrates a scrape target with dissimilar parameter requirements
-    '''
-    F458_SPYDER_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/ferrari/458-spider/atlanta-ga-30338'
-    params = default_params()
-    params[MAX_PRICE_KEY] = 500_000
-    params[NUM_RECORDS_KEY] = 5
-    print('about to scrape url')
-    return scrape_url(F458_SPYDER_URL, params)
 
 
 def frontier():
     FRONTIER_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/nissan/frontier/atlanta-ga-30338'
-    return scrape_url(FRONTIER_4WD_URL)
+    return scrape_url(FRONTIER_4WD_URL, default_truck_params())
 
 
 def gx460():
     GX460_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/lexus/gx-460/atlanta-ga-30338'
-    return scrape_url(GX460_URL)
+    return scrape_url(GX460_URL, default_params())
+
+
+def odyssey():
+    ODYSSEY_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/honda/odyssey/atlanta-ga-30338'
+    return scrape_url(ODYSSEY_URL, default_params())
 
 
 def ram():
+    '''ignores V6 models'''
     RAM_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/ram/1500/atlanta-ga-30338'
-    return scrape_url(RAM_4WD_URL)
+    params = default_truck_params()
+    params[ENGINE_CYL_KEY] = ENGINE_CYL_8
+    return scrape_url(RAM_4WD_URL, params)
+
+
+def sedona():
+    SEDONA_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/kia/sedona/atlanta-ga-30338'
+    return scrape_url(SEDONA_URL, default_params())
+
+
+def sienna():
+    SIENNA_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/toyota/sienna/atlanta-ga-30338'
+    return scrape_url(SIENNA_URL, default_params())
+
+
+def sequoia():
+    SEQUOIA_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/toyota/sequoia/atlanta-ga-30338'
+    return scrape_url(SEQUOIA_4WD_URL, default_params())
 
 
 def silverado():
     SILVERADO_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/chevrolet/silverado-1500/atlanta-ga-30338'
-    return scrape_url(SILVERADO_4WD_URL)
-
-def sequoia():
-    SEQUOIA_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/toyota/sequoia/atlanta-ga-30338'
-    return scrape_url(SEQUOIA_4WD_URL)
+    return scrape_url(SILVERADO_4WD_URL, default_truck_params())
 
 
 def suburban():
     SUBURBAN_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/chevrolet/suburban/atlanta-ga-30338'
-    return scrape_url(SUBURBAN_4WD_URL)
+    return scrape_url(SUBURBAN_4WD_URL, default_params())
 
 
 def tacoma():
     TACOMA_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/toyota/tacoma/atlanta-ga-30338'
-    return scrape_url(TACOMA_4WD_URL)
+    return scrape_url(TACOMA_4WD_URL, default_truck_params())
 
 
 def tahoe():
     TAHOE_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/chevrolet/tahoe/atlanta-ga-30338'
-    return scrape_url(TAHOE_4WD_URL)
+    return scrape_url(TAHOE_4WD_URL, default_params())
 
 
 def titan():
     TITAN_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/nissan/titan/atlanta-ga-30338'
-    return scrape_url(TITAN_4WD_URL)
+    return scrape_url(TITAN_4WD_URL, default_truck_params())
 
 
 def tundra():
     TUNDRA_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/toyota/tundra/atlanta-ga-30338'
-    return scrape_url(TUNDRA_4WD_URL)
+    return scrape_url(TUNDRA_4WD_URL, default_truck_params())
 
 
 # Internal functions
@@ -193,17 +224,24 @@ def default_params():
         NUM_RECORDS_KEY: NUM_RECORDS_DEFAULT_VALUE,
         SEARCH_RADIUS_KEY: SEARCH_RADIUS_DEFAULT_VALUE,
         MAX_PRICE_KEY: MAX_PRICE_DEFAULT_VALUE,
+        MAX_MILEAGE_KEY: MAX_MILEAGE_DEFAULT_VALUE,
     }
 
 
-def scrape_url(base_url: str, params: dict = default_params()):
+def default_truck_params():
+    '''Searches for crew cabs ONLY'''
+    parms = default_params()
+    parms[BODYSTYLE_SUBTYPE_KEY] = BODYSTYLE_SUBTYPE_CREW_CAB
+    return parms
+
+
+def scrape_url(base_url: str, params: dict):
     '''Scrapes specified AutoTrader URL'''
     resp = send_req(base_url, params)
-    inv_list, _ = scrape_doc(resp)
-    next_skip = 0
+    inv_list, next_skip = scrape_doc(resp)
 
     while next_skip:
-        dur = randint(60, 70)
+        dur = randint(10, 60)
         print(f'scraping next page in {dur} secs')
         time.sleep(dur)
         params[SKIP_KEY] = next_skip
@@ -216,11 +254,12 @@ def scrape_url(base_url: str, params: dict = default_params()):
 
     return inv_list
 
+
 def send_req(base_url: str, params: dict):
-    client = httpx.Client(timeout=120) # long, but not infinite
+    client = httpx.Client(timeout=120)  # long, but not infinite
     req = httpx.Request('GET', base_url, params=params, headers={
-        'User-Agent':'Mozilla/5.0 (X11; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0',
-        'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
         'Accept-Encoding': 'gzip, deflate, br',
         'Accept-Language': 'en-US,en;q=0.5',
 
@@ -229,11 +268,12 @@ def send_req(base_url: str, params: dict):
     resp = client.send(req)
     with open('diags/response.html', 'w') as file:
         file.write(resp.text)
-    
+
     if resp.status_code > 299:
         raise Exception(f'request failed with status code: {resp.status_code}')
 
     return resp.text
+
 
 def scrape_doc(document: str):
     '''Scrapes an AutoTrader HTML document containing vehicle search results '''

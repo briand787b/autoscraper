@@ -4,9 +4,6 @@ import sqlalchemy as db
 from sqlalchemy.engine import Engine
 from sqlalchemy.exc import IntegrityError
 
-# TODO
-# commit multiple features in each tx
-
 
 def engine():
     return db.create_engine("sqlite:///autotrader.db", echo=True)
@@ -27,6 +24,7 @@ def save_listings(eng: Engine, listings: list):
                 model,
                 mpg_city,
                 mpg_hwy,
+                owner,
                 price,
                 trim,
                 truck_bed,
@@ -47,6 +45,7 @@ def save_listings(eng: Engine, listings: list):
                 :model,
                 :mpg_city,
                 :mpg_hwy,
+                :owner,
                 :price,
                 :trim,
                 :truck_bed,
@@ -126,6 +125,7 @@ def create_tables(eng: Engine):
                 model         VARCHAR(255),
                 mpg_city      INTEGER,
                 mpg_hwy       INTEGER,
+                owner         VARCHAR(255),
                 price         INTEGER,
                 trim          VARCHAR(255),
                 truck_bed     VARCHAR(255),
@@ -180,6 +180,7 @@ if __name__ == '__main__':
             "model": 'F8 Tributo',
             "mpg_city": 15,
             "mpg_hwy": 19,
+            "owner": 'Used Car Lot',
             "packages": [
                 '302A Luxury Package',
                 'Trailer Tow Pkg',
@@ -204,6 +205,7 @@ if __name__ == '__main__':
             "model": 'F8 Tributo',
             "mpg_city": 15,
             "mpg_hwy": 19,
+            "owner": 'Used Car Lot',
             "packages": [
                 '302A Luxury Package',
                 'Trailer Tow Pkg',
@@ -231,6 +233,7 @@ if __name__ == '__main__':
             "model": '458_italia',
             "mpg_city": 15,
             "mpg_hwy": 19,
+            "owner": 'Luxury Super Cars Ltd',
             "packages": [],
             "price": 349900,
             "trim": None,
@@ -255,6 +258,7 @@ if __name__ == '__main__':
             "model": '458_italia',
             "mpg_city": 15,
             "mpg_hwy": 19,
+            "owner": 'Luxury Super Cars Ltd',
             "packages": None,
             "price": 249900,
             "trim": None,
