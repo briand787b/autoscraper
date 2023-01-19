@@ -43,6 +43,7 @@ TARGET_COLORADO = 'colorado'
 TARGET_F150 = 'f150'
 TARGET_FRONTIER = 'frontier'
 TARGET_RAM = 'ram'
+TARGET_SIERRA = 'sierra'
 TARGET_SILVERADO = 'silverado'
 TARGET_TACOMA = 'tacoma'
 TARGET_TITAN = 'titan'
@@ -69,6 +70,7 @@ def all_targets():
         TARGET_F150,
         TARGET_FRONTIER,
         TARGET_RAM,
+        TARGET_SIERRA,
         TARGET_SILVERADO,
         TARGET_TACOMA,
         TARGET_TITAN,
@@ -116,6 +118,8 @@ def scrape_model(target: str):
         return sedona()
     elif target == TARGET_SIENNA:
         return sienna()
+    elif target == TARGET_SIERRA:
+        return sierra()
     elif target == TARGET_SUBURBAN:
         return suburban()
     elif target == TARGET_TAHOE:
@@ -178,6 +182,9 @@ def sienna():
     SIENNA_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/toyota/sienna/atlanta-ga-30338'
     return scrape_url(SIENNA_URL, default_params())
 
+def sierra():
+    SIERRA_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/gmc/sierra-1500/atlanta-ga-30338'
+    return scrape_url(SIERRA_URL, default_truck_params())
 
 def sequoia():
     SEQUOIA_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/toyota/sequoia/atlanta-ga-30338'
