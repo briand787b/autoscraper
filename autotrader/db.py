@@ -6,6 +6,9 @@ from sqlalchemy.engine import Engine
 from sqlalchemy.exc import IntegrityError
 
 
+# TODO:
+
+
 def engine():
     return db.create_engine("sqlite:///autotrader.db", echo=True)
 
@@ -16,8 +19,8 @@ def create_csv(eng: Engine):
             SELECT
                 id,
                 autotrader_id,
-                carplay,
                 color,
+                condition,
                 drive_type,
                 engine,
                 make,
@@ -43,8 +46,8 @@ def create_csv(eng: Engine):
         w.writerow([
                 'id',
                 'autotrader_id',
-                'carplay',
                 'color',
+                'condition',
                 'drive_type',
                 'engine',
                 'make',
@@ -72,8 +75,8 @@ def save_listings(eng: Engine, listings: list):
             INSERT INTO listings
             (
                 autotrader_id,
-                carplay,
                 color,
+                condition,
                 drive_type,
                 engine,
                 make,
@@ -93,8 +96,8 @@ def save_listings(eng: Engine, listings: list):
             VALUES
             (
                 :autotrader_id,
-                :carplay,
                 :color,
+                :condition,
                 :drive_type,
                 :engine,
                 :make,
@@ -173,8 +176,8 @@ def create_tables(eng: Engine):
             CREATE TABLE IF NOT EXISTS listings (
                 id            INTEGER NOT NULL PRIMARY KEY,
                 autotrader_id VARCHAR(255),
-                carplay       BOOLEAN,
                 color         VARCHAR(255),
+                condition     VARCHAR(16),
                 drive_type    VARCHAR(255),
                 engine        VARCHAR(255),
                 make          VARCHAR(255),
@@ -218,114 +221,114 @@ def create_tables(eng: Engine):
 
 if __name__ == '__main__':
     eng = engine()
-    # with eng.connect() as conn:
-    #     conn.execute('DROP TABLE IF EXISTS listings')
-    #     conn.execute('DROP TABLE IF EXISTS vehicle_features')
-    #     conn.execute('DROP TABLE IF EXISTS vehicle_packages')
+    with eng.connect() as conn:
+        conn.execute('DROP TABLE IF EXISTS listings')
+        conn.execute('DROP TABLE IF EXISTS vehicle_features')
+        conn.execute('DROP TABLE IF EXISTS vehicle_packages')
 
-    # create_tables(eng)
-    # save_listings(eng, [
-    #     {
-    #         "autotrader_id": "669485363",
-    #         "carplay": False,
-    #         "color": "blue",
-    #         "drive_type": "2 wheel drive - rear",
-    #         "engine": "8-cylinder turbo",
-    #         "features": None,
-    #         "make": 'ferrari',
-    #         "mileage": 352,
-    #         "model": 'F8 Tributo',
-    #         "mpg_city": 15,
-    #         "mpg_hwy": 19,
-    #         "owner": 'Used Car Lot',
-    #         "packages": [
-    #             '302A Luxury Package',
-    #             'Trailer Tow Pkg',
-    #         ],
-    #         "price": 449900,
-    #         "trim": None,
-    #         "truck_bed": None,
-    #         "truck_cab": None,
-    #         "vin": "ZFF92LLA7N0279141",
-    #         "year": 2022,
-    #         "zip": "75244"
-    #     },
-    #     {
-    #         "autotrader_id": "669485363",
-    #         "carplay": False,
-    #         "color": "blue",
-    #         "drive_type": "2 wheel drive - rear",
-    #         "engine": "8-cylinder turbo",
-    #         "features": None,
-    #         "make": 'ferrari',
-    #         "mileage": 352,
-    #         "model": 'F8 Tributo',
-    #         "mpg_city": 15,
-    #         "mpg_hwy": 19,
-    #         "owner": 'Used Car Lot',
-    #         "packages": [
-    #             '302A Luxury Package',
-    #             'Trailer Tow Pkg',
-    #         ],
-    #         "price": 449900,
-    #         "trim": None,
-    #         "truck_bed": None,
-    #         "truck_cab": None,
-    #         "vin": "ZFF92LLA7N0279141",
-    #         "year": 2022,
-    #         "zip": "75244"
-    #     },
-    #     {
-    #         "autotrader_id": "669485364",
-    #         "carplay": True,
-    #         "color": "blue",
-    #         "drive_type": "2 wheel drive - rear",
-    #         "engine": "8-cylinder",
-    #         "features": [
-    #             'Apple CarPlay',
-    #             'Android Auto',
-    #         ],
-    #         "make": 'ferrari',
-    #         "mileage": 352,
-    #         "model": '458_italia',
-    #         "mpg_city": 15,
-    #         "mpg_hwy": 19,
-    #         "owner": 'Luxury Super Cars Ltd',
-    #         "packages": [],
-    #         "price": 349900,
-    #         "trim": None,
-    #         "truck_bed": None,
-    #         "truck_cab": None,
-    #         "vin": "ZFF92LLA7N0279142",
-    #         "year": 2022,
-    #         "zip": "75244"
-    #     },
-    #     {
-    #         "autotrader_id": "669485364",
-    #         "carplay": True,
-    #         "color": "blue",
-    #         "drive_type": "2 wheel drive - rear",
-    #         "engine": "8-cylinder",
-    #         "features": [
-    #             'Apple CarPlay',
-    #             'Android Auto',
-    #         ],
-    #         "make": 'ferrari',
-    #         "mileage": 352,
-    #         "model": '458_italia',
-    #         "mpg_city": 15,
-    #         "mpg_hwy": 19,
-    #         "owner": 'Luxury Super Cars Ltd',
-    #         "packages": None,
-    #         "price": 249900,
-    #         "trim": None,
-    #         "truck_bed": None,
-    #         "truck_cab": None,
-    #         "vin": "ZFF92LLA7N0279142",
-    #         "year": 2022,
-    #         "zip": "75244"
-    #     }
-    # ])
+    create_tables(eng)
+    save_listings(eng, [
+        {
+            "autotrader_id": "669485363",
+            "color": "blue",
+            "condition": "used",
+            "drive_type": "2 wheel drive - rear",
+            "engine": "8-cylinder turbo",
+            "features": None,
+            "make": 'ferrari',
+            "mileage": 352,
+            "model": 'F8 Tributo',
+            "mpg_city": 15,
+            "mpg_hwy": 19,
+            "owner": 'Used Car Lot',
+            "packages": [
+                '302A Luxury Package',
+                'Trailer Tow Pkg',
+            ],
+            "price": 449900,
+            "trim": None,
+            "truck_bed": None,
+            "truck_cab": None,
+            "vin": "ZFF92LLA7N0279141",
+            "year": 2022,
+            "zip": "75244"
+        },
+        {
+            "autotrader_id": "669485363",
+            "color": "blue",
+            "condition": "used",
+            "drive_type": "2 wheel drive - rear",
+            "engine": "8-cylinder turbo",
+            "features": None,
+            "make": 'ferrari',
+            "mileage": 352,
+            "model": 'F8 Tributo',
+            "mpg_city": 15,
+            "mpg_hwy": 19,
+            "owner": 'Used Car Lot',
+            "packages": [
+                '302A Luxury Package',
+                'Trailer Tow Pkg',
+            ],
+            "price": 449900,
+            "trim": None,
+            "truck_bed": None,
+            "truck_cab": None,
+            "vin": "ZFF92LLA7N0279141",
+            "year": 2022,
+            "zip": "75244"
+        },
+        {
+            "autotrader_id": "669485364",
+            "color": "blue",
+            "condition": "new",
+            "drive_type": "2 wheel drive - rear",
+            "engine": "8-cylinder",
+            "features": [
+                'Apple CarPlay',
+                'Android Auto',
+            ],
+            "make": 'ferrari',
+            "mileage": 352,
+            "model": '458_italia',
+            "mpg_city": 15,
+            "mpg_hwy": 19,
+            "owner": 'Luxury Super Cars Ltd',
+            "packages": [],
+            "price": 349900,
+            "trim": None,
+            "truck_bed": None,
+            "truck_cab": None,
+            "vin": "ZFF92LLA7N0279142",
+            "year": 2022,
+            "zip": "75244"
+        },
+        {
+            "autotrader_id": "669485364",
+            "color": "blue",
+            "condition": "new",
+            "drive_type": "2 wheel drive - rear",
+            "engine": "8-cylinder",
+            "features": [
+                'Apple CarPlay',
+                'Android Auto',
+            ],
+            "make": 'ferrari',
+            "mileage": 352,
+            "model": '458_italia',
+            "mpg_city": 15,
+            "mpg_hwy": 19,
+            "owner": 'Luxury Super Cars Ltd',
+            "packages": None,
+            "price": 249900,
+            "trim": None,
+            "truck_bed": None,
+            "truck_cab": None,
+            "vin": "ZFF92LLA7N0279142",
+            "year": 2022,
+            "zip": "75244"
+        }
+    ])
     create_csv(eng)
 
     print('done!')

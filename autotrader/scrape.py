@@ -10,6 +10,8 @@ import sys
 import time
 
 
+# TODO:
+
 # query params
 #
 # number of listings to retrieve
@@ -23,9 +25,11 @@ MAX_PRICE_KEY = 'maxPrice'
 MAX_PRICE_DEFAULT_VALUE = 40_000
 # maximum number of miles
 MAX_MILEAGE_KEY = 'maxMileage'
-MAX_MILEAGE_DEFAULT_VALUE = 100_000
+MAX_MILEAGE_DEFAULT_VALUE = 150_000
 # how many records to skip
 SKIP_KEY = 'firstRecord'
+# earliest year to search for
+MIN_YEAR_KEY = 'startYear'
 # Crew cab key/value pair
 BODYSTYLE_SUBTYPE_KEY = 'bodyStyleSubtypeCodes'
 BODYSTYLE_SUBTYPE_CREW_CAB = 'FULLSIZE_CREW+COMPACT_CREW'
@@ -60,10 +64,16 @@ TARGET_SEDONA = 'sedona'
 TARGET_SIENNA = 'sienna'
 
 
+# scrape regions
+REGION_ATLANTA = 'atlanta-ga-30338'
+REGION_BROOKFIELD = 'brookfield-ct-06804'
+REGION_CHICAGO = 'chicago-il-60652'
+REGION_KANSAS_CITY = 'kansas-city-mo-64101'
+REGION_MIAMI = 'miami-fl-33101'
+REGION_RALEIGH = 'raleigh-nc-27601'
+
 def all_targets():
-    '''
-    helper function for scrapes that target everything
-    '''
+    '''helper function for scrapes that target all models'''
     return [
         # Trucks
         TARGET_COLORADO,
@@ -87,137 +97,153 @@ def all_targets():
         TARGET_SIENNA,
     ]
 
+def all_regions():
+    '''helper function for scrapes that search all regions'''
+    return [
+        REGION_ATLANTA,
+        REGION_BROOKFIELD,
+        REGION_CHICAGO,
+        REGION_KANSAS_CITY,
+        REGION_MIAMI,
+        REGION_RALEIGH,
+    ]
+
 # Typical entrypoints
 
 
-def scrape_model(target: str):
+def scrape_model(target: str, region: str):
     '''
     scrape_model is useful for interfacing with a cli where the srape target
     is specified as a string arg
     '''
     target = target.lower()
     if target == TARGET_COLORADO:
-        return colorado()
+        return colorado(region)
     elif target == TARGET_EXPEDITION:
-        return expedition()
+        return expedition(region)
     elif target == TARGET_F150:
-        return f150()
+        return f150(region)
     elif target == TARGET_FRONTIER:
-        return frontier()
+        return frontier(region)
     elif target == TARGET_GX460:
-        return gx460()
+        return gx460(region)
     elif target == TARGET_ODYSSEY:
-        return odyssey()
+        return odyssey(region)
     elif target == TARGET_RAM:
-        return ram()
+        return ram(region)
     elif target == TARGET_SILVERADO:
-        return silverado()
+        return silverado(region)
     elif target == TARGET_SEQUOIA:
-        return sequoia()
+        return sequoia(region)
     elif target == TARGET_SEDONA:
-        return sedona()
+        return sedona(region)
     elif target == TARGET_SIENNA:
-        return sienna()
+        return sienna(region)
     elif target == TARGET_SIERRA:
-        return sierra()
+        return sierra(region)
     elif target == TARGET_SUBURBAN:
-        return suburban()
+        return suburban(region)
     elif target == TARGET_TAHOE:
-        return tahoe()
+        return tahoe(region)
     elif target == TARGET_TACOMA:
-        return tacoma()
+        return tacoma(region)
     elif target == TARGET_TITAN:
-        return titan()
+        return titan(region)
     elif target == TARGET_TUNDRA:
-        return tundra()
+        return tundra(region)
     else:
         raise Exception(f'scraper for {target} not implemented')
 
 
-def colorado():
-    COLORADO_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/chevrolet/colorado/atlanta-ga-30338'
+def colorado(region: str):
+    COLORADO_4WD_URL = f'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/chevrolet/colorado/{region}'
     return scrape_url(COLORADO_4WD_URL, default_truck_params())
 
 
-def expedition():
-    EXPEDITION_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/ford/expedition/atlanta-ga-30338'
-    return scrape_url(EXPEDITION_4WD_URL, default_params())
+def expedition(region: str):
+    EXPEDITION_4WD_URL = f'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/ford/expedition/{region}'
+    return scrape_url(EXPEDITION_4WD_URL, default_suv_params())
 
 
-def f150():
-    F150_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/ford/f150/atlanta-ga-30338'
+def f150(region: str):
+    F150_4WD_URL = f'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/ford/f150/{region}'
     inv_list = scrape_url(F150_4WD_URL, default_truck_params())
     return inv_list
 
 
-def frontier():
-    FRONTIER_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/nissan/frontier/atlanta-ga-30338'
+def frontier(region: str):
+    FRONTIER_4WD_URL = f'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/nissan/frontier/{region}'
     return scrape_url(FRONTIER_4WD_URL, default_truck_params())
 
 
-def gx460():
-    GX460_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/lexus/gx-460/atlanta-ga-30338'
-    return scrape_url(GX460_URL, default_params())
+def gx460(region: str):
+    GX460_URL = f'https://www.autotrader.com/cars-for-sale/all-cars/lexus/gx-460/{region}'
+    return scrape_url(GX460_URL, default_suv_params())
 
 
-def odyssey():
-    ODYSSEY_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/honda/odyssey/atlanta-ga-30338'
+def odyssey(region: str):
+    ODYSSEY_URL = f'https://www.autotrader.com/cars-for-sale/all-cars/honda/odyssey/{region}'
     return scrape_url(ODYSSEY_URL, default_params())
 
 
-def ram():
+def ram(region: str):
     '''ignores V6 models'''
-    RAM_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/ram/1500/atlanta-ga-30338'
+    RAM_4WD_URL = f'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/ram/1500/{region}'
     params = default_truck_params()
     params[ENGINE_CYL_KEY] = ENGINE_CYL_8
     return scrape_url(RAM_4WD_URL, params)
 
 
-def sedona():
-    SEDONA_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/kia/sedona/atlanta-ga-30338'
+def sedona(region: str):
+    SEDONA_URL = f'https://www.autotrader.com/cars-for-sale/all-cars/kia/sedona/{region}'
     return scrape_url(SEDONA_URL, default_params())
 
 
-def sienna():
-    SIENNA_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/toyota/sienna/atlanta-ga-30338'
+def sienna(region: str):
+    SIENNA_URL = f'https://www.autotrader.com/cars-for-sale/all-cars/toyota/sienna/{region}'
     return scrape_url(SIENNA_URL, default_params())
 
-def sierra():
-    SIERRA_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/gmc/sierra-1500/atlanta-ga-30338'
+
+def sierra(region: str):
+    SIERRA_URL = f'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/gmc/sierra-1500/{region}'
     return scrape_url(SIERRA_URL, default_truck_params())
 
-def sequoia():
-    SEQUOIA_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/toyota/sequoia/atlanta-ga-30338'
-    return scrape_url(SEQUOIA_4WD_URL, default_params())
+
+def sequoia(region: str):
+    SEQUOIA_4WD_URL = f'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/toyota/sequoia/{region}'
+    return scrape_url(SEQUOIA_4WD_URL, default_suv_params())
 
 
-def silverado():
-    SILVERADO_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/chevrolet/silverado-1500/atlanta-ga-30338'
+def silverado(region: str):
+    SILVERADO_4WD_URL = f'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/chevrolet/silverado-1500/{region}'
     return scrape_url(SILVERADO_4WD_URL, default_truck_params())
 
 
-def suburban():
-    SUBURBAN_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/chevrolet/suburban/atlanta-ga-30338'
-    return scrape_url(SUBURBAN_4WD_URL, default_params())
+def suburban(region: str):
+    SUBURBAN_4WD_URL = f'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/chevrolet/suburban/{region}'
+    return scrape_url(SUBURBAN_4WD_URL, default_suv_params())
 
 
-def tacoma():
-    TACOMA_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/toyota/tacoma/atlanta-ga-30338'
+def tacoma(region: str):
+    TACOMA_4WD_URL = f'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/toyota/tacoma/{region}'
     return scrape_url(TACOMA_4WD_URL, default_truck_params())
 
 
-def tahoe():
-    TAHOE_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/chevrolet/tahoe/atlanta-ga-30338'
-    return scrape_url(TAHOE_4WD_URL, default_params())
+def tahoe(region: str):
+    TAHOE_4WD_URL = f'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/chevrolet/tahoe/{region}'
+    return scrape_url(TAHOE_4WD_URL, default_suv_params())
 
 
-def titan():
-    TITAN_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/nissan/titan/atlanta-ga-30338'
-    return scrape_url(TITAN_4WD_URL, default_truck_params())
+def titan(region: str):
+    TITAN_4WD_URL = f'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/nissan/titan/{region}'
+    params = default_truck_params()
+    params[SEARCH_RADIUS_KEY] = 500  # fewer titans around
+    params[MIN_YEAR_KEY] = '2016'  # updated body style
+    return scrape_url(TITAN_4WD_URL, params)
 
 
-def tundra():
-    TUNDRA_4WD_URL = 'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/toyota/tundra/atlanta-ga-30338'
+def tundra(region: str):
+    TUNDRA_4WD_URL = f'https://www.autotrader.com/cars-for-sale/all-cars/awd-4wd/toyota/tundra/{region}'
     return scrape_url(TUNDRA_4WD_URL, default_truck_params())
 
 
@@ -240,6 +266,14 @@ def default_truck_params():
     parms = default_params()
     parms[BODYSTYLE_SUBTYPE_KEY] = BODYSTYLE_SUBTYPE_CREW_CAB
     return parms
+
+
+def default_suv_params():
+    '''SUVs are in lower quantity, so relax query'''
+    params = default_params()
+    params[SEARCH_RADIUS_KEY] = 500
+    params[MAX_MILEAGE_KEY] = 200_000
+    return params
 
 
 def scrape_url(base_url: str, params: dict):

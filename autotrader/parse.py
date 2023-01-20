@@ -4,6 +4,8 @@ import json
 import re
 import sys
 
+# TODO:
+
 DEFAULT_INVFILE = 'examples/100_items.json'
 
 
@@ -36,8 +38,8 @@ def parse(payload: dict):
     for id, inv in inventory.items():
         inv_items.append({
             'autotrader_id': id,
-            'carplay': carplay(inv),
             'color': color(inv),
+            'condition': condition(inv),
             'drive_type': drive_type(inv),
             'engine': engine(inv),
             'features': features(inv),
@@ -69,25 +71,27 @@ def parse(payload: dict):
 
 # Internal
 
-def carplay(inv: dict):
-    features = inv.get('features', [])
-    qvFeatures = inv.get('quickViewFeatures', [])
-    for f in features + qvFeatures:
-        if re_carplay.search(f):
-            return True
-
-    return False
-
 
 def color(inv: dict):
-    color = None
     try:
-        color = inv['specifications']['color']['value'].lower()
+        return inv['specifications']['color']['value'].lower()
     except:
         log(inv, 'could not get color')
-    finally:
-        return color
 
+def condition(inv: dict):
+    try:
+        return inv['listingType'].lower()
+    except KeyError:
+        pass
+    
+    try:
+        for t in inv['listingTypes']:
+            t = t.lower()
+            if t in ('used', 'new'):
+                return t
+    except KeyError as e:
+        log(inv, f'could not find listing type/condition: {e}')
+        
 
 def drive_type(inv: dict):
     try:
@@ -103,7 +107,7 @@ def engine(inv: dict):
         try:
             return inv['specifications']['engine']['value'].lower()
         except KeyError:
-            log(inv, log(inv, 'could not find engine key'))
+            log(inv, 'could not find engine key')
 
 
 def features(inv: dict):
