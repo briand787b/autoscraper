@@ -126,3 +126,14 @@ HAVING
 ORDER BY 
     year DESC,
     avg_price ASC;
+    
+
+-- which features does each package have
+SELECT
+    p.package,
+    f.feature,
+    p.vin
+FROM vehicle_packages p
+INNER JOIN vehicle_features f
+ON p.vin = f.vin
+LIMIT 500;

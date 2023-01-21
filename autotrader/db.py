@@ -36,9 +36,7 @@ def create_csv(eng: Engine):
                 vin,
                 year,
                 zip,
-                created_at,
-                updated_at
-            FROM listings;
+                scrape_date
         ''').all()
 
     with open('output/listings.csv', 'w') as file:
@@ -63,8 +61,7 @@ def create_csv(eng: Engine):
                 'vin',
                 'year',
                 'zip',
-                'created_at',
-                'updated_at',
+                'scrape_date',
         ])
         w.writerows(results)
             
@@ -174,36 +171,34 @@ def create_tables(eng: Engine):
     with eng.connect() as conn:
         conn.execute('''
             CREATE TABLE IF NOT EXISTS listings (
-                id            INTEGER NOT NULL PRIMARY KEY,
-                autotrader_id VARCHAR(255),
-                color         VARCHAR(255),
+                id            SERIAL PRIMARY KEY,
+                autotrader_id VARCHAR(9),
+                color         VARCHAR(55),
                 condition     VARCHAR(16),
-                drive_type    VARCHAR(255),
-                engine        VARCHAR(255),
-                make          VARCHAR(255),
+                drive_type    VARCHAR(55),
+                engine        VARCHAR(55),
+                make          VARCHAR(55),
                 mileage       INTEGER,
-                model         VARCHAR(255),
+                model         VARCHAR(55),
                 mpg_city      INTEGER,
                 mpg_hwy       INTEGER,
                 owner         VARCHAR(255),
                 price         INTEGER,
-                trim          VARCHAR(255),
-                truck_bed     VARCHAR(255),
-                truck_cab     VARCHAR(255),
+                trim          VARCHAR(55),
+                truck_bed     VARCHAR(55),
+                truck_cab     VARCHAR(55),
                 vin           VARCHAR(17),
                 year          INTEGER,
                 zip           VARCHAR(5),
-                created_at    DATETIME NOT NULL DEFAULT current_timestamp, 
-                updated_at    DATETIME NOT NULL DEFAULT current_timestamp
+                scrape_date   DATE NOT NULL DEFAULT CURRENT_DATE
             )
         ''')
 
         conn.execute('''
             CREATE TABLE IF NOT EXISTS vehicle_features (
                 vin          VARCHAR(17) NOT NULL,
-                feature      VARCHAR(255) NOT NULL,
-                created_at   DATETIME NOT NULL DEFAULT current_timestamp, 
-                updated_at   DATETIME NOT NULL DEFAULT current_timestamp,
+                feature      VARCHAR(105) NOT NULL,
+                scrape_date  DATE NOT NULL DEFAULT CURRENT_DATE,
                 PRIMARY KEY (vin, feature)
             )
         ''')
@@ -211,9 +206,8 @@ def create_tables(eng: Engine):
         conn.execute('''
             CREATE TABLE IF NOT EXISTS vehicle_packages (
                 vin          VARCHAR(17) NOT NULL,
-                package      VARCHAR(255) NOT NULL,
-                created_at   DATETIME NOT NULL DEFAULT current_timestamp, 
-                updated_at   DATETIME NOT NULL DEFAULT current_timestamp,
+                package      VARCHAR(105) NOT NULL,
+                scrape_date  DATE NOT NULL DEFAULT CURRENT_DATE,
                 PRIMARY KEY (vin, package)
             )
         ''')
