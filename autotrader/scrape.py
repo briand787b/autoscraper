@@ -290,7 +290,7 @@ def scrape_url(base_url: str, params: dict):
         next_list, next_skip = scrape_doc(resp)
         inv_list += next_list
 
-    with open('diags/inventory_list.json', 'w') as file:
+    with open('diags/inventory_list.json', 'w+') as file:
         json.dump(inv_list, file)
 
     return inv_list
@@ -307,7 +307,7 @@ def send_req(base_url: str, params: dict):
     })
     print(f'[DEBUG] about to send request: {req}')
     resp = client.send(req)
-    with open('diags/response.html', 'w') as file:
+    with open('diags/response.html', 'w+') as file:
         file.write(resp.text)
 
     if resp.status_code > 299:
@@ -322,7 +322,7 @@ def scrape_doc(document: str):
     bs = BeautifulSoup(document, 'html.parser')
     data = bs.find('script', text=re.compile(DATA_LOC)).get_text()
     payload = data.split(DATA_LOC + '=')[1]
-    with open('diags/response_data.json', 'w') as file:
+    with open('diags/response_data.json', 'w+') as file:
         file.write(payload)
 
     payload_json = json.loads(payload)
