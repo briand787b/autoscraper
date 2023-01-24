@@ -206,7 +206,7 @@ def create_tables(eng: Engine):
             conn.execute(sqlalchemy.text('''
                 CREATE TABLE IF NOT EXISTS vehicle_features (
                     vin          VARCHAR(17) NOT NULL,
-                    feature      VARCHAR(105) NOT NULL,
+                    feature      VARCHAR(255) NOT NULL,
                     scrape_date  DATE NOT NULL DEFAULT CURRENT_DATE,
                     PRIMARY KEY (vin, feature)
                 )

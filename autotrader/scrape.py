@@ -11,6 +11,8 @@ import time
 
 
 # TODO:
+# vary the ordering of cities to make scrapes look more random
+# vary the ordering of models to make scrapes look more random
 
 # query params
 #
