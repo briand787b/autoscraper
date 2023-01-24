@@ -60,10 +60,10 @@ TARGET_GX460 = 'gx460'
 TARGET_SEQUOIA = 'sequoia'
 TARGET_SUBURBAN = 'suburban'
 TARGET_TAHOE = 'tahoe'
-# Minivans
-TARGET_ODYSSEY = 'odyssey'
-TARGET_SEDONA = 'sedona'
-TARGET_SIENNA = 'sienna'
+# # Minivans
+# TARGET_ODYSSEY = 'odyssey'
+# TARGET_SEDONA = 'sedona'
+# TARGET_SIENNA = 'sienna'
 
 
 # scrape regions
@@ -93,10 +93,10 @@ def all_targets():
         TARGET_SEQUOIA,
         TARGET_SUBURBAN,
         TARGET_TAHOE,
-        # Minivans
-        TARGET_ODYSSEY,
-        TARGET_SEDONA,
-        TARGET_SIENNA,
+        # # Minivans
+        # TARGET_ODYSSEY,
+        # TARGET_SEDONA,
+        # TARGET_SIENNA,
     ]
 
 def all_regions():
@@ -129,18 +129,18 @@ def scrape_model(target: str, region: str):
         return frontier(region)
     elif target == TARGET_GX460:
         return gx460(region)
-    elif target == TARGET_ODYSSEY:
-        return odyssey(region)
+    # elif target == TARGET_ODYSSEY:
+    #     return odyssey(region)
     elif target == TARGET_RAM:
         return ram(region)
     elif target == TARGET_SILVERADO:
         return silverado(region)
     elif target == TARGET_SEQUOIA:
         return sequoia(region)
-    elif target == TARGET_SEDONA:
-        return sedona(region)
-    elif target == TARGET_SIENNA:
-        return sienna(region)
+    # elif target == TARGET_SEDONA:
+    #     return sedona(region)
+    # elif target == TARGET_SIENNA:
+    #     return sienna(region)
     elif target == TARGET_SIERRA:
         return sierra(region)
     elif target == TARGET_SUBURBAN:
@@ -183,9 +183,9 @@ def gx460(region: str):
     return scrape_url(GX460_URL, default_suv_params())
 
 
-def odyssey(region: str):
-    ODYSSEY_URL = f'https://www.autotrader.com/cars-for-sale/all-cars/honda/odyssey/{region}'
-    return scrape_url(ODYSSEY_URL, default_params())
+# def odyssey(region: str):
+#     ODYSSEY_URL = f'https://www.autotrader.com/cars-for-sale/all-cars/honda/odyssey/{region}'
+#     return scrape_url(ODYSSEY_URL, default_params())
 
 
 def ram(region: str):
@@ -196,14 +196,14 @@ def ram(region: str):
     return scrape_url(RAM_4WD_URL, params)
 
 
-def sedona(region: str):
-    SEDONA_URL = f'https://www.autotrader.com/cars-for-sale/all-cars/kia/sedona/{region}'
-    return scrape_url(SEDONA_URL, default_params())
+# def sedona(region: str):
+#     SEDONA_URL = f'https://www.autotrader.com/cars-for-sale/all-cars/kia/sedona/{region}'
+#     return scrape_url(SEDONA_URL, default_params())
 
 
-def sienna(region: str):
-    SIENNA_URL = f'https://www.autotrader.com/cars-for-sale/all-cars/toyota/sienna/{region}'
-    return scrape_url(SIENNA_URL, default_params())
+# def sienna(region: str):
+#     SIENNA_URL = f'https://www.autotrader.com/cars-for-sale/all-cars/toyota/sienna/{region}'
+#     return scrape_url(SIENNA_URL, default_params())
 
 
 def sierra(region: str):
