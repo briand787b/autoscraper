@@ -6,8 +6,11 @@ import time
 from sys import argv
 
 
-### TODO:
-# 1. add checkpoints
+# TODO:
+# use the click package to make this cli app more complex:
+#   1) password arg
+#   2) region arg
+# push errors into a specific log file, but continue running
 
 def main(db_pw: str):
     eng = database.engine(db_pw)
@@ -19,13 +22,12 @@ def main(db_pw: str):
                 time.sleep(10)
             except Exception as e:
                 print(f'failed to scrape target ({target}): {e}')
-                raise # I want to be alerted of any failures while testing
-    
+                raise  # I want to be alerted of any failures while testing
+
 
 if __name__ == '__main__':
     if len(argv) != 2:
         print('please provide database password to autoscraper')
         exit(1)
-    
-    main(argv[1])
 
+    main(argv[1])
