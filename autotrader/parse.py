@@ -5,6 +5,7 @@ import re
 import sys
 
 # TODO:
+# Limit the size of feature/package list items to avoid db exeptions
 
 DEFAULT_INVFILE = 'examples/100_items.json'
 

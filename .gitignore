@@ -1,7 +1,8 @@
 **/examples
 database/
 *.db
-**/diags
+**/diags/*.html
+**/diags/*.json
 **/output
 
 # Byte-compiled / optimized / DLL files
