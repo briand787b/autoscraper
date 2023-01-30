@@ -5,7 +5,7 @@ import database
 import scrape as sc
 
 
-# TODO: 
+# TODO:
 # take args to make non-local database conn work
 
 
@@ -16,19 +16,32 @@ def cli():
 
 @click.command()
 @click.option('--password', help='database password')
-@click.option('--region',  help='region to scrape')
-def scrape(password, region):
-    eng = database.engine(password)
-    for model in sc.all_models():
-        listings = sc.scrape_model(model, region)
+@click.option('--host', default='localhost', help='database host')
+@click.option('--port', default=5432, help='database port')
+@click.option('--region', default='atlanta-ga-30338', help='region to scrape')
+@click.option('--model', help='vehicle model to scrape, defaults to all')
+def scrape(password, host, port, region, model):
+    if not password:
+        raise Exception('missing mandatory password')
+
+    eng = database.engine(password, host=host, port=port)
+    if model:
+        models = [model]
+    else:
+        models = sc.all_models()
+
+    for m in models:
+        listings = sc.scrape_model(m, region)
         database.save_listings(eng, listings)
 
 
 @click.command()
 @click.option('--password', help='database password')
+@click.option('--host', default='localhost', help='database host')
+@click.option('--port', default=5432, help='database port')
 @click.option('--output_path', help='where to write csv file to')
-def write_listing_report_csv(password, output_path):
-    eng = database.engine(password)
+def write_listing_report_csv(password, host, port, output_path):
+    eng = database.engine(password, host=host, port=port)
     listings = database.select_listings(eng)
     database.export_listings(listings, output_path)
 
