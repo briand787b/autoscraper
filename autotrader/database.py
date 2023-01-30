@@ -4,9 +4,9 @@ from sqlalchemy.engine import Engine
 from sqlalchemy.exc import IntegrityError
 
 
-def engine(pw: str, addr='localhost', usr='autotrader'):
+def engine(pw: str, host='localhost', port=5432, usr='autotrader'):
     return sqlalchemy.create_engine(
-        f'postgresql://{usr}:{pw}@{addr}/autotrader',
+        f'postgresql://{usr}:{pw}@{host}:{port}/autotrader',
         echo=True,
         future=True,
     )

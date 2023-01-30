@@ -1,16 +1,16 @@
 version: '3.8'
 
 services:
-  db:
+  # db for every scrape target
+  autotrader-db:
     image: postgres:15.1
     ports:
-      - 5432:5432
+      - 15432:5432
     environment:
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${AUTOTRADER_POSTGRES_PASSWORD}
+      POSTGRES_USER: ${AUTOTRADER_POSTGRES_USER}
     networks:
       - private
-
 
 networks:
   private:
