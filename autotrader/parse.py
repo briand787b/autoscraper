@@ -1,13 +1,9 @@
-#!/usr/bin/env python3
-
 import json
 import re
 import sys
 
 # TODO:
 # Limit the size of feature/package list items to avoid db exeptions
-
-DEFAULT_INVFILE = 'examples/100_items.json'
 
 
 re_bed_len = re.compile('[0-9]+-Inch Bed')
@@ -79,12 +75,13 @@ def color(inv: dict):
     except:
         log(inv, 'could not get color')
 
+
 def condition(inv: dict):
     try:
         return inv['listingType'].lower()
     except KeyError:
         pass
-    
+
     try:
         for t in inv['listingTypes']:
             t = t.lower()
@@ -92,7 +89,7 @@ def condition(inv: dict):
                 return t
     except KeyError as e:
         log(inv, f'could not find listing type/condition: {e}')
-        
+
 
 def drive_type(inv: dict):
     try:
@@ -194,6 +191,7 @@ def mpg_hwy(inv: dict):
 
     return mpg
 
+
 def owner(inv: dict):
     try:
         return inv['ownerName']
@@ -279,12 +277,3 @@ def zip(inv: dict):
             return inv['owner']['location']['address']['zip']
         except KeyError:
             log(inv, 'could not find zip code field')
-
-
-if __name__ == '__main__':
-    if len(sys.argv) == 2:
-        file = sys.argv[1]
-    else:
-        file = DEFAULT_INVFILE
-
-    main(file)

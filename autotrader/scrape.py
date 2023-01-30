@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 from bs4 import BeautifulSoup
 import httpx
 import json
@@ -13,6 +11,8 @@ import time
 # TODO:
 # vary the ordering of cities to make scrapes look more random
 # vary the ordering of models to make scrapes look more random
+# rename TARGET to MODEL
+# create mapping from friendly region name to url param
 
 # query params
 #
@@ -74,7 +74,7 @@ REGION_KANSAS_CITY = 'kansas-city-mo-64101'
 REGION_MIAMI = 'miami-fl-33101'
 REGION_RALEIGH = 'raleigh-nc-27601'
 
-def all_targets():
+def all_models():
     '''helper function for scrapes that target all models'''
     return [
         # Trucks
