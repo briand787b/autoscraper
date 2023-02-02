@@ -18,7 +18,7 @@ def cli():
 @click.option('--password', help='database password')
 @click.option('--host', default='localhost', help='database host')
 @click.option('--port', default=5432, help='database port')
-@click.option('--region', default='atlanta-ga-30338', help='region to scrape')
+@click.option('--region', default='atlanta-ga-30338', help='region to scrape, "all" to scrape all locations')
 @click.option('--model', help='vehicle model to scrape, defaults to all')
 def scrape(password, host, port, region, model):
     if not password:
@@ -31,8 +31,15 @@ def scrape(password, host, port, region, model):
         models = sc.all_models()
 
     for m in models:
-        listings = sc.scrape_model(m, region)
-        database.save_listings(eng, listings)
+        if region == 'all':
+            regions = sc.all_regions()
+        else:
+            regions = [region]
+
+        for r in regions:
+            listings = sc.scrape_model(m, r)
+            database.save_listings(eng, listings)
+            
 
 
 @click.command()
