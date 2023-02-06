@@ -94,15 +94,15 @@ def parse_resp(respjson):
             'city':         i['storeCity'].lower(),
             'color':        i['exteriorColor'].lower(),
             'drive_type':   i['driveTrain'].lower(),
-            'engine_cyl':   i['cylinders'],
-            'engine_size':  i['engineSize'],
+            'engine_cyl':   _attr('cylinders', int, i),
+            'engine_size':  _attr('engineSize', str, i),
             'engine_type':  _attr('engineType', str, i),
             'features':     i['features'],
             'highlights':   i['highlights'],
             'make':         i['make'].lower(),
             'model':        i['model'].lower(),
-            'mpg_city':     i['mpgCity'],
-            'mpg_hwy':      i['mpgHighway'],
+            'mpg_city':     _attr('mpgCity', int, i),
+            'mpg_hwy':      _attr('mpgHighway', int, i),
             'msrp':         _attr('msrp', int, i),
             'packages':     i['packages'],
             'price':        int(i['basePrice']),
@@ -112,35 +112,11 @@ def parse_resp(respjson):
             'trim':         _attr('trim', str, i),
             'vin':          i['vin'],
             'year':         i['year'],
-            'zip':          i['storeZip'],
+            'zip':          _attr('storeZip', str, i),
         })
 
     return items
 
-# def _strattr(key: str, listing: dict):
-#     '''get nullable string values from listing'''
-#     try:
-#         m = listing[key]
-#         if type(m) == str:
-#             return m.lower()
-#     except KeyError as e:
-#         pass
-#     except Exception as e:
-#         print(f'[{listing["vin"]}] cannot find "{key}": {e}')
-#         raise e
-
-
-# def _intattr(key: str, listing: dict):
-#     '''get nullable integet values from listing'''
-#     try:
-#         m = listing[key]
-#         if type(m) == str:
-#             return int(m)
-#     except KeyError as e:
-#         pass
-#     except Exception as e:
-#         print(f'[{listing["vin"]}] cannot find "{key}": {e}')
-#         raise e
 
 def _attr(key: str, valtype, listing: dict):
     '''get nullable value from listing'''
