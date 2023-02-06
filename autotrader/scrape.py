@@ -118,6 +118,9 @@ def scrape_model(target: str, region: str):
     scrape_model is useful for interfacing with a cli where the srape target
     is specified as a string arg
     '''
+    if region not in all_regions():
+        raise Exception(f'unknown region: {region}')
+
     target = target.lower()
     if target == TARGET_COLORADO:
         return colorado(region)
