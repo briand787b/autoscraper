@@ -74,6 +74,10 @@ def select_listings(eng: Engine):
 
 
 def save_listings(eng: Engine, listings: list):
+    if len(listings) < 1:
+        print('no listings to save')
+        return
+
     with eng.connect() as conn:
         with conn.begin():
             conn.execute(sqlalchemy.text('''
@@ -255,7 +259,7 @@ def create_tables(eng: Engine):
                     price           INTEGER,
                     state           VARCHAR(2),
                     store_id        SMALLINT,
-                    trim            VARCHAR(16),
+                    trim            VARCHAR(55),
                     vin             VARCHAR(17),
                     year            SMALLINT,
                     zip             VARCHAR(5),

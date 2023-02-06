@@ -9,9 +9,39 @@ FILTER_FOUR_WHEEL_DRIVE = '4wdawd'
 FILTER_CREW_CAB = '4d-crew-cab'
 
 
-def api(make, model, *filters, chunk_size=100):
+def all_queries():
+    '''convenience helper for querying all models with default filters'''
+    return [
+        ('chevrolet', 'colorado', [FILTER_CREW_CAB, FILTER_FOUR_WHEEL_DRIVE]),
+        ('chevrolet', 'silverado-1500',
+         [FILTER_CREW_CAB, FILTER_FOUR_WHEEL_DRIVE]),
+        ('chevrolet', 'suburban', [FILTER_FOUR_WHEEL_DRIVE]),
+        ('chevrolet', 'tahoe', [FILTER_FOUR_WHEEL_DRIVE]),
+        ('ford', 'expedition', [FILTER_FOUR_WHEEL_DRIVE]),
+        ('ford', 'f150', [FILTER_CREW_CAB, FILTER_FOUR_WHEEL_DRIVE]),
+        ('honda', 'odyssey', []),
+        ('nissan', 'frontier', [FILTER_CREW_CAB, FILTER_FOUR_WHEEL_DRIVE]),
+        ('nissan', 'titan', [FILTER_CREW_CAB, FILTER_FOUR_WHEEL_DRIVE]),
+        ('toyota', 'tacoma', [FILTER_CREW_CAB, FILTER_FOUR_WHEEL_DRIVE]),
+        ('toyota', 'tundra', [FILTER_CREW_CAB, FILTER_FOUR_WHEEL_DRIVE]),
+    ]
+
+
+def api(queries: list, chunk_size=100):
     '''
     scrapes the carmax API.  
+        `queries` must be a 3-tuple with the following components:
+            [0]: make
+            [1]: model
+            [2]: filters to search on
+    '''
+    for q in queries:
+        yield model(q[0], q[1], *q[2], chunk_size=chunk_size)
+
+
+def model(make, model, *filters, chunk_size=100):
+    '''
+    scrapes the carmax API for a specific make/model.  
         `filters` are features to search on (e.g. 4wdawd, 4d-crew-cab, etc...)
         `chunk_size` specifies how many listings to retrieve per iteration
     '''
@@ -40,7 +70,7 @@ def send_req(make, model, *filters, skip=0, take=100):
         resp = client.get(
             f'https://www.carmax.com/cars/api/search/run?uri={search}&year=2016-2023&price=50000&skip={skip}&take={take}&radius=radius-nationwide&shipping=-1',
             headers={
-                'Cookie': 'KmxSession_0=SessionId=63e9cbff-4eee-40b5-93e9-72df72bcfb79&logOdds=0.42943299999999995&logOddsA=-1.3124279159999999&logOddsI=0.7750897999999998; KmxStore=StoreId=6140; KmxVisitor_0=StoreId=6140&Zip=30606&Lat=33.9447&Lon=-83.4263&ZipConfirmed=True&ZipDate=2/5/2023 1:48:32 PM&VisitorID=813d3095-16d6-4bad-9287-0eb43afb7d3b&CookieDate=2/2/2023 3:20:27 AM&IsFirstVisit=False; _abck=8261582D852BF143C3DFDD6532142EA0~-1~YAAQXA3eFwQkxx+GAQAA59zSIQn3Phm3R3vABJi8Thi/gice6+itMcXrT+am6h95AWNHAz4c5TJZ74AyQzmRsRYrtM6g2IK9KuvG3Lf00j/BytVsbLD+6vKa4Zw3ZL+DwZ7ngDbSBrOHhIrSUrYcfhgb5YYXLOpWg1P/9MSCKE6Qc1I86ZkP442BJ6K6GP+BFXKrntPmDcHzzGArRG07c1aXDSMTjypXtFdTe8JnDjLolzlsr3m6ODvBWSGDn+gY0d5J7AVFlXGXM5H8+bxur56ANFROq0HbFLJO09dxsZR0QWzBnJnpqnXscjc4f9y7IbfXAYwPD0VnZxYLz3NIiKRjS/wAmBkBAyLeZ7npZ3wCFGvP5EpUuow6H8QL21KZdqPtCTzXUA==~-1~-1~1675311518; ak_bmsc=54B7E0014BF5C45DF15AE5257AD959D4~000000000000000000000000000000~YAAQXA3eFwYkxx+GAQAA59zSIRI1xgLiB9ndv04ieZvVA8G2qFP4QV1rIHFP3jDc6OEhD6Vd0ZzHu5bCCd5j0RtYeFrZo0yTXE3bRl1ttAPQSvyp2BR+C3YbRhIGdJTqIYVhibYJiJN38V3tJpA1X2nR++ZBUBxKjqPEprcHYchciSIVxupLe0F4eB4tppXK+M6LeX7vLvXVQna70p8Ka5nhWkccRMCuEWiBZ7SaKmswB8tOzXJ9SSQ+QBoPl0TItWzK5CUL7F/mfZRNGSA+0GdPl2VAP+MrWVgpiqdjd4ia9itfoWA6YQv5Y7Q4EoYmTvximRsGCARGpCAJrKolj+A4rO8Q2rCX1JTVF6n67xh461V/XZGJCdvSvxhsVQ==; bm_sv=21F63800FF19A2D712A92A801B6E0D64~YAAQXA3eF9bCxx+GAQAAo9vYIRJ7WtzVfceF4gIt1+vRLnf90c70IgwS442dbiWbFjrrKhRPdK3HOj7XE3A6sVye4cKKtgumhLLnijNVVEyVNNqS3abqa8qlsKMgrhK+M+QeBxHdZV26saPb7JTO0RGQgb4ufL0RwePoqSNtlO+4kNS34+ICimCMnCycstfiVKEuCD3g253JR8tT+z+h7NEszPc9QtRmGgG84qX8ngCXp2++edTD/CevMnSvTxMQ~1; bm_sz=2C9A919667AFE729DFDA52949B3EAC7A~YAAQXA3eFwckxx+GAQAA59zSIRJwmml1wVoJkElYIAWi68tsjKgdOtlBr2hEJgYPzGpWRVCHRt/IMZSeLGKY//WvMcKJe7odkKqWoKbQprI3u2rK5Y9Frge281Wlfa57AdjCbpd9o0KJsVI/KNSvNLAhLtfaOchJsq4n0ZWpVgzNrvt5jmM6MjbvACBbJD6k6so3IhuRseh2mW7t8V6z8n4/fyoxJdSk/Nzjv1jlX2RRZIRfKP/jDFrGV9zq5PZ0hjaFqREmCGGj77kRRcSVf7INLHQ5sK/eJFmvwqcSqyIUdgE=~3294771~3359537',
+                'Cookie': 'KmxSession_0=SessionId=f9dcadd8-9252-4d8b-a064-832e0c6d7585&logOdds=0.4298310000000001&logOddsA=-1.435489244&logOddsI=0.9258658999999999; KmxStore=StoreId=6140; KmxVisitor_0=StoreId=6140&Zip=30606&Lat=33.9447&Lon=-83.4263&ZipConfirmed=True&ZipDate=2/6/2023 3:35:12 PM&VisitorID=813d3095-16d6-4bad-9287-0eb43afb7d3b&CookieDate=2/2/2023 3:20:27 AM&IsFirstVisit=False; _abck=8261582D852BF143C3DFDD6532142EA0~-1~YAAQSg3eF4DRBiSGAQAA8uxdJwl9v43OHQkRhz6dG8fANFJBs6ZGFuKUVYYaM5MgNkbaQMnGckMpICriT0Er5l3g3tpCT9EWgrlAKa8REUJ+MqIE65mW20ZNXCidlmVUDB+1VhANrZF2fX3eLcomhfyHSLJnDf936bBmpRtJgeGFNo1MVQ8US9tRoQcx1HaHrcknEQwfJwMVG9x2nTKrNZ9hmSGLfGs+0IrVlARiwP5a6JBOdzZGHFGTsp4ElQ1B6iUdKAId58zTLJP5BciCdYq05XET7O/e37VUIFw/EX28/cFvBrDMDNSHqtzuMIE+5TOmlqW8f9FmBq6nHPhl6H9DZ6O9yJn27oVvLOw7fKfEuY9pcH2zYiyMhHAWS8mCevPXbsptLw==~-1~-1~1675311518; ak_bmsc=F804F05BB4D92BF19D8289C9D8811214~000000000000000000000000000000~YAAQSg3eF4HRBiSGAQAA8uxdJxLpAynuzFy/XeITcWS3N+ICO/2q4pA2VLLRgHHUMqhsOnQEPfEoK0i1CdRmcEHXD24UmTkbW6zSrz+ouuZP9GQyJSKPwjhPF91krD6in3EUjwt2BcGRtuss4g5M6J4lfuAyALZwONWsvNl8F0ne/Ugq9ukfyadZ95BxCwQkNZS0KzaVEk2MhRrpYnP5RCOWVre7V48Z055dgHM7eZQdSMVg2e52CzP8Kxi0l0cQ1NITvR/jHGkmW5WVRPaKK7W2JnAmEHo+yGrdeb7yCQIwFLx+/waFyqr/s0SejZx1AJwmniiG1gqVlop/ouLCwuFJouzYcgoExqCSLgHnbJbk/APed6PVYHSbVmUz8A==; bm_sz=95486236FBFC3A3C9A089C481305E67D~YAAQSg3eF4LRBiSGAQAA8uxdJxJduNMckYwZUT0gCspBheoFaxzjP9Sa3IRQMbOl62eRqUWuG+i26lN5BQHzRvHKXep6WMEIldJZV3igIa76oaY05muASRihPAyxvpogk8o+W3sOY1U+qdQx7gSfLlm3zbE9rq+ToBdDiE65XcCI09+RnrXC+wbnZDXASOmoh4BRwDcohpFfI3y5ZW/o4LL2WmUpSYZ53Mc8J6b5DgjTNK+Jg+eNXO7HJOxixFQ3R8pxCwotLjdbWLvQfjGiQUiWR9URfmVkd0Fo7YspW5CSWqw=~4539203~4273731',
                 # fails with Mozilla, but works with Postman... wtf
                 'User-Agent': 'PostmanRuntime/7.30.0',
             },
@@ -66,20 +96,20 @@ def parse_resp(respjson):
             'drive_type':   i['driveTrain'].lower(),
             'engine_cyl':   i['cylinders'],
             'engine_size':  i['engineSize'],
-            'engine_type':  i['engineType'].lower(),
+            'engine_type':  _attr('engineType', str, i),
             'features':     i['features'],
             'highlights':   i['highlights'],
             'make':         i['make'].lower(),
             'model':        i['model'].lower(),
             'mpg_city':     i['mpgCity'],
             'mpg_hwy':      i['mpgHighway'],
-            'msrp':         _msrp(i),
+            'msrp':         _attr('msrp', int, i),
             'packages':     i['packages'],
             'price':        int(i['basePrice']),
             'prior_uses':   [int(p) for p in i['priorUses']],
             'state':        i['stateAbbreviation'].lower(),
             'store_id':     i['storeId'],
-            'trim':         i['trim'].lower(),
+            'trim':         _attr('trim', str, i),
             'vin':          i['vin'],
             'year':         i['year'],
             'zip':          i['storeZip'],
@@ -87,12 +117,47 @@ def parse_resp(respjson):
 
     return items
 
+# def _strattr(key: str, listing: dict):
+#     '''get nullable string values from listing'''
+#     try:
+#         m = listing[key]
+#         if type(m) == str:
+#             return m.lower()
+#     except KeyError as e:
+#         pass
+#     except Exception as e:
+#         print(f'[{listing["vin"]}] cannot find "{key}": {e}')
+#         raise e
 
-def _msrp(listing: dict):
-    '''get nullable msrp value'''
+
+# def _intattr(key: str, listing: dict):
+#     '''get nullable integet values from listing'''
+#     try:
+#         m = listing[key]
+#         if type(m) == str:
+#             return int(m)
+#     except KeyError as e:
+#         pass
+#     except Exception as e:
+#         print(f'[{listing["vin"]}] cannot find "{key}": {e}')
+#         raise e
+
+def _attr(key: str, valtype, listing: dict):
+    '''get nullable value from listing'''
     try:
-        m = listing['msrp']
-        if type(m) == str:
+        m = listing[key]
+        if m is None:
+            return
+
+        if valtype is str:
+            return m.lower()
+        elif valtype is int:
             return int(m)
+        else:
+            raise Exception(f'unexpected valtype "{valtype}"')
+
     except KeyError as e:
-        print(f'[{m["vin"]}] cannot find "msrp": {e}')
+        pass
+    except Exception as e:
+        print(f'[{listing["vin"]}] cannot find "{key}": {e}')
+        raise e
