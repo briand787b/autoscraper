@@ -1,0 +1,147 @@
+id,body,carmax_id,city,color,drive_type,engine_cyl,engine_size,engine_type,make,model,mpg_city,mpg_hwy,msrp,price,state,store_id,trim,vin,year,zip,scrape_date
+1,4d crew cab,23660308,twin cities,silver,4wd,6,2.7L,gas,ford,f150,19,24,34998,34998,mn,6008,xlt,1FTEW1EP6LKE38692,2020,55428,2023-02-06
+2,4d crew cab,23660308,twin cities,silver,4wd,6,2.7L,gas,ford,f150,19,24,,34998,mn,6008,xlt,1FTEW1EP6LKE38692,2020,55428,2023-02-06
+3,4d crew cab,23660308,twin cities,silver,4wd,6,2.7L,gas,ford,f150,19,24,,34998,mn,6008,xlt,1FTEW1EP6LKE38692,2020,55428,2023-02-06
+4,4d crew cab,22996400,twin cities,gray,4wd,6,3.5L,gas,ford,f150,16,22,,44998,mn,6008,xlt,1FTEW1E48LKF39397,2020,55428,2023-02-06
+5,4d crew cab,23660304,twin cities,red,4wd,6,2.7L,gas,ford,f150,19,24,,33998,mn,6008,xlt,1FTEW1EP1LKE05700,2020,55428,2023-02-06
+6,4d crew cab,23660732,twin cities,silver,4wd,6,3.5L,gas,ford,f150,15,18,,56998,mn,6008,raptor,1FTFW1RG3KFB68407,2019,55428,2023-02-06
+7,4d crew cab,23533370,san antonio,white,4wd,6,3.5L,gas,ford,f150,17,23,,29998,tx,7227,lariat,1FTEW1EG5FKF15539,2015,78233,2023-02-06
+8,4d crew cab,23774067,san antonio,white,4wd,6,3.0L,diesel,ford,f150,16,22,,44998,tx,7227,lariat,1FTFW1E11JFE46494,2018,78233,2023-02-06
+9,4d crew cab,23588366,twin cities,red,4wd,6,3.5L,gas,ford,f150,17,23,,28998,mn,6008,xlt,1FTEW1EG1FFC72188,2015,55428,2023-02-06
+10,4d crew cab,23733942,san antonio,red,4wd,6,2.7L,gas,ford,f150,19,24,,38998,tx,7227,xl,1FTEW1EP8KKC30277,2019,78233,2023-02-06
+11,4d crew cab,23733618,san antonio,red,4wd,6,3.5L,gas,ford,f150,15,21,,24998,tx,7227,xlt,1FTFW1ET0EKE69229,2014,78233,2023-02-06
+12,4d crew cab,23391172,san antonio,gray,4wd,6,3.5L,gas,ford,f150,15,21,,27998,tx,7152,platinum,1FTFW1ET2BFB80096,2011,78229,2023-02-06
+13,4d crew cab,23676380,south portland,blue,4wd,6,3.5L,gas,ford,f150,15,18,,48998,me,6086,svt raptor,1FTEX1RG9HFA17220,2017,04106,2023-02-06
+14,4d crew cab,22604272,south portland,gray,4wd,6,3.5L,gas,ford,f150,17,23,,41998,me,6086,lariat,1FTFW1EG1JFC82426,2018,04106,2023-02-06
+15,4d crew cab,23593815,mcallen,gray,4wd,6,3.5L,gas,ford,f150,17,23,,39998,tx,6089,platinum,1FTEW1EG8JFA30491,2018,78577,2023-02-06
+16,4d crew cab,23483743,lubbock,black,4wd,6,3.5L,gas,ford,f150,17,21,,47998,tx,6146,limited,1FTEW1EG2KFA79784,2019,79424,2023-02-06
+17,4d crew cab,23465069,lubbock,black,4wd,8,6.2L,gas,ford,f150,11,14,,34998,tx,6146,svt raptor,1FTFW1R60BFB45335,2011,79424,2023-02-06
+18,4d crew cab,23391572,colorado springs,gray,4wd,6,3.5L,gas,ford,f150,15,18,,63998,co,7201,svt raptor,1FTFW1RG1JFD51867,2018,80922,2023-02-06
+19,4d crew cab,23908311,colorado springs,white,4wd,6,2.7L,gas,ford,f150,19,24,,39998,co,7201,xl,1FTEW1EP6LFB09158,2020,80922,2023-02-06
+20,4d crew cab,22057713,salt lake city,black,4wd,8,5.0L,gas,ford,f150,15,21,,25998,ut,7167,xlt,1FTEW1EF2GKE48794,2016,84095,2023-02-06
+21,4d crew cab,23463815,el paso,gray,4wd,6,3.5L,gas,ford,f150,17,23,,62998,tx,6038,lariat,1FTFW1E80MFC94726,2021,79936,2023-02-06
+22,4d crew cab,23630192,las vegas,black,4wd,6,3.5L,gas,ford,f150,17,23,,31998,nv,6074,xlt,1FTEW1E44KFC10087,2019,89130,2023-02-06
+23,4d crew cab,23759269,fresno,black,4wd,6,3.5L,gas,ford,f150,17,21,,57998,ca,7264,limited,1FTEW1EG2LFA18047,2020,93650,2023-02-06
+24,4d crew cab,23347288,boise,gray,4wd,6,2.7L,gas,ford,f150,19,24,,38998,id,6039,xl,1FTEW1EP3LFA84543,2020,83642,2023-02-06
+25,4d crew cab,23541325,albuquerque,black,4wd,8,6.2L,gas,ford,f150,11,16,,39998,nm,7194,svt raptor,1FTFW1R6XEFC94212,2014,87113,2023-02-06
+26,4d crew cab,22706067,salt lake city,silver,4wd,6,3.3L,gas,ford,f150,18,23,,27998,ut,7167,xlt,1FTEW1EB0JKD36290,2018,84095,2023-02-06
+27,4d crew cab,23045059,beaverton,black,4wd,6,3.5L,gas,ford,f150,15,18,,50998,or,7164,svt raptor,1FTFW1RG1HFA87138,2017,97008,2023-02-06
+28,4d crew cab,21716296,denver,black,4wd,6,3.5L,gas,ford,f150,15,21,,28998,co,6045,fx4,1FTFW1ET1BFB02859,2011,80121,2023-02-06
+29,4d crew cab,23730738,los angeles,black,4wd,8,5.0L,gas,ford,f150,15,21,,39998,ca,7120,lariat,1FTEW1EF3GKE92111,2016,91764,2023-02-06
+30,4d crew cab,23347433,boise,black,4wd,6,3.5L,gas,ford,f150,15,21,,33998,id,6039,lariat,1FTFW1EG1HKC06111,2017,83642,2023-02-06
+31,4d crew cab,23515927,denver,silver,4wd,8,5.0L,gas,ford,f150,16,22,,45998,co,6045,xl,1FTFW1E53MFA54303,2021,80121,2023-02-06
+32,4d crew cab,23664468,stockton,white,4wd,6,3.0L,diesel,ford,f150,20,25,,42998,ca,6012,lariat,1FTFW1E17KFA87167,2019,95212,2023-02-06
+33,4d crew cab,23535642,san diego,white,4wd,6,3.0L,diesel,ford,f150,16,22,,44998,ca,7654,lariat,1FTFW1E19JFD86495,2018,92025,2023-02-06
+34,4d crew cab,23784133,denver,white,4wd,8,5.0L,gas,ford,f150,15,21,,31998,co,6010,xlt,1FTEW1E54LKD78569,2020,80134,2023-02-06
+35,4d crew cab,23662416,tolleson,red,4wd,6,3.5L,hybrid,ford,f150,24,24,,44998,az,7274,xlt,1FTFW1E58MKD27307,2021,85353,2023-02-06
+36,4d crew cab,23675429,irvine,black,4wd,6,3.5L,gas,ford,f150,15,18,,48998,ca,7195,svt raptor,1FTFW1RGXHFC43872,2017,92618,2023-02-06
+37,4d crew cab,23630962,fremont,white,4wd,6,2.7L,gas,ford,f150,19,24,,35998,ca,6071,xl,1FTEW1EPXKKD47276,2019,94538,2023-02-06
+38,4d crew cab,23643904,seattle,gray,4wd,8,5.0L,gas,ford,f150,16,22,,45998,wa,7252,xl,1FTFW1E59MFB54941,2021,98057,2023-02-06
+39,4d crew cab,23431813,denver,red,4wd,8,5.0L,gas,ford,f150,15,21,,46998,co,6024,lariat,1FTEW1E58LFA13336,2020,80234,2023-02-06
+40,4d crew cab,23735562,denver,black,4wd,6,2.7L,gas,ford,f150,19,24,,39998,co,7258,xlt,1FTEW1EP8KFC18039,2019,80538,2023-02-06
+41,4d crew cab,23463694,el paso,black,4wd,6,3.5L,gas,ford,f150,17,23,,34998,tx,6038,xlt,1FTEW1EG6GKF94401,2016,79936,2023-02-06
+42,4d crew cab,22097765,golden,red,4wd,8,5.0L,gas,ford,f150,15,21,,39998,co,6047,xlt,1FTEW1E51LKF38603,2020,80401,2023-02-06
+43,4d crew cab,23856596,fresno,white,4wd,8,5.0L,gas,ford,f150,16,22,,42998,ca,7264,xlt,1FTFW1E56MFB95995,2021,93650,2023-02-06
+44,4d crew cab,23281848,golden,white,4wd,6,3.5L,gas,ford,f150,17,23,,35998,co,6047,king ranch,1FTEW1EG5JFC24783,2018,80401,2023-02-06
+45,4d crew cab,23757552,oceanside,red,4wd,6,2.7L,gas,ford,f150,17,23,,32998,ca,6163,xlt,1FTEW1EP2HKC83517,2017,92056,2023-02-06
+46,4d crew cab,23662569,santa fe,gray,4wd,6,2.7L,gas,ford,f150,18,24,,41998,nm,6112,xl,1FTEW1EPXMFB69834,2021,87507,2023-02-06
+47,4d crew cab,23675559,irvine,white,4wd,8,5.0L,gas,ford,f150,14,19,,28998,ca,7195,xlt,1FTFW1EF2EKD19942,2014,92618,2023-02-06
+48,4d crew cab,23298706,pleasanton,white,4wd,8,5.0L,gas,ford,f150,14,19,,24998,ca,6068,lariat,1FTFW1EF5BFB93113,2011,94588,2023-02-06
+49,4d crew cab,23406433,roseville,white,4wd,8,5.0L,gas,ford,f150,15,21,,25998,ca,7147,xl,1FTFW1EF8HFA66977,2017,95661,2023-02-06
+50,4d crew cab,23569662,salt lake city,gray,4wd,8,5.0L,gas,ford,f150,16,22,,34998,ut,7167,xlt,1FTEW1E5XJKG01999,2018,84095,2023-02-06
+51,4d crew cab,23486409,salt lake city,gray,4wd,8,5.0L,gas,ford,f150,16,22,,35998,ut,7167,xlt,1FTEW1E57KKD66253,2019,84095,2023-02-06
+52,4d crew cab,23595219,los angeles,white,4wd,8,5.0L,gas,ford,f150,16,22,,37998,ca,7120,lariat,1FTEW1E50JKE48811,2018,91764,2023-02-06
+53,4d crew cab,23787958,salt lake city,white,4wd,6,2.7L,gas,ford,f150,19,24,,44998,ut,7167,lariat,1FTEW1EP5KFA11561,2019,84095,2023-02-06
+54,4d crew cab,23446692,denver,red,4wd,6,3.5L,gas,ford,f150,15,18,,51998,co,6024,svt raptor,1FTFW1RG1HFC89428,2017,80234,2023-02-06
+55,4d crew cab,23689322,fremont,blue,4wd,6,2.7L,gas,ford,f150,16,22,,34998,ca,6071,xl,1FTEW1EP0JFB66629,2018,94538,2023-02-06
+56,4d crew cab,23490120,tucson,gray,4wd,6,3.5L,gas,ford,f150,15,21,,24998,az,7249,xlt,1FTFW1ET8DKD65506,2013,85705,2023-02-06
+57,4d crew cab,23784032,los angeles,silver,4wd,6,2.7L,gas,ford,f150,18,24,,33998,ca,7129,xlt,1FTFW1E82MFB01752,2021,90621,2023-02-06
+58,4d crew cab,23633746,los angeles,silver,4wd,6,3.5L,hybrid,ford,f150,24,24,,55998,ca,7129,platinum,1FTFW1ED6MFA85827,2021,90621,2023-02-06
+59,4d crew cab,23545885,golden,silver,4wd,6,3.5L,gas,ford,f150,17,23,,40998,co,6047,xlt,1FTEW1E43KFA85521,2019,80401,2023-02-06
+60,4d crew cab,23643883,spokane,silver,4wd,6,2.7L,gas,ford,f150,19,24,,36998,wa,6040,xl,1FTEW1EPXLKE07011,2020,99212,2023-02-06
+61,4d crew cab,23475915,denver,red,4wd,6,2.7L,gas,ford,f150,19,24,,37998,co,6010,xlt,1FTEW1EP5KFA78001,2019,80134,2023-02-06
+62,4d crew cab,23662241,tolleson,silver,4wd,6,2.7L,gas,ford,f150,18,23,,34998,az,7274,xlt,1FTEW1EP9JKE07644,2018,85353,2023-02-06
+63,4d crew cab,22423446,san francisco,gray,4wd,8,5.0L,gas,ford,f150,15,21,,28998,ca,6080,xlt,1FTEW1EF8GKD01704,2016,94014,2023-02-06
+64,4d crew cab,23163629,denver,silver,4wd,6,3.5L,gas,ford,f150,15,18,,44998,co,6024,svt raptor,1FTFW1RG8HFA85760,2017,80234,2023-02-06
+65,4d crew cab,23381125,reno,gray,4wd,6,3.5L,gas,ford,f150,15,18,,51998,nv,7280,svt raptor,1FTFW1RG5JFA47070,2018,89511,2023-02-06
+66,4d crew cab,22748933,san diego,blue,4wd,6,3.5L,gas,ford,f150,15,21,,32998,ca,7654,xlt,1FTEW1EG0HKC13305,2017,92025,2023-02-06
+67,4d crew cab,23813583,denver,green,4wd,8,5.0L,gas,ford,f150,14,19,,27998,co,6010,lariat,1FTFW1EF8DKF60449,2013,80134,2023-02-06
+68,4d crew cab,23787654,salt lake city,silver,4wd,6,3.5L,gas,ford,f150,15,21,,26998,ut,7167,lariat,1FTFW1ET6DFA38353,2013,84095,2023-02-06
+69,4d crew cab,23183591,golden,gray,4wd,8,5.0L,gas,ford,f150,16,22,,43998,co,6047,platinum,1FTEW1E56JFA63083,2018,80401,2023-02-06
+70,4d crew cab,23359532,atlanta,white,4wd,6,3.5L,gas,ford,f150,15,21,,39998,ga,6140,xlt,1FTEW1EG3HFA56412,2017,30606,2023-02-06
+71,4d crew cab,23732884,town center,black,4wd,8,5.0L,gas,ford,f150,16,22,,42998,ga,7103,xl,1FTFW1E52MFB95203,2021,30144,2023-02-06
+72,4d crew cab,22300950,atlanta,gray,4wd,6,3.5L,gas,ford,f150,15,18,,71998,ga,7243,raptor,1FTFW1RG8LFB97239,2020,30122,2023-02-06
+73,4d crew cab,23510664,atlanta,black,4wd,8,6.2L,gas,ford,f150,11,16,,35998,ga,7298,svt raptor,1FTFW1R66EFB25577,2014,30076,2023-02-06
+74,4d crew cab,23660308,twin cities,silver,4wd,6,2.7L,gas,ford,f150,19,24,34998,34998,mn,6008,xlt,1FTEW1EP6LKE38692,2020,55428,2023-02-06
+75,4d crew cab,23660308,twin cities,silver,4wd,6,2.7L,gas,ford,f150,19,24,,34998,mn,6008,xlt,1FTEW1EP6LKE38692,2020,55428,2023-02-06
+76,4d crew cab,23660308,twin cities,silver,4wd,6,2.7L,gas,ford,f150,19,24,,34998,mn,6008,xlt,1FTEW1EP6LKE38692,2020,55428,2023-02-06
+77,4d crew cab,22996400,twin cities,gray,4wd,6,3.5L,gas,ford,f150,16,22,,44998,mn,6008,xlt,1FTEW1E48LKF39397,2020,55428,2023-02-06
+78,4d crew cab,23660304,twin cities,red,4wd,6,2.7L,gas,ford,f150,19,24,,33998,mn,6008,xlt,1FTEW1EP1LKE05700,2020,55428,2023-02-06
+79,4d crew cab,23660732,twin cities,silver,4wd,6,3.5L,gas,ford,f150,15,18,,56998,mn,6008,raptor,1FTFW1RG3KFB68407,2019,55428,2023-02-06
+80,4d crew cab,23533370,san antonio,white,4wd,6,3.5L,gas,ford,f150,17,23,,29998,tx,7227,lariat,1FTEW1EG5FKF15539,2015,78233,2023-02-06
+81,4d crew cab,23774067,san antonio,white,4wd,6,3.0L,diesel,ford,f150,16,22,,44998,tx,7227,lariat,1FTFW1E11JFE46494,2018,78233,2023-02-06
+82,4d crew cab,23588366,twin cities,red,4wd,6,3.5L,gas,ford,f150,17,23,,28998,mn,6008,xlt,1FTEW1EG1FFC72188,2015,55428,2023-02-06
+83,4d crew cab,23733942,san antonio,red,4wd,6,2.7L,gas,ford,f150,19,24,,38998,tx,7227,xl,1FTEW1EP8KKC30277,2019,78233,2023-02-06
+84,4d crew cab,23733618,san antonio,red,4wd,6,3.5L,gas,ford,f150,15,21,,24998,tx,7227,xlt,1FTFW1ET0EKE69229,2014,78233,2023-02-06
+85,4d crew cab,23391172,san antonio,gray,4wd,6,3.5L,gas,ford,f150,15,21,,27998,tx,7152,platinum,1FTFW1ET2BFB80096,2011,78229,2023-02-06
+86,4d crew cab,23676380,south portland,blue,4wd,6,3.5L,gas,ford,f150,15,18,,48998,me,6086,svt raptor,1FTEX1RG9HFA17220,2017,04106,2023-02-06
+87,4d crew cab,22604272,south portland,gray,4wd,6,3.5L,gas,ford,f150,17,23,,41998,me,6086,lariat,1FTFW1EG1JFC82426,2018,04106,2023-02-06
+88,4d crew cab,23593815,mcallen,gray,4wd,6,3.5L,gas,ford,f150,17,23,,39998,tx,6089,platinum,1FTEW1EG8JFA30491,2018,78577,2023-02-06
+89,4d crew cab,23483743,lubbock,black,4wd,6,3.5L,gas,ford,f150,17,21,,47998,tx,6146,limited,1FTEW1EG2KFA79784,2019,79424,2023-02-06
+90,4d crew cab,23465069,lubbock,black,4wd,8,6.2L,gas,ford,f150,11,14,,34998,tx,6146,svt raptor,1FTFW1R60BFB45335,2011,79424,2023-02-06
+91,4d crew cab,23391572,colorado springs,gray,4wd,6,3.5L,gas,ford,f150,15,18,,63998,co,7201,svt raptor,1FTFW1RG1JFD51867,2018,80922,2023-02-06
+92,4d crew cab,23908311,colorado springs,white,4wd,6,2.7L,gas,ford,f150,19,24,,39998,co,7201,xl,1FTEW1EP6LFB09158,2020,80922,2023-02-06
+93,4d crew cab,22057713,salt lake city,black,4wd,8,5.0L,gas,ford,f150,15,21,,25998,ut,7167,xlt,1FTEW1EF2GKE48794,2016,84095,2023-02-06
+94,4d crew cab,23463815,el paso,gray,4wd,6,3.5L,gas,ford,f150,17,23,,62998,tx,6038,lariat,1FTFW1E80MFC94726,2021,79936,2023-02-06
+95,4d crew cab,23630192,las vegas,black,4wd,6,3.5L,gas,ford,f150,17,23,,31998,nv,6074,xlt,1FTEW1E44KFC10087,2019,89130,2023-02-06
+96,4d crew cab,23759269,fresno,black,4wd,6,3.5L,gas,ford,f150,17,21,,57998,ca,7264,limited,1FTEW1EG2LFA18047,2020,93650,2023-02-06
+97,4d crew cab,23347288,boise,gray,4wd,6,2.7L,gas,ford,f150,19,24,,38998,id,6039,xl,1FTEW1EP3LFA84543,2020,83642,2023-02-06
+98,4d crew cab,23541325,albuquerque,black,4wd,8,6.2L,gas,ford,f150,11,16,,39998,nm,7194,svt raptor,1FTFW1R6XEFC94212,2014,87113,2023-02-06
+99,4d crew cab,22706067,salt lake city,silver,4wd,6,3.3L,gas,ford,f150,18,23,,27998,ut,7167,xlt,1FTEW1EB0JKD36290,2018,84095,2023-02-06
+100,4d crew cab,23045059,beaverton,black,4wd,6,3.5L,gas,ford,f150,15,18,,50998,or,7164,svt raptor,1FTFW1RG1HFA87138,2017,97008,2023-02-06
+101,4d crew cab,21716296,denver,black,4wd,6,3.5L,gas,ford,f150,15,21,,28998,co,6045,fx4,1FTFW1ET1BFB02859,2011,80121,2023-02-06
+102,4d crew cab,23730738,los angeles,black,4wd,8,5.0L,gas,ford,f150,15,21,,39998,ca,7120,lariat,1FTEW1EF3GKE92111,2016,91764,2023-02-06
+103,4d crew cab,23347433,boise,black,4wd,6,3.5L,gas,ford,f150,15,21,,33998,id,6039,lariat,1FTFW1EG1HKC06111,2017,83642,2023-02-06
+104,4d crew cab,23515927,denver,silver,4wd,8,5.0L,gas,ford,f150,16,22,,45998,co,6045,xl,1FTFW1E53MFA54303,2021,80121,2023-02-06
+105,4d crew cab,23664468,stockton,white,4wd,6,3.0L,diesel,ford,f150,20,25,,42998,ca,6012,lariat,1FTFW1E17KFA87167,2019,95212,2023-02-06
+106,4d crew cab,23535642,san diego,white,4wd,6,3.0L,diesel,ford,f150,16,22,,44998,ca,7654,lariat,1FTFW1E19JFD86495,2018,92025,2023-02-06
+107,4d crew cab,23784133,denver,white,4wd,8,5.0L,gas,ford,f150,15,21,,31998,co,6010,xlt,1FTEW1E54LKD78569,2020,80134,2023-02-06
+108,4d crew cab,23662416,tolleson,red,4wd,6,3.5L,hybrid,ford,f150,24,24,,44998,az,7274,xlt,1FTFW1E58MKD27307,2021,85353,2023-02-06
+109,4d crew cab,23675429,irvine,black,4wd,6,3.5L,gas,ford,f150,15,18,,48998,ca,7195,svt raptor,1FTFW1RGXHFC43872,2017,92618,2023-02-06
+110,4d crew cab,23630962,fremont,white,4wd,6,2.7L,gas,ford,f150,19,24,,35998,ca,6071,xl,1FTEW1EPXKKD47276,2019,94538,2023-02-06
+111,4d crew cab,23643904,seattle,gray,4wd,8,5.0L,gas,ford,f150,16,22,,45998,wa,7252,xl,1FTFW1E59MFB54941,2021,98057,2023-02-06
+112,4d crew cab,23431813,denver,red,4wd,8,5.0L,gas,ford,f150,15,21,,46998,co,6024,lariat,1FTEW1E58LFA13336,2020,80234,2023-02-06
+113,4d crew cab,23735562,denver,black,4wd,6,2.7L,gas,ford,f150,19,24,,39998,co,7258,xlt,1FTEW1EP8KFC18039,2019,80538,2023-02-06
+114,4d crew cab,23463694,el paso,black,4wd,6,3.5L,gas,ford,f150,17,23,,34998,tx,6038,xlt,1FTEW1EG6GKF94401,2016,79936,2023-02-06
+115,4d crew cab,22097765,golden,red,4wd,8,5.0L,gas,ford,f150,15,21,,39998,co,6047,xlt,1FTEW1E51LKF38603,2020,80401,2023-02-06
+116,4d crew cab,23856596,fresno,white,4wd,8,5.0L,gas,ford,f150,16,22,,42998,ca,7264,xlt,1FTFW1E56MFB95995,2021,93650,2023-02-06
+117,4d crew cab,23281848,golden,white,4wd,6,3.5L,gas,ford,f150,17,23,,35998,co,6047,king ranch,1FTEW1EG5JFC24783,2018,80401,2023-02-06
+118,4d crew cab,23757552,oceanside,red,4wd,6,2.7L,gas,ford,f150,17,23,,32998,ca,6163,xlt,1FTEW1EP2HKC83517,2017,92056,2023-02-06
+119,4d crew cab,23662569,santa fe,gray,4wd,6,2.7L,gas,ford,f150,18,24,,41998,nm,6112,xl,1FTEW1EPXMFB69834,2021,87507,2023-02-06
+120,4d crew cab,23675559,irvine,white,4wd,8,5.0L,gas,ford,f150,14,19,,28998,ca,7195,xlt,1FTFW1EF2EKD19942,2014,92618,2023-02-06
+121,4d crew cab,23298706,pleasanton,white,4wd,8,5.0L,gas,ford,f150,14,19,,24998,ca,6068,lariat,1FTFW1EF5BFB93113,2011,94588,2023-02-06
+122,4d crew cab,23406433,roseville,white,4wd,8,5.0L,gas,ford,f150,15,21,,25998,ca,7147,xl,1FTFW1EF8HFA66977,2017,95661,2023-02-06
+123,4d crew cab,23569662,salt lake city,gray,4wd,8,5.0L,gas,ford,f150,16,22,,34998,ut,7167,xlt,1FTEW1E5XJKG01999,2018,84095,2023-02-06
+124,4d crew cab,23486409,salt lake city,gray,4wd,8,5.0L,gas,ford,f150,16,22,,35998,ut,7167,xlt,1FTEW1E57KKD66253,2019,84095,2023-02-06
+125,4d crew cab,23595219,los angeles,white,4wd,8,5.0L,gas,ford,f150,16,22,,37998,ca,7120,lariat,1FTEW1E50JKE48811,2018,91764,2023-02-06
+126,4d crew cab,23787958,salt lake city,white,4wd,6,2.7L,gas,ford,f150,19,24,,44998,ut,7167,lariat,1FTEW1EP5KFA11561,2019,84095,2023-02-06
+127,4d crew cab,23446692,denver,red,4wd,6,3.5L,gas,ford,f150,15,18,,51998,co,6024,svt raptor,1FTFW1RG1HFC89428,2017,80234,2023-02-06
+128,4d crew cab,23689322,fremont,blue,4wd,6,2.7L,gas,ford,f150,16,22,,34998,ca,6071,xl,1FTEW1EP0JFB66629,2018,94538,2023-02-06
+129,4d crew cab,23490120,tucson,gray,4wd,6,3.5L,gas,ford,f150,15,21,,24998,az,7249,xlt,1FTFW1ET8DKD65506,2013,85705,2023-02-06
+130,4d crew cab,23784032,los angeles,silver,4wd,6,2.7L,gas,ford,f150,18,24,,33998,ca,7129,xlt,1FTFW1E82MFB01752,2021,90621,2023-02-06
+131,4d crew cab,23633746,los angeles,silver,4wd,6,3.5L,hybrid,ford,f150,24,24,,55998,ca,7129,platinum,1FTFW1ED6MFA85827,2021,90621,2023-02-06
+132,4d crew cab,23545885,golden,silver,4wd,6,3.5L,gas,ford,f150,17,23,,40998,co,6047,xlt,1FTEW1E43KFA85521,2019,80401,2023-02-06
+133,4d crew cab,23643883,spokane,silver,4wd,6,2.7L,gas,ford,f150,19,24,,36998,wa,6040,xl,1FTEW1EPXLKE07011,2020,99212,2023-02-06
+134,4d crew cab,23475915,denver,red,4wd,6,2.7L,gas,ford,f150,19,24,,37998,co,6010,xlt,1FTEW1EP5KFA78001,2019,80134,2023-02-06
+135,4d crew cab,23662241,tolleson,silver,4wd,6,2.7L,gas,ford,f150,18,23,,34998,az,7274,xlt,1FTEW1EP9JKE07644,2018,85353,2023-02-06
+136,4d crew cab,22423446,san francisco,gray,4wd,8,5.0L,gas,ford,f150,15,21,,28998,ca,6080,xlt,1FTEW1EF8GKD01704,2016,94014,2023-02-06
+137,4d crew cab,23163629,denver,silver,4wd,6,3.5L,gas,ford,f150,15,18,,44998,co,6024,svt raptor,1FTFW1RG8HFA85760,2017,80234,2023-02-06
+138,4d crew cab,23381125,reno,gray,4wd,6,3.5L,gas,ford,f150,15,18,,51998,nv,7280,svt raptor,1FTFW1RG5JFA47070,2018,89511,2023-02-06
+139,4d crew cab,22748933,san diego,blue,4wd,6,3.5L,gas,ford,f150,15,21,,32998,ca,7654,xlt,1FTEW1EG0HKC13305,2017,92025,2023-02-06
+140,4d crew cab,23813583,denver,green,4wd,8,5.0L,gas,ford,f150,14,19,,27998,co,6010,lariat,1FTFW1EF8DKF60449,2013,80134,2023-02-06
+141,4d crew cab,23787654,salt lake city,silver,4wd,6,3.5L,gas,ford,f150,15,21,,26998,ut,7167,lariat,1FTFW1ET6DFA38353,2013,84095,2023-02-06
+142,4d crew cab,23183591,golden,gray,4wd,8,5.0L,gas,ford,f150,16,22,,43998,co,6047,platinum,1FTEW1E56JFA63083,2018,80401,2023-02-06
+143,4d crew cab,23359532,atlanta,white,4wd,6,3.5L,gas,ford,f150,15,21,,39998,ga,6140,xlt,1FTEW1EG3HFA56412,2017,30606,2023-02-06
+144,4d crew cab,23732884,town center,black,4wd,8,5.0L,gas,ford,f150,16,22,,42998,ga,7103,xl,1FTFW1E52MFB95203,2021,30144,2023-02-06
+145,4d crew cab,22300950,atlanta,gray,4wd,6,3.5L,gas,ford,f150,15,18,,71998,ga,7243,raptor,1FTFW1RG8LFB97239,2020,30122,2023-02-06
+146,4d crew cab,23510664,atlanta,black,4wd,8,6.2L,gas,ford,f150,11,16,,35998,ga,7298,svt raptor,1FTFW1R66EFB25577,2014,30076,2023-02-06

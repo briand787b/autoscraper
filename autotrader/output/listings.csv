@@ -1,0 +1,5 @@
+id,autotrader_id,color,condition,drive_type,engine,make,mileage,model,mpg_city,mpg_hwy,owner,price,trim,truck_bed,truck_cab,vin,year,zip,created_at,updated_at
+1,669485363,blue,used,2 wheel drive - rear,8-cylinder turbo,ferrari,352,F8 Tributo,15,19,Used Car Lot,449900,,,,ZFF92LLA7N0279141,2022,75244,2023-01-20 15:17:33,2023-01-20 15:17:33
+2,669485363,blue,used,2 wheel drive - rear,8-cylinder turbo,ferrari,352,F8 Tributo,15,19,Used Car Lot,449900,,,,ZFF92LLA7N0279141,2022,75244,2023-01-20 15:17:33,2023-01-20 15:17:33
+3,669485364,blue,new,2 wheel drive - rear,8-cylinder,ferrari,352,458_italia,15,19,Luxury Super Cars Ltd,349900,,,,ZFF92LLA7N0279142,2022,75244,2023-01-20 15:17:33,2023-01-20 15:17:33
+4,669485364,blue,new,2 wheel drive - rear,8-cylinder,ferrari,352,458_italia,15,19,Luxury Super Cars Ltd,249900,,,,ZFF92LLA7N0279142,2022,75244,2023-01-20 15:17:33,2023-01-20 15:17:33

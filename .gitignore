@@ -3,7 +3,6 @@ database/
 *.db
 **/diags/*.html
 **/diags/*.json
-**/output
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
