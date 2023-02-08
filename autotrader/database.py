@@ -4,11 +4,11 @@ from sqlalchemy.engine import Engine
 from sqlalchemy.exc import IntegrityError
 
 
-def engine(pw: str, host='localhost', port=5432, usr='autotrader'):
+def engine(pw: str, host='localhost', port=5432, usr='autotrader', echo=False):
     return sqlalchemy.create_engine(
         f'postgresql://{usr}:{pw}@{host}:{port}/autotrader',
         echo=True,
-        future=True,
+        future=echo,
     )
 
 
@@ -53,7 +53,7 @@ def select_listings(eng: Engine):
                 make,
                 mileage,
                 model,
-                mpg_city,
+                mpg_city,True
                 mpg_hwy,
                 owner,
                 price,
@@ -71,6 +71,10 @@ def select_listings(eng: Engine):
 
 
 def save_listings(eng: Engine, listings: list):
+    if not listings or len(listings):
+        return
+
+    print(f'saving {len(listings)} listings')
     with eng.connect() as conn:
         with conn.begin():
             conn.execute(sqlalchemy.text('''

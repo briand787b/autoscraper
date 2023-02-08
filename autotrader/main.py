@@ -5,10 +5,6 @@ import database
 import scrape as sc
 
 
-# TODO:
-# take args to make non-local database conn work
-
-
 @click.group()
 def cli():
     pass
@@ -39,7 +35,6 @@ def scrape(password, host, port, region, model):
         for r in regions:
             listings = sc.scrape_model(m, r)
             database.save_listings(eng, listings)
-            
 
 
 @click.command()
