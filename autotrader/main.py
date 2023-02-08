@@ -14,24 +14,17 @@ def cli():
 @click.option('--password', help='database password')
 @click.option('--host', default='localhost', help='database host')
 @click.option('--port', default=5432, help='database port')
-@click.option('--region', default='atlanta-ga-30338', help='region to scrape, "all" to scrape all locations')
+@click.option('--region', default='atlanta', help='region to scrape, "all" to scrape all locations')
 @click.option('--model', help='vehicle model to scrape, defaults to all')
 def scrape(password, host, port, region, model):
     if not password:
         raise Exception('missing mandatory password')
 
     eng = database.engine(password, host=host, port=port)
-    if model:
-        models = [model]
-    else:
-        models = sc.all_models()
+    regions = scraper_regions(region)
+    models = scraper_models(model)
 
     for m in models:
-        if region == 'all':
-            regions = sc.all_regions()
-        else:
-            regions = [region]
-
         for r in regions:
             listings = sc.scrape_model(m, r)
             database.save_listings(eng, listings)
@@ -51,5 +44,26 @@ def write_listing_report_csv(password, host, port, output_path):
 cli.add_command(scrape)
 cli.add_command(write_listing_report_csv)
 
+def scraper_models(model: str | None):
+    if model is None:
+        return sc.all_models()
+    
+    return (model,)
+        
+
+def scraper_regions(friendly_name: str):
+    friendly_name = friendly_name.lower()
+    
+    if friendly_name == 'all':
+        return sc.all_regions()
+    if friendly_name in ('atlanta', 'georgia', 'ga'):
+        return (sc.REGION_ATLANTA,)
+    if friendly_name in ('brookfield', 'connecticut', 'ct'):
+        return (sc.REGION_BROOKFIELD,)
+
+    return friendly_name
+
+
 if __name__ == '__main__':
     cli()
+

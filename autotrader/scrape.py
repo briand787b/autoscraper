@@ -76,7 +76,7 @@ REGION_RALEIGH = 'raleigh-nc-27601'
 
 def all_models():
     '''helper function for scrapes that target all models'''
-    return [
+    return (
         # Trucks
         TARGET_COLORADO,
         TARGET_F150,
@@ -97,18 +97,18 @@ def all_models():
         # TARGET_ODYSSEY,
         # TARGET_SEDONA,
         # TARGET_SIENNA,
-    ]
+    )
 
 def all_regions():
     '''helper function for scrapes that search all regions'''
-    return [
+    return (
         REGION_ATLANTA,
         REGION_BROOKFIELD,
         REGION_CHICAGO,
         REGION_KANSAS_CITY,
         REGION_MIAMI,
         REGION_RALEIGH,
-    ]
+    )
 
 # Typical entrypoints
 
