@@ -213,7 +213,7 @@ def create_tables(eng: Engine):
                     feature      VARCHAR(255) NOT NULL,
                     scrape_date  DATE NOT NULL DEFAULT CURRENT_DATE,
                     PRIMARY KEY (vin, feature)
-                )
+                );
             '''))
 
         with conn.begin():
@@ -223,5 +223,16 @@ def create_tables(eng: Engine):
                     package      VARCHAR(105) NOT NULL,
                     scrape_date  DATE NOT NULL DEFAULT CURRENT_DATE,
                     PRIMARY KEY (vin, package)
-                )
+                );
+            '''))
+
+        with conn.begin():
+            conn.execute(sqlalchemy.text('''
+                CREATE TABLE IF NOT EXISTS shady_dealers (
+                    name                VARCHAR(255) PRIMARY KEY,
+                    shadiness_score     SMALLINT NOT NULL,
+                    reason              TEXT NOT NULL,
+                    created_at          TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                    updated_at          TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+                );             
             '''))
