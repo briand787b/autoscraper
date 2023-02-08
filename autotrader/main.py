@@ -24,6 +24,7 @@ def scrape(password, host, port, region, model):
     regions = scraper_regions(region)
     models = scraper_models(model)
 
+    print(f'now scraping [{regions}] for [{models}]')
     for m in models:
         for r in regions:
             listings = sc.scrape_model(m, r)
