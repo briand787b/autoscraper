@@ -121,6 +121,8 @@ def scrape_model(target: str, region: str):
     if region not in all_regions():
         raise Exception(f'unknown region: {region}')
 
+    print(f'now scraping {target} in {region}')
+
     target = target.lower()
     if target == TARGET_COLORADO:
         return colorado(region)
@@ -287,7 +289,7 @@ def scrape_url(base_url: str, params: dict):
     inv_list, next_skip = scrape_doc(resp)
 
     while next_skip:
-        dur = randint(10, 60)
+        dur = randint(10, 30)
         print(f'scraping next page in {dur} secs')
         time.sleep(dur)
         params[SKIP_KEY] = next_skip
@@ -310,7 +312,7 @@ def send_req(base_url: str, params: dict):
         'Accept-Language': 'en-US,en;q=0.5',
 
     })
-    print(f'[DEBUG] about to send request: {req}')
+    # print(f'[DEBUG] about to send request: {req}')
     resp = client.send(req)
     with open('diags/response.html', 'w+') as file:
         file.write(resp.text)

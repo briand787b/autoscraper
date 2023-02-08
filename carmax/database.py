@@ -3,10 +3,10 @@ import sqlalchemy
 from sqlalchemy.engine import Engine
 from sqlalchemy.exc import IntegrityError
 
-def engine(pw: str, host='localhost', port=5432, usr='carmax'):
+def engine(pw: str, host='localhost', port=5432, usr='carmax', echo=False):
     return sqlalchemy.create_engine(
         f'postgresql://{usr}:{pw}@{host}:{port}/carmax',
-        echo=True,
+        echo=echo,
         future=True,
     )
 
