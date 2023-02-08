@@ -3,6 +3,7 @@ database/
 *.db
 **/diags/*.html
 **/diags/*.json
+**/scrape.log
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
