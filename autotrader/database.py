@@ -7,7 +7,7 @@ from sqlalchemy.exc import IntegrityError
 def engine(pw: str, host='localhost', port=5432, usr='autotrader', echo=False):
     return sqlalchemy.create_engine(
         f'postgresql://{usr}:{pw}@{host}:{port}/autotrader',
-        echo=True,
+        echo=echo,
         future=echo,
     )
 
@@ -71,7 +71,7 @@ def select_listings(eng: Engine):
 
 
 def save_listings(eng: Engine, listings: list):
-    if not listings or len(listings):
+    if not listings or len(listings) < 1:
         return
 
     print(f'saving {len(listings)} listings')
