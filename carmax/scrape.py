@@ -100,6 +100,7 @@ def parse_resp(respjson):
             'features':     i['features'],
             'highlights':   i['highlights'],
             'make':         i['make'].lower(),
+            'mileage':      i['mileage'],
             'model':        i['model'].lower(),
             'mpg_city':     _attr('mpgCity', int, i),
             'mpg_hwy':      _attr('mpgHighway', int, i),
