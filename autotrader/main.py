@@ -12,9 +12,9 @@ def cli():
 
 @click.command()
 @click.option('--password', help='database password')
-@click.option('--host', default='localhost', help='database host')
-@click.option('--port', default=5432, help='database port')
-@click.option('--region', default='atlanta', help='region to scrape, "all" to scrape all locations')
+@click.option('--host', default='localhost', help='database host [default: localhost]')
+@click.option('--port', default=5432, help='database port [default: 5432]')
+@click.option('--region', default='atlanta', help='region to scrape, "all" to scrape all locations [default: atlanta]')
 @click.option('--model', help='vehicle model to scrape, defaults to all')
 def scrape(password, host, port, region, model):
     if not password:

@@ -22,6 +22,7 @@ def all_queries():
         ('honda', 'odyssey', []),
         ('nissan', 'frontier', [FILTER_CREW_CAB, FILTER_FOUR_WHEEL_DRIVE]),
         ('nissan', 'titan', [FILTER_CREW_CAB, FILTER_FOUR_WHEEL_DRIVE]),
+        ('ram', '1500', [FILTER_CREW_CAB, FILTER_FOUR_WHEEL_DRIVE]),
         ('toyota', 'tacoma', [FILTER_CREW_CAB, FILTER_FOUR_WHEEL_DRIVE]),
         ('toyota', 'tundra', [FILTER_CREW_CAB, FILTER_FOUR_WHEEL_DRIVE]),
     ]
