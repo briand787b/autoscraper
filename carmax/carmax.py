@@ -11,15 +11,15 @@ def cli():
 
 
 @click.command()
-@click.option('--dbpassword', help='database password')
-@click.option('--dbhost', default='localhost', help='database host [default: localhost]')
-@click.option('--dbport', default=5432, help='database port [default: 5432]')
-def scrape(dbpassword, dbhost, dbport):
+@click.option('--password', help='database password')
+@click.option('--host', default='localhost', help='database host [default: localhost]')
+@click.option('--port', default=5432, help='database port [default: 5432]')
+def scrape(password, host, port):
     '''scrapes the carmax site for listings'''
-    if not dbpassword:
+    if not password:
         raise Exception('missing mandatory password')
 
-    scrape(pw=dbpassword, host=dbhost, port=dbport)
+    scrape(pw=password, host=host, port=port)
 
 
 def scrape_core(pw, host, port):
