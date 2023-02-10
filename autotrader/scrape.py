@@ -9,10 +9,10 @@ import time
 
 
 # TODO:
+# make the saving of responses in diags/ optional
 # vary the ordering of cities to make scrapes look more random
 # vary the ordering of models to make scrapes look more random
 # rename TARGET to MODEL
-# create mapping from friendly region name to url param
 
 # query params
 #
@@ -283,9 +283,9 @@ def default_suv_params():
     return params
 
 
-def scrape_url(base_url: str, params: dict):
+def scrape_url(base_url: str, params: dict, dbug: False):
     '''Scrapes specified AutoTrader URL'''
-    resp = send_req(base_url, params)
+    resp = send_req(base_url, params, dbug=dbug)
     inv_list, next_skip = scrape_doc(resp)
 
     while next_skip:
@@ -293,17 +293,18 @@ def scrape_url(base_url: str, params: dict):
         print(f'scraping next page in {dur} secs')
         time.sleep(dur)
         params[SKIP_KEY] = next_skip
-        resp = send_req(base_url, params)
-        next_list, next_skip = scrape_doc(resp)
+        resp = send_req(base_url, params, dbug=dbug)
+        next_list, next_skip = scrape_doc(resp, dbug=dbug)
         inv_list += next_list
 
-    with open('diags/inventory_list.json', 'w+') as file:
-        json.dump(inv_list, file)
+    if dbug:
+        with open('diags/inventory_list.json', 'w+') as file:
+            json.dump(inv_list, file)
 
     return inv_list
 
 
-def send_req(base_url: str, params: dict):
+def send_req(base_url: str, params: dict, dbug: False):
     client = httpx.Client(timeout=120)  # long, but not infinite
     req = httpx.Request('GET', base_url, params=params, headers={
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0',
@@ -314,8 +315,9 @@ def send_req(base_url: str, params: dict):
     })
     # print(f'[DEBUG] about to send request: {req}')
     resp = client.send(req)
-    with open('diags/response.html', 'w+') as file:
-        file.write(resp.text)
+    if dbug:
+        with open('diags/response.html', 'w+') as file:
+            file.write(resp.text)
 
     if resp.status_code > 299:
         raise Exception(f'request failed with status code: {resp.status_code}')
@@ -323,14 +325,15 @@ def send_req(base_url: str, params: dict):
     return resp.text
 
 
-def scrape_doc(document: str):
+def scrape_doc(document: str, dbug: False):
     '''Scrapes an AutoTrader HTML document containing vehicle search results '''
     DATA_LOC = 'window.__BONNET_DATA__'
     bs = BeautifulSoup(document, 'html.parser')
     data = bs.find('script', text=re.compile(DATA_LOC)).get_text()
     payload = data.split(DATA_LOC + '=')[1]
-    with open('diags/response_data.json', 'w+') as file:
-        file.write(payload)
+    if dbug:
+        with open('diags/response_data.json', 'w+') as file:
+            file.write(payload)
 
     payload_json = json.loads(payload)
     return parse(payload_json), next_skip(bs)
