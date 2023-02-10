@@ -40,7 +40,7 @@ def api(queries: list, chunk_size=100):
         yield model(q[0], q[1], *q[2], chunk_size=chunk_size)
 
 
-def model(make, model, *filters, chunk_size=100):
+def model(make, model, *filters, chunk_size=100, dbug=False):
     '''
     scrapes the carmax API for a specific make/model.  
         `filters` are features to search on (e.g. 4wdawd, 4d-crew-cab, etc...)
@@ -48,7 +48,7 @@ def model(make, model, *filters, chunk_size=100):
     '''
     skip = 0
     while True:
-        listings = send_req(make, model, *filters, skip=skip, take=chunk_size)
+        listings = send_req(make, model, *filters, skip=skip, take=chunk_size, dbug=dbug)
         yield listings
         if len(listings) < chunk_size:
             break
@@ -58,7 +58,7 @@ def model(make, model, *filters, chunk_size=100):
         sleep(sleep_dur)
 
 
-def send_req(make, model, *filters, skip=0, take=100):
+def send_req(make, model, *filters, skip=0, take=100, dbug=False):
     if filters is None:
         filters = []
 
@@ -80,8 +80,9 @@ def send_req(make, model, *filters, skip=0, take=100):
 
     print('completed request')
     respjson = resp.json()
-    with open('data/response.json', 'w+') as file:
-        json.dump(respjson, file)
+    if dbug:
+        with open('data/response.json', 'w+') as file:
+            json.dump(respjson, file)
 
     return parse_resp(respjson)
 
