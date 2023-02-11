@@ -19,7 +19,7 @@ def scrape(password, host, port):
     if not password:
         raise Exception('missing mandatory password')
 
-    scrape(pw=password, host=host, port=port)
+    scrape_core(pw=password, host=host, port=port)
 
 
 def scrape_core(pw, host, port):
