@@ -1,0 +1,7 @@
+[Unit]
+Description=Scrapes Autotrader site and saves to db
+Wants=autotrader.timer
+
+[Service]
+Type=oneshot
+ExecStart=/home/brian/autoscraper/autotrader/main.sh

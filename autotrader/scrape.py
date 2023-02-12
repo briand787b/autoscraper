@@ -74,6 +74,7 @@ REGION_KANSAS_CITY = 'kansas-city-mo-64101'
 REGION_MIAMI = 'miami-fl-33101'
 REGION_RALEIGH = 'raleigh-nc-27601'
 
+
 def all_models():
     '''helper function for scrapes that target all models'''
     return (
@@ -98,6 +99,7 @@ def all_models():
         # TARGET_SEDONA,
         # TARGET_SIENNA,
     )
+
 
 def all_regions():
     '''helper function for scrapes that search all regions'''
@@ -283,7 +285,7 @@ def default_suv_params():
     return params
 
 
-def scrape_url(base_url: str, params: dict, dbug: False):
+def scrape_url(base_url: str, params: dict, dbug=False):
     '''Scrapes specified AutoTrader URL'''
     resp = send_req(base_url, params, dbug=dbug)
     inv_list, next_skip = scrape_doc(resp)
@@ -304,7 +306,7 @@ def scrape_url(base_url: str, params: dict, dbug: False):
     return inv_list
 
 
-def send_req(base_url: str, params: dict, dbug: False):
+def send_req(base_url: str, params: dict, dbug=False):
     client = httpx.Client(timeout=120)  # long, but not infinite
     req = httpx.Request('GET', base_url, params=params, headers={
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0',
@@ -325,7 +327,7 @@ def send_req(base_url: str, params: dict, dbug: False):
     return resp.text
 
 
-def scrape_doc(document: str, dbug: False):
+def scrape_doc(document: str, dbug=False):
     '''Scrapes an AutoTrader HTML document containing vehicle search results '''
     DATA_LOC = 'window.__BONNET_DATA__'
     bs = BeautifulSoup(document, 'html.parser')

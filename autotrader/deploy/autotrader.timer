@@ -1,0 +1,11 @@
+[Unit]
+Description=Controls the Autotrader scraping interval
+Requires=autotrader.service
+
+[Timer]
+Unit=autotrader.service
+OnCalendar=*-*-* 13:00:00
+AccuracySec=4h
+
+[Install]
+WantedBy=timers.target
