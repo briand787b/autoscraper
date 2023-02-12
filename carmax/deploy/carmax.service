@@ -1,0 +1,7 @@
+[Unit]
+Description=Carmax scraper
+Wants=carmax.timer
+
+[Service]
+Type=oneshot
+ExecStart=/home/brian/autoscraper/carmax/main.sh
