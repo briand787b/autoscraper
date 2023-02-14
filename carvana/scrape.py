@@ -1,7 +1,9 @@
 from collections import namedtuple
 import httpx
+import random
 import re
 import json
+import time
 from bs4 import BeautifulSoup
 
 VEHICLE_QUERIES = (
@@ -32,28 +34,51 @@ VEHICLE_QUERIES = (
 )
 
 
-def models(queries=VEHICLE_QUERIES):
+def models(queries=VEHICLE_QUERIES, dbug=False):
     '''helper function to scrape multiple models, returns a generator'''
     for q in queries:
-        yield model(q)
+        yield model(q, dbug=dbug)
 
 
-def model(query: str):
+def model(query: str, dbug=False):
     '''scrape a specific model as defined in the query parameter'''
-    page = 1
+    page = 0
     url = f'https://www.carvana.com/cars/{query}'
 
     while True:
+        page += 1
         print(f'[DEBUG] scraping page {page} of query {query}')
         with httpx.Client(timeout=120) as client:
-            resp = client.get(url, params={'page': page})
+            resptext = client.get(url, params={'page': page}).text
 
-        inventory = extract_inventory(resp.text)
+        if dbug:
+            with open('data/dbug_inventory.html', 'w+') as file:
+                file.write(resptext)
+
+        inventory = extract_inventory(resptext)
         if len(inventory) < 1:
-            return
+            break
 
-        for vehicle in inventory:
-            yield extract_inventory_item(vehicle['vehicleId'])
+        if dbug:
+            with open('data/dbug_inventory.json', 'w+') as file:
+                json.dump(inventory, file)
+
+        for inv_item in inventory:
+            if dbug:
+                with open('data/dbug_inventory_item.json', 'w+') as file:
+                    json.dump(inv_item, file)
+
+            # non-listings are insterspersed with listings
+            id = inv_item.get('vehicleId')
+            if id is None:
+                continue
+
+            yield extract_inventory_item(id, dbug=dbug)
+
+            # sleep random time to mimic human user
+            sleep_dur = random.randint(5, 15)
+            print(f'sleeping for {sleep_dur} seconds')
+            time.sleep(sleep_dur)
 
 
 def extract_inventory(htmlpage: str):
@@ -68,67 +93,70 @@ def extract_inventory(htmlpage: str):
     return jsonpayload['v2/inventory']['vehicles']
 
 
-def extract_inventory_item(id):
+def extract_inventory_item(id, dbug=False):
+    '''loads and extracts a an inventory item'''
     with httpx.Client(timeout=120) as client:
-        resp = client.get('https://www.carvana.com/vehicle/2548188')
-        # print(f'resp: {resp}')
-        resp_text = resp.text
-        # print(f'resp: {resptext}')
+        resp_text = client.get(f'https://www.carvana.com/vehicle/{id}').text
 
-    # print("\n\n\n\n\n\n\n")
     bs = BeautifulSoup(resp_text, 'html.parser')
-    # print()
-    # print(f'bs: {bs}')
     vehicle_text = bs.find('script', {"id": "__NEXT_DATA__"}).text
-    # print(f'vehicle_text: {vehicle_text}')
-    return build_listing(json.loads(vehicle_text)['props']['pageProps']['initialState']['vehicle']['details'])
+    vehicle_json = json.loads(vehicle_text)
+    vehicle = vehicle_json['props']['pageProps']['initialState']['vehicle']['details']
+    return build_listing(vehicle, dbug=dbug)
 
 
-def build_listing(vehicle: dict):
-    with open('data/_scrape_vehicle.json', 'w+') as file:
-        json.dump(vehicle, file)
+def build_listing(vehicle: dict, dbug=False):
+    if dbug:
+        with open('data/dbug_vehicle.json', 'w+') as file:
+            json.dump(vehicle, file)
 
-    return {
-        'body_type': vehicle['bodyType'],
-        'carvana_id': vehicle['vehicleId'],
-        'city': vehicle['location']['city'],
-        'drive_type': vehicle['drivetrainDescription'],
-        'engine': vehicle['engineDescription'],
-        'exterior_color': vehicle['exteriorColor'],
-        'features': [f['displayName'] for kf in vehicle['kbbFeatures'] for f in kf['features']],
-        'fuel': vehicle['fuelDescription'],
-        'imperfections': [
-            {
-                'description': i['description'],
-                'location': i['location'],
-                'title': i['title'],
-                'zone': i['zoneDescription'],
-            } for i in vehicle['vexVdpImageData'].get('imperfections', [])
-        ],
-        'interior_color': vehicle['interiorColor'],
-        'kbb_value': vehicle['kbbValue'],
-        'make': vehicle['make'],
-        'mfg_basic_warranty_miles': vehicle["manufacturerBasicWarrantyMiles"],
-        'mg_basic_warranty_months': vehicle["manufacturerBasicWarrantyMonths"],
-        'mfg_drivetrain_warranty_miles': vehicle["manufacturerDriveTrainWarrantyMiles"],
-        'mfg_drivetrain_warranty_months': vehicle["manufacturerDriveTrainWarrantyMonths"],
-        'mileage': vehicle['mileage'],
-        'model': vehicle['model'],
-        'num_keys': vehicle['numberOfKeys'],
-        'options': vehicle.get('installedOptions', []),
-        'price': vehicle['price'],
-        'remaining_warranty_miles': vehicle["remainingWarrantyMiles"],
-        'remaining_warranty_months': vehicle["remainingWarrantyMonths"],
-        'remaining_drivetrain_warranty_months': vehicle["remainingDriveTrainWarrantyMiles"],
-        'remaining_drivetrain_warranty_miles': vehicle["remainingDriveTrainWarrantyMonths"],
-        'state': vehicle['location']['stateAbbreviation'],
-        'std_equipment': vehicle.get('standardEquipment', []),
-        'transmission': vehicle['transmission'],
-        'trim': vehicle['trim'],
-        'vin': vehicle['vin'],
-        'year': vehicle['year'],
-        'zip': vehicle['location']['zip5'],
-    }
+    try:
+        listing = {
+            'body_type': vehicle['bodyType'],
+            'carvana_id': vehicle['vehicleId'],
+            'city': vehicle['location']['city'],
+            'drive_type': vehicle['drivetrainDescription'],
+            'engine': vehicle['engineDescription'],
+            'exterior_color': vehicle['exteriorColor'],
+            'features': [f['displayName'] for kf in vehicle.get('kbbFeatures', {}) for f in kf.get('features', [])],
+            'fuel': vehicle.get('fuelDescription'),
+            'imperfections': [
+                {
+                    'description': i['description'],
+                    'location': i['location'],
+                    'title': i['title'],
+                    'zone': i['zoneDescription'],
+                } for i in vehicle.get('vexVdpImageData', {}).get('imperfections', [])
+            ],
+            'interior_color': vehicle['interiorColor'],
+            'kbb_value': vehicle['kbbValue'],
+            'make': vehicle['make'],
+            'mfg_basic_warranty_miles': vehicle["manufacturerBasicWarrantyMiles"],
+            'mg_basic_warranty_months': vehicle["manufacturerBasicWarrantyMonths"],
+            'mfg_drivetrain_warranty_miles': vehicle["manufacturerDriveTrainWarrantyMiles"],
+            'mfg_drivetrain_warranty_months': vehicle["manufacturerDriveTrainWarrantyMonths"],
+            'mileage': vehicle['mileage'],
+            'model': vehicle['model'],
+            'num_keys': vehicle['numberOfKeys'],
+            'options': vehicle.get('installedOptions', []),
+            'price': vehicle['price'],
+            'remaining_warranty_miles': vehicle["remainingWarrantyMiles"],
+            'remaining_warranty_months': vehicle["remainingWarrantyMonths"],
+            'remaining_drivetrain_warranty_months': vehicle["remainingDriveTrainWarrantyMiles"],
+            'remaining_drivetrain_warranty_miles': vehicle["remainingDriveTrainWarrantyMonths"],
+            'state': vehicle['location']['stateAbbreviation'],
+            'std_equipment': vehicle.get('standardEquipment', []),
+            'transmission': vehicle.get('transmission'),
+            'trim': vehicle.get('trim'),
+            'vin': vehicle['vin'],
+            'year': vehicle['year'],
+            'zip': vehicle['location']['zip5'],
+        }
+    except Exception as e:
+        print(f'failed to build listing with id {vehicle["vehicleId"]}: {e}')
+        raise e
+
+    return listing
 
 
 def _headers():
