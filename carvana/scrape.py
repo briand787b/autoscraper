@@ -112,38 +112,45 @@ def build_listing(vehicle: dict, dbug=False):
 
     try:
         listing = {
-            'body_type': vehicle['bodyType'],
+            'body': vehicle['bodyType'],
             'carvana_id': vehicle['vehicleId'],
             'city': vehicle['location']['city'],
+            'color': vehicle['exteriorColor'],
             'drive_type': vehicle['drivetrainDescription'],
             'engine': vehicle['engineDescription'],
-            'exterior_color': vehicle['exteriorColor'],
-            'features': [f['displayName'] for kf in vehicle.get('kbbFeatures', {}) for f in kf.get('features', [])],
+            'features': [
+                {
+                    'id': f['kbbOptionId'],
+                    'name': f['displayName'],
+                } for kf in vehicle.get('kbbFeatures', {}) for f in kf.get('features', [])
+            ],
             'fuel': vehicle.get('fuelDescription'),
+            'highlights': [ h.get('tagKey') for h in vehicle.get('highlights')],
             'imperfections': [
                 {
-                    'description': i['description'],
-                    'location': i['location'],
+                    'id': i['id'],
+                    'desc': i['description'],
+                    'loc': i['location'],
                     'title': i['title'],
                     'zone': i['zoneDescription'],
                 } for i in vehicle.get('vexVdpImageData', {}).get('imperfections', [])
             ],
-            'interior_color': vehicle['interiorColor'],
             'kbb_value': vehicle['kbbValue'],
             'make': vehicle['make'],
             'mfg_basic_warranty_miles': vehicle["manufacturerBasicWarrantyMiles"],
-            'mg_basic_warranty_months': vehicle["manufacturerBasicWarrantyMonths"],
-            'mfg_drivetrain_warranty_miles': vehicle["manufacturerDriveTrainWarrantyMiles"],
-            'mfg_drivetrain_warranty_months': vehicle["manufacturerDriveTrainWarrantyMonths"],
+            'mfg_basic_warranty_months': vehicle["manufacturerBasicWarrantyMonths"],
+            'mfg_dt_warranty_miles': vehicle["manufacturerDriveTrainWarrantyMiles"],
+            'mfg_dt_warranty_months': vehicle["manufacturerDriveTrainWarrantyMonths"],
             'mileage': vehicle['mileage'],
             'model': vehicle['model'],
             'num_keys': vehicle['numberOfKeys'],
             'options': vehicle.get('installedOptions', []),
             'price': vehicle['price'],
-            'remaining_warranty_miles': vehicle["remainingWarrantyMiles"],
-            'remaining_warranty_months': vehicle["remainingWarrantyMonths"],
-            'remaining_drivetrain_warranty_months': vehicle["remainingDriveTrainWarrantyMiles"],
-            'remaining_drivetrain_warranty_miles': vehicle["remainingDriveTrainWarrantyMonths"],
+            'rem_warranty_miles': vehicle["remainingWarrantyMiles"],
+            'rem_warranty_months': vehicle["remainingWarrantyMonths"],
+            'rem_dt_warranty_months': vehicle["remainingDriveTrainWarrantyMiles"],
+            'rem_dt_warranty_miles': vehicle["remainingDriveTrainWarrantyMonths"],
+            'seating': vehicle.get('seating'),
             'state': vehicle['location']['stateAbbreviation'],
             'std_equipment': vehicle.get('standardEquipment', []),
             'transmission': vehicle.get('transmission'),
@@ -157,12 +164,3 @@ def build_listing(vehicle: dict, dbug=False):
         raise e
 
     return listing
-
-
-def _headers():
-    return {
-        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Accept-Language': 'en-US,en;q=0.5',
-    }
