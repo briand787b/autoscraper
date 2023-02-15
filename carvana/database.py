@@ -234,7 +234,7 @@ def save_imperfections(eng: Engine, listings: list):
                         (
                             vin,
                             id,
-                            desc,
+                            description,
                             loc,
                             title,
                             zone
@@ -243,7 +243,7 @@ def save_imperfections(eng: Engine, listings: list):
                         (
                             :vin,
                             :id,
-                            :desc,
+                            :description,
                             :loc,
                             :title,
                             :zone
@@ -252,7 +252,7 @@ def save_imperfections(eng: Engine, listings: list):
                         {
                             'vin': vin,
                             'id': i.get('id'),
-                            'desc': i.get('desc'),
+                            'description': i.get('desc'),
                             'loc': i.get('loc'),
                             'title': i.get('title'),
                             'zone': i.get('zone'),
@@ -329,7 +329,7 @@ def create_tables(eng: Engine):
                     body                        VARCHAR(24),
                     carvana_id                  INTEGER,
                     city                        VARCHAR(55),
-                    color                       VARCHAR(16),
+                    color                       VARCHAR(55),
                     drive_type                  VARCHAR(8),
                     engine                      VARCHAR(55),
                     kbb_value                   INTEGER,
@@ -348,7 +348,7 @@ def create_tables(eng: Engine):
                     rem_dt_warranty_months      SMALLINT,
                     seating                     SMALLINT,
                     state                       VARCHAR(2),
-                    transmission                VARCHAR(16),
+                    transmission                VARCHAR(55),
                     trim                        VARCHAR(55),
                     vin                         VARCHAR(17),
                     year                        SMALLINT,
@@ -370,7 +370,7 @@ def create_tables(eng: Engine):
 
         with conn.begin():
             conn.execute(sqlalchemy.text('''
-                CREATE TABLE IF NOT EXISTS highlights (
+                CREATE TABLE IF NOT EXISTS vehicle_highlights (
                     vin             VARCHAR(17) NOT NULL,
                     name            VARCHAR(255) NOT NULL,
                     scrape_date     DATE NOT NULL DEFAULT CURRENT_DATE,
@@ -383,7 +383,7 @@ def create_tables(eng: Engine):
                 CREATE TABLE IF NOT EXISTS vehicle_imperfections (
                     id          INTEGER PRIMARY KEY,
                     vin         VARCHAR(17) NOT NULL,
-                    desc        VARCHAR(255) NOT NULL,
+                    description VARCHAR(255) NOT NULL,
                     loc         VARCHAR(55) NOT NULL,
                     title       VARCHAR(55) NOT NULL,
                     zone        VARCHAR(105) NOT NULL,
@@ -414,6 +414,6 @@ def create_tables(eng: Engine):
                     vin             VARCHAR(17) NOT NULL,
                     name            VARCHAR(155) NOT NULL,
                     scrape_date     DATE NOT NULL DEFAULT CURRENT_DATE,
-                    PRIMARY KEY (vin, code)
+                    PRIMARY KEY (vin, name)
                 )
             '''))
