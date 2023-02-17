@@ -88,11 +88,7 @@ def select_listings(eng: Engine):
     return results
 
 
-def save_listings(eng: Engine, listings: list):
-    if len(listings) < 1:
-        print('no listings to save')
-        return
-
+def save_listing(eng: Engine, listing: list):
     with eng.connect() as conn:
         with conn.begin():
             conn.execute(sqlalchemy.text('''
@@ -156,26 +152,25 @@ def save_listings(eng: Engine, listings: list):
                     :year,
                     :zip
                 );
-                '''), listings)
+                '''), listing)
 
-    save_features(eng, listings)
-    save_highlights(eng, listings)
-    save_imperfections(eng, listings)
-    save_options(eng, listings)
-    save_std_equipment(eng, listings)
+    save_features(eng, listing)
+    save_highlights(eng, listing)
+    save_imperfections(eng, listing)
+    save_options(eng, listing)
+    save_std_equipment(eng, listing)
 
 
-def save_features(eng: Engine, listings: list):
-    for listing in listings:
-        vin = listing['vin']
-        ftrs = listing.get('features', [])
-        if type(ftrs) != list or len(ftrs) < 1:
-            continue
+def save_features(eng: Engine, listing):
+    vin = listing['vin']
+    ftrs = listing.get('features', [])
+    if type(ftrs) != list or len(ftrs) < 1:
+        return
 
-        try:
-            with eng.connect() as conn:
-                with conn.begin():
-                    conn.execute(sqlalchemy.text('''
+    try:
+        with eng.connect() as conn:
+            with conn.begin():
+                conn.execute(sqlalchemy.text('''
                         INSERT INTO vehicle_features
                         (
                             vin,
@@ -188,26 +183,25 @@ def save_features(eng: Engine, listings: list):
                             :n,
                             :k_id
                         );
-                    '''), [{'vin': vin, 'n': f['name'], 'k_ikd': f['id']} for f in ftrs])
-        except IntegrityError:
-            continue
+                    '''), [{'vin': vin, 'n': f['name'], 'k_id': f['id']} for f in ftrs])
+    except IntegrityError:
+        return
 
 
-def save_highlights(eng: Engine, listings: list):
-    for listing in listings:
-        vin = listing['vin']
-        hs = listing.get('highlights', [])
-        if type(hs) != list or len(hs) < 1:
-            continue
+def save_highlights(eng: Engine, listing):
+    vin = listing['vin']
+    hs = listing.get('highlights', [])
+    if type(hs) != list or len(hs) < 1:
+        return
 
-        try:
-            with eng.connect() as conn:
-                with conn.begin():
-                    conn.execute(sqlalchemy.text('''
+    try:
+        with eng.connect() as conn:
+            with conn.begin():
+                conn.execute(sqlalchemy.text('''
                         INSERT INTO vehicle_highlights
                         (
                             vin,
-                            highlight
+                            name
                         ) 
                         VALUES
                         (
@@ -215,21 +209,20 @@ def save_highlights(eng: Engine, listings: list):
                             :hl
                         );
                     '''), [{'vin': vin, 'hl': h} for h in hs])
-        except IntegrityError:
-            continue
+    except IntegrityError:
+        return
 
 
-def save_imperfections(eng: Engine, listings: list):
-    for listing in listings:
-        vin = listing['vin']
-        imps = listing.get('imperfections', [])
-        if type(imps) != list or len(imps) < 1:
-            continue
+def save_imperfections(eng: Engine, listing):
+    vin = listing['vin']
+    imps = listing.get('imperfections', [])
+    if type(imps) != list or len(imps) < 1:
+        return
 
-        try:
-            with eng.connect() as conn:
-                with conn.begin():
-                    conn.execute(sqlalchemy.text('''
+    try:
+        with eng.connect() as conn:
+            with conn.begin():
+                conn.execute(sqlalchemy.text('''
                         INSERT INTO vehicle_imperfections
                         (
                             vin,
@@ -249,29 +242,28 @@ def save_imperfections(eng: Engine, listings: list):
                             :zone
                         );
                     '''), [
-                        {
-                            'vin': vin,
-                            'id': i.get('id'),
-                            'description': i.get('desc'),
-                            'loc': i.get('loc'),
-                            'title': i.get('title'),
-                            'zone': i.get('zone'),
-                        } for i in imps])
-        except IntegrityError:
-            continue
+                    {
+                        'vin': vin,
+                        'id': i.get('id'),
+                        'description': i.get('desc'),
+                        'loc': i.get('loc'),
+                        'title': i.get('title'),
+                        'zone': i.get('zone'),
+                    } for i in imps])
+    except IntegrityError:
+        return
 
 
-def save_options(eng: Engine, listings: list):
-    for listing in listings:
-        vin = listing['vin']
-        opts = listing.get('options', [])
-        if type(opts) != list or len(opts) < 1:
-            continue
+def save_options(eng: Engine, listing):
+    vin = listing['vin']
+    opts = listing.get('options', [])
+    if type(opts) != list or len(opts) < 1:
+        return
 
-        try:
-            with eng.connect() as conn:
-                with conn.begin():
-                    conn.execute(sqlalchemy.text('''
+    try:
+        with eng.connect() as conn:
+            with conn.begin():
+                conn.execute(sqlalchemy.text('''
                         INSERT INTO vehicle_options
                         (
                             vin,
@@ -285,39 +277,38 @@ def save_options(eng: Engine, listings: list):
                             :price
                         );
                     '''), [
-                        {
-                            'vin': vin,
-                            'name': o.get('name'),
-                            'price': o.get('price')
-                        } for o in opts])
-        except IntegrityError:
-            continue
+                    {
+                        'vin': vin,
+                        'name': o.get('name'),
+                        'price': o.get('price')
+                    } for o in opts])
+    except IntegrityError:
+        return
 
 
-def save_std_equipment(eng: Engine, listings: list):
-    for listing in listings:
-        vin = listing['vin']
-        se = listing.get('std_equipment', [])
-        if type(se) != list or len(se) < 1:
-            continue
+def save_std_equipment(eng: Engine, listing):
+    vin = listing['vin']
+    se = listing.get('std_equipment', [])
+    if type(se) != list or len(se) < 1:
+        return
 
-        try:
-            with eng.connect() as conn:
-                with conn.begin():
-                    conn.execute(sqlalchemy.text('''
+    try:
+        with eng.connect() as conn:
+            with conn.begin():
+                conn.execute(sqlalchemy.text('''
                         INSERT INTO vehicle_std_equipment
                         (
                             vin,
-                            name
+                            description
                         ) 
                         VALUES
                         (
                             :vin,
-                            :name
+                            :description
                         );
-                    '''), [{'vin': vin, 'name': e} for e in se])
-        except IntegrityError:
-            continue
+                    '''), [{'vin': vin, 'description': e} for e in se])
+    except IntegrityError:
+        return
 
 
 def create_tables(eng: Engine):
@@ -402,7 +393,7 @@ def create_tables(eng: Engine):
                 CREATE TABLE IF NOT EXISTS vehicle_options (
                     vin             VARCHAR(17) NOT NULL,
                     name            VARCHAR(255) NOT NULL,
-                    price           SMALLINT,
+                    price           INTEGER,
                     scrape_date     DATE NOT NULL DEFAULT CURRENT_DATE,
                     PRIMARY KEY (vin, name)
                 )
@@ -412,8 +403,8 @@ def create_tables(eng: Engine):
             conn.execute(sqlalchemy.text('''
                 CREATE TABLE IF NOT EXISTS vehicle_std_equipment (
                     vin             VARCHAR(17) NOT NULL,
-                    name            VARCHAR(155) NOT NULL,
+                    description     TEXT NOT NULL,
                     scrape_date     DATE NOT NULL DEFAULT CURRENT_DATE,
-                    PRIMARY KEY (vin, name)
+                    PRIMARY KEY (vin, description)
                 )
             '''))

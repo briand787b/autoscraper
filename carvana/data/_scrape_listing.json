@@ -1,0 +1,90 @@
+{
+    "body_type": "Coupe",
+    "carvana_id": 2548188,
+    "city": "Winder",
+    "drive_type": "RWD",
+    "engine": "8-Cyl, HEMI, 6.1L",
+    "exterior_color": "Orange",
+    "features": [
+        "Power Trunk Release",
+        "Power Windows",
+        "Air Conditioning",
+        "Cruise Control",
+        "Power Door Locks",
+        "Anti-Theft System",
+        "Keyless Entry",
+        "Navigation System",
+        "AM/FM Stereo",
+        "Bluetooth Wireless",
+        "Leather",
+        "Heated Seats",
+        "Power Seat",
+        "Electronic Stability Control",
+        "Performance Suspension",
+        "Dual Air Bags",
+        "F&R Head Curtain Air Bags",
+        "Side Air Bags",
+        "Racing Stripes",
+        "Rear Spoiler",
+        "Power Steering",
+        "Tilt & Telescoping Wheel",
+        "Premium Wheels 19\"+",
+        "HID Headlamps"
+    ],
+    "fuel": "Gas",
+    "imperfections": [
+        {
+            "description": "A circular area less than 1/2\" in diameter where the paint has been impacted.",
+            "location": "exterior",
+            "title": "Chips",
+            "zone": "Driver Mirror"
+        },
+        {
+            "description": "A circular area less than 1/2\" in diameter where the paint has been impacted.",
+            "location": "exterior",
+            "title": "Chips",
+            "zone": "Hood"
+        },
+        {
+            "description": "Scratches in the clear coat that are clearly visible with virtually no depth. A fingernail will not catch on the scratch.",
+            "location": "exterior",
+            "title": "Light Scratches",
+            "zone": "Rear Bumper"
+        },
+        {
+            "description": "Discoloration or fading of material (interior and exterior), usually due to UV exposure or operators use that has degraded the original component condition over time.",
+            "location": "interior",
+            "title": "Worn/Faded",
+            "zone": "Front Driver Seat"
+        },
+        {
+            "description": "Scratches on internal hard surfaces.",
+            "location": "interior",
+            "title": "Scratches",
+            "zone": "Front Driver Door Panel"
+        }
+    ],
+    "interior_color": "Black",
+    "kbb_value": 17826,
+    "make": "Dodge",
+    "mfg_basic_warranty_miles": 36000,
+    "mg_basic_warranty_months": 36,
+    "mfg_drivetrain_warranty_miles": 100000,
+    "mfg_drivetrain_warranty_months": 60,
+    "mileage": 94584,
+    "model": "Challenger",
+    "num_keys": 2,
+    "options": [],
+    "price": 24590,
+    "remaining_warranty_miles": 0,
+    "remaining_warranty_months": 0,
+    "remaining_drivetrain_warranty_months": 5200,
+    "remaining_drivetrain_warranty_miles": 0,
+    "state": "GA",
+    "std_equipment": [],
+    "transmission": "Manual, 6 speed",
+    "trim": "SRT8 Coupe 2D",
+    "vin": "2B3CJ7DW2AH261677",
+    "year": 2010,
+    "zip": "30680"
+}

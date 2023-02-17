@@ -1,0 +1,882 @@
+{
+    "props": {
+        "pageProps": {
+            "vehicleId": 2646258,
+            "requestContext": {
+                "browserCookieId": "75970267-eb89-dfa9-f770-2e5b7928541f",
+                "ipInfo": "67.140.220.153, 172.71.26.100, 10.100.33.38, 10.100.33.147",
+                "podName": "carvana-merch-merchui-56b686f677-m8llc",
+                "referrer": null,
+                "userAgent": "python-httpx/0.23.3",
+                "vehicleId": 2646258
+            },
+            "state": {
+                "browserName": "",
+                "deviceType": {
+                    "devicePixelRatio": 1,
+                    "isDesktop": true,
+                    "isMobile": false,
+                    "isTablet": false
+                }
+            },
+            "cookies": {
+                "BrowserCookieId": "75970267-eb89-dfa9-f770-2e5b7928541f"
+            },
+            "experiments": {
+                "vdp-lite-2": {
+                    "defaultBucket": "control",
+                    "buckets": [
+                        "control"
+                    ],
+                    "assignedBucket": "control",
+                    "isLoading": false,
+                    "hasErrored": false
+                },
+                "vdp-page-layout": {
+                    "defaultBucket": "control",
+                    "buckets": [
+                        "control"
+                    ],
+                    "assignedBucket": "control",
+                    "isLoading": false,
+                    "hasErrored": false
+                }
+            },
+            "shouldShowLite": false,
+            "shouldShowHybrid": false,
+            "initialState": {
+                "configuration": {
+                    "autocheck-cid": "7006243",
+                    "autocheck-sid": "7006244",
+                    "merch-meetup": false,
+                    "authServerUrl": "https://apim.carvana.io/auth/identity",
+                    "splunkEndpoint": "https://splunk.carvana.io",
+                    "mi-petition": true
+                },
+                "ui": {
+                    "browser": {
+                        "name": ""
+                    },
+                    "isHeadless": false,
+                    "isLazyLoadEnabled": true,
+                    "isLite": false,
+                    "isSpinnerLess": false,
+                    "sectionViewed": {
+                        "gallery": false,
+                        "vehicle-details": false,
+                        "vehicles-you-might-like": false
+                    },
+                    "sectionMounted": {
+                        "spinner-container": true,
+                        "hero": true,
+                        "vehicle-details": false,
+                        "price-details": false,
+                        "owner-reviews": false,
+                        "inspection-150-point": false,
+                        "vehicles-you-might-like": false
+                    },
+                    "screenSize": {
+                        "height": 0,
+                        "isDesktop": true,
+                        "isLandscape": false,
+                        "isMobile": false,
+                        "isPortrait": false,
+                        "isTablet": false,
+                        "devicePixelRatio": 1,
+                        "width": 0
+                    }
+                },
+                "user": {
+                    "availability": {
+                        "action": "GetStartedDisabled",
+                        "error": "None",
+                        "inventoryType": "Core",
+                        "isAvailableForPurchase": true,
+                        "isBuyingAVehicle": false,
+                        "isError": false,
+                        "isLoaded": false,
+                        "isLoading": false,
+                        "isLockedByThisUser": false,
+                        "isPendingDealerPurchase": false,
+                        "isPendingDealerPurchaseByUser": false,
+                        "lockType": "None",
+                        "vehicleAvailableDateTime": ""
+                    },
+                    "email": "",
+                    "favorites": {
+                        "isError": false,
+                        "isLoaded": false,
+                        "isLoading": false,
+                        "vehicles": []
+                    },
+                    "financing": {
+                        "data": null,
+                        "hasError": false,
+                        "isLoaded": false,
+                        "isLoading": false
+                    },
+                    "isLoaded": false,
+                    "isLoading": false,
+                    "isLoggedIn": false,
+                    "location": {
+                        "city": "Toccoa",
+                        "state": "GA",
+                        "zip": "30577"
+                    },
+                    "referrer": "",
+                    "softPullStatus": "None",
+                    "userId": ""
+                },
+                "vehicle": {
+                    "alertModals": {
+                        "isError": false,
+                        "isLoading": false,
+                        "recallStatus": []
+                    },
+                    "analytics": {
+                        "associatedVdpEventId": "ee6e7588-6996-482e-9aa8-3de9f405b1f1",
+                        "correspondingSearchRequestId": null,
+                        "correspondingVDPEventId": null
+                    },
+                    "details": {
+                        "bodyType": "Truck",
+                        "doors": 4,
+                        "drivetrainDescription": "4WD",
+                        "engineDescription": "V6, EcoBoost, High Output Twin Turbo, 3.5 Liter",
+                        "exteriorColor": "Red",
+                        "fairMarketValue": 66987,
+                        "fuelDescription": "Gas",
+                        "generalizedFacets": [
+                            {
+                                "facetId": 3,
+                                "facetName": "Sunroof"
+                            },
+                            {
+                                "facetId": 4,
+                                "facetName": "Navigation"
+                            },
+                            {
+                                "facetId": 5,
+                                "facetName": "Rear View Camera"
+                            },
+                            {
+                                "facetId": 6,
+                                "facetName": "Heated Seats"
+                            },
+                            {
+                                "facetId": 7,
+                                "facetName": "Remote Start"
+                            },
+                            {
+                                "facetId": 8,
+                                "facetName": "Push Button Start"
+                            },
+                            {
+                                "facetId": 10,
+                                "facetName": "Hands Free Calling"
+                            },
+                            {
+                                "facetId": 11,
+                                "facetName": "Bluetooth Music"
+                            },
+                            {
+                                "facetId": 12,
+                                "facetName": "Blindspot Sensors"
+                            },
+                            {
+                                "facetId": 14,
+                                "facetName": "Upgraded Sound System"
+                            },
+                            {
+                                "facetId": 15,
+                                "facetName": "Power Driver Seat"
+                            },
+                            {
+                                "facetId": 16,
+                                "facetName": "Tow Hitch"
+                            },
+                            {
+                                "facetId": 25,
+                                "facetName": "Alloy Wheels"
+                            },
+                            {
+                                "facetId": 28,
+                                "facetName": "360 Camera"
+                            },
+                            {
+                                "facetId": 30,
+                                "facetName": "Heated Steering Wheel"
+                            }
+                        ],
+                        "highlights": [
+                            {
+                                "isResultTileDisplayable": false,
+                                "isVdpDisplayable": true,
+                                "sortOrder": 10,
+                                "tagCategoryId": 1,
+                                "tagDescription": "This vehicle has no reported accidents, fire, flood, or frame damage according to CARFAX\u2122 and AutoCheck\u00ae.",
+                                "tagId": 21,
+                                "tagKey": "AccidentFree",
+                                "tagName": "No Reported Accidents"
+                            },
+                            {
+                                "isResultTileDisplayable": true,
+                                "isVdpDisplayable": true,
+                                "sortOrder": 700,
+                                "tagCategoryId": 1,
+                                "tagDescription": "This car is priced at least $1,500 below its Kelley Blue Book\u00ae Suggested Retail Value.",
+                                "tagId": 104,
+                                "tagKey": "KeepMovingPrice",
+                                "tagName": "Great Deal"
+                            },
+                            {
+                                "isResultTileDisplayable": false,
+                                "isVdpDisplayable": true,
+                                "sortOrder": 710,
+                                "tagCategoryId": 1,
+                                "tagDescription": "Pickup trucks with bed length greater than 5.5 ft but less than 6.5 ft",
+                                "tagId": 113,
+                                "tagKey": "MediumBed",
+                                "tagName": "Medium Bed Length"
+                            }
+                        ],
+                        "inServiceDate": "2020-06-24T04:00:00.000Z",
+                        "inServiceMiles": 126,
+                        "interiorColor": "Black",
+                        "inventoryType": "Core",
+                        "kbbFeatures": [
+                            {
+                                "label": "Entertainment and Instrumentation",
+                                "features": [
+                                    {
+                                        "displayName": "Bang & Olufsen Sound",
+                                        "kbbOptionId": 8617902
+                                    },
+                                    {
+                                        "displayName": "AM/FM Stereo",
+                                        "kbbOptionId": 8617883
+                                    },
+                                    {
+                                        "displayName": "Navigation System",
+                                        "kbbOptionId": 8617896
+                                    },
+                                    {
+                                        "displayName": "Bluetooth Wireless",
+                                        "kbbOptionId": 8617890
+                                    }
+                                ]
+                            },
+                            {
+                                "label": "Safety and Security",
+                                "features": [
+                                    {
+                                        "displayName": "Dual Air Bags",
+                                        "kbbOptionId": 8617907
+                                    },
+                                    {
+                                        "displayName": "F&R Head Curtain Air Bags",
+                                        "kbbOptionId": 8617909
+                                    },
+                                    {
+                                        "displayName": "Side Air Bags",
+                                        "kbbOptionId": 8617924
+                                    },
+                                    {
+                                        "displayName": "Backup Camera",
+                                        "kbbOptionId": 8617885
+                                    },
+                                    {
+                                        "displayName": "Reverse Sensing System",
+                                        "kbbOptionId": 8617915
+                                    },
+                                    {
+                                        "displayName": "360-Degree Split View Camera",
+                                        "kbbOptionId": 8617898
+                                    }
+                                ]
+                            },
+                            {
+                                "label": "Cargo and Towing",
+                                "features": [
+                                    {
+                                        "displayName": "Bed Liner",
+                                        "kbbOptionId": 8617886
+                                    }
+                                ]
+                            },
+                            {
+                                "label": "Comfort and Convenience",
+                                "features": [
+                                    {
+                                        "displayName": "Power Door Locks",
+                                        "kbbOptionId": 8617916
+                                    },
+                                    {
+                                        "displayName": "Power Windows",
+                                        "kbbOptionId": 8617920
+                                    },
+                                    {
+                                        "displayName": "Cruise Control",
+                                        "kbbOptionId": 8617904
+                                    },
+                                    {
+                                        "displayName": "Alarm System",
+                                        "kbbOptionId": 8617884
+                                    },
+                                    {
+                                        "displayName": "Air Conditioning",
+                                        "kbbOptionId": 8617879
+                                    },
+                                    {
+                                        "displayName": "Remote Engine Start",
+                                        "kbbOptionId": 8617894
+                                    },
+                                    {
+                                        "displayName": "Power Sliding Rear Window",
+                                        "kbbOptionId": 8617900
+                                    },
+                                    {
+                                        "displayName": "Keyless Entry",
+                                        "kbbOptionId": 8617893
+                                    }
+                                ]
+                            },
+                            {
+                                "label": "Seats",
+                                "features": [
+                                    {
+                                        "displayName": "Heated & Ventilated Seats",
+                                        "kbbOptionId": 8617903
+                                    },
+                                    {
+                                        "displayName": "Dual Power Seats",
+                                        "kbbOptionId": 8617918
+                                    },
+                                    {
+                                        "displayName": "Power Seat",
+                                        "kbbOptionId": 8617917
+                                    }
+                                ]
+                            },
+                            {
+                                "label": "Roof and Glass",
+                                "features": [
+                                    {
+                                        "displayName": "Twin Panel Moon Roof",
+                                        "kbbOptionId": 8617908
+                                    }
+                                ]
+                            },
+                            {
+                                "label": "Steering",
+                                "features": [
+                                    {
+                                        "displayName": "Power Steering",
+                                        "kbbOptionId": 8617919
+                                    },
+                                    {
+                                        "displayName": "Tilt & Telescoping Wheel",
+                                        "kbbOptionId": 8617899
+                                    }
+                                ]
+                            },
+                            {
+                                "label": "Exterior",
+                                "features": [
+                                    {
+                                        "displayName": "Running Boards",
+                                        "kbbOptionId": 8617923
+                                    }
+                                ]
+                            },
+                            {
+                                "label": "Braking and Traction",
+                                "features": [
+                                    {
+                                        "displayName": "Traction Control",
+                                        "kbbOptionId": 8617931
+                                    },
+                                    {
+                                        "displayName": "ABS (4-Wheel)",
+                                        "kbbOptionId": 8617878
+                                    },
+                                    {
+                                        "displayName": "AdvanceTrac",
+                                        "kbbOptionId": 8617926
+                                    }
+                                ]
+                            },
+                            {
+                                "label": "Accessory Packages",
+                                "features": [
+                                    {
+                                        "displayName": "Blind-Spot Info System",
+                                        "kbbOptionId": 8617888
+                                    }
+                                ]
+                            },
+                            {
+                                "label": "Wheels and Tires",
+                                "features": [
+                                    {
+                                        "displayName": "Alloy Wheels",
+                                        "kbbOptionId": 8617880
+                                    }
+                                ]
+                            }
+                        ],
+                        "kbbValue": 66987,
+                        "location": {
+                            "addressLine1": "3035 New Town Way SW",
+                            "city": "Concord",
+                            "locationId": 111,
+                            "stateAbbreviation": "NC",
+                            "zip5": "28027"
+                        },
+                        "make": "Ford",
+                        "manufacturerBasicWarrantyMiles": 36000,
+                        "manufacturerBasicWarrantyMonths": 36,
+                        "manufacturerDriveTrainWarrantyMiles": 60000,
+                        "manufacturerDriveTrainWarrantyMonths": 60,
+                        "marketValueLoadedDateTime": "2023-02-12T10:04:57.000Z",
+                        "mileage": 23725,
+                        "model": "F150 SuperCrew Cab",
+                        "modelId": 188,
+                        "mpgCity": 15,
+                        "mpgHighway": 18,
+                        "numberOfKeys": 2,
+                        "price": 63990,
+                        "purchaseType": "Purchasable",
+                        "remainingWarrantyMiles": 12000,
+                        "remainingWarrantyMonths": 4,
+                        "remainingDriveTrainWarrantyMiles": 36000,
+                        "remainingDriveTrainWarrantyMonths": 28,
+                        "saleStatus": "Available",
+                        "seating": 5,
+                        "stockImageData": {
+                            "jellyBeanDesktopUrl": "https://vexstockimages.fastly.carvana.io/stockimages/2019_FORD_F150%20SUPERCREW%20CAB_RAPTOR%20PICKUP%204D%205%201/2%20FT_RED_stock_desktop_1920x1080.png?v=1648130057.913",
+                            "jellyBeanMobileUrl": "https://vexstockimages.fastly.carvana.io/stockimages/2019_FORD_F150%20SUPERCREW%20CAB_RAPTOR%20PICKUP%204D%205%201/2%20FT_RED_stock_mobile_640x640.png?v=1648130057.913"
+                        },
+                        "stockNumber": 2002228946,
+                        "stores": [],
+                        "transmission": "Automatic, 10-Spd w/Sport Mode",
+                        "trim": "Raptor Pickup 4D 5 1/2 ft",
+                        "vehicleId": 2646258,
+                        "vexVdpImageData": {
+                            "captureInfo": {
+                                "inventoryType": "core",
+                                "lastModified": "2023-02-10T20:36:27.000Z",
+                                "vortalPublished": false
+                            },
+                            "features": [
+                                {
+                                    "id": 24745652,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/feature-24745652.jpg?v=1676061387.636",
+                                    "location": "interior",
+                                    "title": "Passenger Seat"
+                                },
+                                {
+                                    "id": 24745659,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/feature-24745659.jpg?v=1676061387.636",
+                                    "location": "interior",
+                                    "title": "Power Seat Controls"
+                                },
+                                {
+                                    "id": 24745655,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/feature-24745655.jpg?v=1676061387.636",
+                                    "location": "interior",
+                                    "title": "Entire Dash"
+                                },
+                                {
+                                    "id": 24745656,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/feature-24745656.jpg?v=1676061387.636",
+                                    "location": "interior",
+                                    "title": "Center Console"
+                                },
+                                {
+                                    "id": 24745654,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/feature-24745654.jpg?v=1676061387.636",
+                                    "location": "interior",
+                                    "title": "Rear Air Vents"
+                                },
+                                {
+                                    "id": 24745653,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/feature-24745653.jpg?v=1676061387.636",
+                                    "location": "interior",
+                                    "title": "Backseat"
+                                },
+                                {
+                                    "id": 24745658,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/feature-24745658.jpg?v=1676061387.636",
+                                    "location": "",
+                                    "title": "Bed-Liner"
+                                },
+                                {
+                                    "id": 24745657,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/feature-24745657.jpg?v=1676061387.636",
+                                    "location": "",
+                                    "title": "Tow-Hitch Area"
+                                },
+                                {
+                                    "id": 24745660,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/feature-24745660.jpg?v=1676061387.636",
+                                    "location": "interior",
+                                    "title": "Driver's Side Dash Controls"
+                                },
+                                {
+                                    "id": 24745661,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/feature-24745661.jpg?v=1676061387.636",
+                                    "location": "interior",
+                                    "title": "Steering Wheel Controls"
+                                },
+                                {
+                                    "description": "This vehicle comes with 2 key(s)",
+                                    "id": 24745662,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/feature-24745662.jpg?v=1676061387.636",
+                                    "location": "",
+                                    "title": "Keys"
+                                },
+                                {
+                                    "description": "Odometer Reading: 23,725 miles",
+                                    "id": 24745663,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/feature-24745663.jpg?v=1676061387.636",
+                                    "location": "interior",
+                                    "title": "Odometer"
+                                },
+                                {
+                                    "id": 24745664,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/feature-24745664.jpg?v=1676061387.636",
+                                    "location": "interior",
+                                    "title": "Infotainment System"
+                                },
+                                {
+                                    "description": "Built-in navigation system to help get you to your destination!",
+                                    "id": 24745665,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/feature-24745665.jpg?v=1676061387.636",
+                                    "location": "interior",
+                                    "title": "Navigation"
+                                },
+                                {
+                                    "id": 24745667,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/feature-24745667.jpg?v=1676061387.636",
+                                    "location": "interior",
+                                    "title": "Storage Console"
+                                },
+                                {
+                                    "id": 24745668,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/feature-24745668.jpg?v=1676061387.636",
+                                    "location": "interior",
+                                    "title": "Driver's Door Panel"
+                                },
+                                {
+                                    "description": "See the area behind your vehicle while reversing.",
+                                    "id": 24745666,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/feature-24745666.jpg?v=1676061387.636",
+                                    "location": "interior",
+                                    "title": "Backup Camera"
+                                },
+                                {
+                                    "id": 24745669,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/feature-24745669.jpg?v=1676061387.636",
+                                    "location": "interior",
+                                    "title": "VIN Barcode"
+                                },
+                                {
+                                    "id": 24750032,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/feature-24750032.jpg?v=1676061387.636",
+                                    "location": "",
+                                    "title": "Alloy Wheels"
+                                },
+                                {
+                                    "description": "This vehicle comes with bluetooth connection capabilities, so you can take hands-free calls.",
+                                    "id": 24750041,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/feature-24750041.jpg?v=1676061387.636",
+                                    "location": "interior",
+                                    "title": "Bluetooth"
+                                },
+                                {
+                                    "id": 24750035,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/feature-24750035.jpg?v=1676061387.636",
+                                    "location": "interior",
+                                    "title": "Heated/Ventilated Seats"
+                                },
+                                {
+                                    "description": "Sharing this vehicle?  Save your preferred seating position as a preset!",
+                                    "id": 24750044,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/feature-24750044.jpg?v=1676061387.636",
+                                    "location": "interior",
+                                    "title": "Seat Memory System"
+                                },
+                                {
+                                    "id": 24750050,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/feature-24750050.jpg?v=1676061387.636",
+                                    "location": "interior",
+                                    "title": "Bang & Olufsen Premium Audio"
+                                },
+                                {
+                                    "description": "This vehicle is equipped with blind spot monitoring which alerts you if you attempt to make an unsafe lane change.",
+                                    "id": 24750052,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/feature-24750052.jpg?v=1676061387.636",
+                                    "location": "",
+                                    "title": "Blind Spot Monitor"
+                                }
+                            ],
+                            "gif": "https://vexgateway.fastly.carvana.io/executions/68962477/SPIN_VIDEO_FLOOR_CLEANER/output.gif?v=1676061386.737",
+                            "heroes": {
+                                "hero": "https://vexgateway.fastly.carvana.io/executions/68962477/SPIN_VIDEO_FLOOR_CLEANER/hero_1920x1080.jpg?v=1676061386.737"
+                            },
+                            "interior": "https://vexgateway.fastly.carvana.io/executions/68962483/INTERIOR_TILING/original.jpg?v=1676061387.636",
+                            "imperfections": [
+                                {
+                                    "description": "Scratches on internal hard surfaces.",
+                                    "id": 4100094,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/imperfection-4100094.jpg?v=1676061387.636",
+                                    "location": "interior",
+                                    "title": "Scratches",
+                                    "zoneDescription": "Glove"
+                                },
+                                {
+                                    "description": "Scratches in the clear coat that are clearly visible with virtually no depth. A fingernail will not catch on the scratch.",
+                                    "id": 4100208,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/imperfection-4100208.jpg?v=1676061387.636",
+                                    "location": "exterior",
+                                    "title": "Light Scratches",
+                                    "zoneDescription": "Rear Driver Door"
+                                },
+                                {
+                                    "description": "Scratches in the clear coat that are clearly visible with virtually no depth. A fingernail will not catch on the scratch.",
+                                    "id": 4100212,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/imperfection-4100212.jpg?v=1676061387.636",
+                                    "location": "exterior",
+                                    "title": "Light Scratches",
+                                    "zoneDescription": "Front Passenger Door"
+                                },
+                                {
+                                    "description": "Scratches in the clear coat that are clearly visible with virtually no depth. A fingernail will not catch on the scratch.",
+                                    "id": 4100216,
+                                    "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/details/imperfection-4100216.jpg?v=1676061387.636",
+                                    "location": "exterior",
+                                    "title": "Light Scratches",
+                                    "zoneDescription": "Rear Passenger Door"
+                                }
+                            ],
+                            "spins": [
+                                {
+                                    "cameraHeight": 5,
+                                    "images": [
+                                        {
+                                            "positionId": 0,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/executions/68962477/FLOOR_CLEANER/cleaned/clean_000.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 1,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/executions/68962477/FLOOR_CLEANER/cleaned/clean_004.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 2,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/executions/68962477/FLOOR_CLEANER/cleaned/clean_008.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 3,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/executions/68962477/FLOOR_CLEANER/cleaned/clean_012.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 4,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/executions/68962477/FLOOR_CLEANER/cleaned/clean_016.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 5,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/executions/68962477/FLOOR_CLEANER/cleaned/clean_020.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 6,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/executions/68962477/FLOOR_CLEANER/cleaned/clean_024.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 7,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/executions/68962477/FLOOR_CLEANER/cleaned/clean_028.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 8,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/executions/68962477/FLOOR_CLEANER/cleaned/clean_032.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 9,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/executions/68962477/FLOOR_CLEANER/cleaned/clean_036.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 10,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/executions/68962477/FLOOR_CLEANER/cleaned/clean_040.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 11,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/executions/68962477/FLOOR_CLEANER/cleaned/clean_044.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 12,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/executions/68962477/FLOOR_CLEANER/cleaned/clean_048.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 13,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/executions/68962477/FLOOR_CLEANER/cleaned/clean_052.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 14,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/executions/68962477/FLOOR_CLEANER/cleaned/clean_056.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 15,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/executions/68962477/FLOOR_CLEANER/cleaned/clean_060.jpg?v=1676061388.254"
+                                        }
+                                    ],
+                                    "style": "edc"
+                                },
+                                {
+                                    "cameraHeight": 7,
+                                    "images": [
+                                        {
+                                            "positionId": 0,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/spins/3775457/images/229066793.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 1,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/spins/3775457/images/229066797.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 2,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/spins/3775457/images/229066801.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 3,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/spins/3775457/images/229066805.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 4,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/spins/3775457/images/229066809.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 5,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/spins/3775457/images/229066813.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 6,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/spins/3775457/images/229066817.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 7,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/spins/3775457/images/229066821.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 8,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/spins/3775457/images/229066825.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 9,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/spins/3775457/images/229066829.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 10,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/spins/3775457/images/229066833.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 11,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/spins/3775457/images/229066837.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 12,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/spins/3775457/images/229066841.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 13,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/spins/3775457/images/229066845.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 14,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/spins/3775457/images/229066849.jpg?v=1676061388.254"
+                                        },
+                                        {
+                                            "positionId": 15,
+                                            "imageUrl": "https://vexgateway.fastly.carvana.io/vex-1581620/spins/3775457/images/229066853.jpg?v=1676061388.254"
+                                        }
+                                    ],
+                                    "style": "edo"
+                                }
+                            ]
+                        },
+                        "vin": "1FTFW1RG8KFC16290",
+                        "year": 2019
+                    },
+                    "deliveryPickup": {
+                        "data": {
+                            "vehicleId": 0,
+                            "soonestDelivery": {},
+                            "soonestPickup": {}
+                        },
+                        "hasError": false,
+                        "isLoaded": false,
+                        "isLoading": false
+                    },
+                    "hasOwnerReviews": true,
+                    "isFavorited": false,
+                    "isDetailsLoaded": true,
+                    "isSubscribedToNotifications": false,
+                    "spinner": {
+                        "hasError": false,
+                        "inTourMode": false,
+                        "isImmersive": false,
+                        "isScriptInserted": false,
+                        "type": ""
+                    },
+                    "transitCharge": {
+                        "data": -1,
+                        "hasError": false,
+                        "isLoaded": false,
+                        "isLoading": false
+                    }
+                },
+                "appSettings": {
+                    "isLoaded": false,
+                    "manageUpgradesFlow": {
+                        "shouldShowOnVDP": false
+                    },
+                    "merchRootInsurance": false
+                },
+                "experimentation": {
+                    "isServerLoaded": true,
+                    "isClientLoaded": false,
+                    "experiments": {
+                        "vdp-lite-2": {
+                            "assignedBucket": "control"
+                        },
+                        "vdp-page-layout": {
+                            "assignedBucket": "control"
+                        }
+                    }
+                },
+                "router": {
+                    "queryParams": {
+                        "vehicleId": "2646258"
+                    },
+                    "hash": ""
+                }
+            }
+        },
+        "__N_SSP": true
+    },
+    "page": "/vehicle/[vehicleId]",
+    "query": {
+        "vehicleId": "2646258"
+    },
+    "buildId": "fba33b32e86ab7b55a380714c59bcd648ea2b5d0",
+    "assetPrefix": "https://assets.fastly.carvana.io/merchui",
+    "isFallback": false,
+    "dynamicIds": [
+        9267,
+        31006,
+        10777,
+        96062
+    ],
+    "gssp": true,
+    "customServer": true,
+    "scriptLoader": []
+}

@@ -1,4 +1,3 @@
-from collections import namedtuple
 import httpx
 import random
 import re
@@ -112,52 +111,52 @@ def build_listing(vehicle: dict, dbug=False):
 
     try:
         listing = {
-            'body': vehicle['bodyType'],
-            'carvana_id': vehicle['vehicleId'],
-            'city': vehicle['location']['city'],
-            'color': vehicle['exteriorColor'],
-            'drive_type': vehicle['drivetrainDescription'],
-            'engine': vehicle['engineDescription'],
+            'body': vehicle.get('bodyType'),
+            'carvana_id': vehicle.get('vehicleId'),
+            'city': vehicle.get('location', {}).get('city'),
+            'color': vehicle.get('exteriorColor'),
+            'drive_type': vehicle.get('drivetrainDescription'),
+            'engine': vehicle.get('engineDescription'),
             'features': [
                 {
-                    'id': f['kbbOptionId'],
-                    'name': f['displayName'],
+                    'id': f.get('kbbOptionId'),
+                    'name': f.get('displayName'),
                 } for kf in vehicle.get('kbbFeatures', {}) for f in kf.get('features', [])
             ],
             'fuel': vehicle.get('fuelDescription'),
             'highlights': [ h.get('tagKey') for h in vehicle.get('highlights')],
             'imperfections': [
                 {
-                    'id': i['id'],
-                    'desc': i['description'],
-                    'loc': i['location'],
-                    'title': i['title'],
-                    'zone': i['zoneDescription'],
+                    'id': i.get('id'),
+                    'desc': i.get('description'),
+                    'loc': i.get('location'),
+                    'title': i.get('title'),
+                    'zone': i.get('zoneDescription'),
                 } for i in vehicle.get('vexVdpImageData', {}).get('imperfections', [])
             ],
-            'kbb_value': vehicle['kbbValue'],
-            'make': vehicle['make'],
-            'mfg_basic_warranty_miles': vehicle["manufacturerBasicWarrantyMiles"],
-            'mfg_basic_warranty_months': vehicle["manufacturerBasicWarrantyMonths"],
-            'mfg_dt_warranty_miles': vehicle["manufacturerDriveTrainWarrantyMiles"],
-            'mfg_dt_warranty_months': vehicle["manufacturerDriveTrainWarrantyMonths"],
-            'mileage': vehicle['mileage'],
-            'model': vehicle['model'],
-            'num_keys': vehicle['numberOfKeys'],
+            'kbb_value': vehicle.get('kbbValue'),
+            'make': vehicle.get('make'),
+            'mfg_basic_warranty_miles': vehicle.get("manufacturerBasicWarrantyMiles"),
+            'mfg_basic_warranty_months': vehicle.get("manufacturerBasicWarrantyMonths"),
+            'mfg_dt_warranty_miles': vehicle.get("manufacturerDriveTrainWarrantyMiles"),
+            'mfg_dt_warranty_months': vehicle.get("manufacturerDriveTrainWarrantyMonths"),
+            'mileage': vehicle.get('mileage'),
+            'model': vehicle.get('model'),
+            'num_keys': vehicle.get('numberOfKeys'),
             'options': vehicle.get('installedOptions', []),
-            'price': vehicle['price'],
-            'rem_warranty_miles': vehicle["remainingWarrantyMiles"],
-            'rem_warranty_months': vehicle["remainingWarrantyMonths"],
-            'rem_dt_warranty_months': vehicle["remainingDriveTrainWarrantyMiles"],
-            'rem_dt_warranty_miles': vehicle["remainingDriveTrainWarrantyMonths"],
+            'price': vehicle.get('price'),
+            'rem_warranty_miles': vehicle.get("remainingWarrantyMiles"),
+            'rem_warranty_months': vehicle.get("remainingWarrantyMonths"),
+            'rem_dt_warranty_miles': vehicle.get("remainingDriveTrainWarrantyMiles"),
+            'rem_dt_warranty_months': vehicle.get("remainingDriveTrainWarrantyMonths"),
             'seating': vehicle.get('seating'),
-            'state': vehicle['location']['stateAbbreviation'],
+            'state': vehicle.get('location', {}).get('stateAbbreviation'),
             'std_equipment': vehicle.get('standardEquipment', []),
             'transmission': vehicle.get('transmission'),
             'trim': vehicle.get('trim'),
-            'vin': vehicle['vin'],
-            'year': vehicle['year'],
-            'zip': vehicle['location']['zip5'],
+            'vin': vehicle.get('vin'),
+            'year': vehicle.get('year'),
+            'zip': vehicle.get('location', {}).get('zip5'),
         }
     except Exception as e:
         print(f'failed to build listing with id {vehicle["vehicleId"]}: {e}')
