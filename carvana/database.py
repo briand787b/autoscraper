@@ -88,7 +88,7 @@ def select_listings(eng: Engine):
     return results
 
 
-def save_listing(eng: Engine, listing: list):
+def save_listing(eng: Engine, listing: dict):
     with eng.connect() as conn:
         with conn.begin():
             conn.execute(sqlalchemy.text('''
@@ -161,10 +161,10 @@ def save_listing(eng: Engine, listing: list):
     save_std_equipment(eng, listing)
 
 
-def save_features(eng: Engine, listing):
-    vin = listing['vin']
-    ftrs = listing.get('features', [])
-    if type(ftrs) != list or len(ftrs) < 1:
+def save_features(eng: Engine, listing: dict):
+    vin = listing.get('vin')
+    ftrs = listing.get('features')
+    if type(vin) != str or type(ftrs) != list or len(ftrs) < 1:
         return
 
     try:
@@ -188,10 +188,10 @@ def save_features(eng: Engine, listing):
         return
 
 
-def save_highlights(eng: Engine, listing):
-    vin = listing['vin']
+def save_highlights(eng: Engine, listing: dict):
+    vin = listing.get('vin')
     hs = listing.get('highlights', [])
-    if type(hs) != list or len(hs) < 1:
+    if type(vin) != str or type(hs) != list or len(hs) < 1:
         return
 
     try:
@@ -213,11 +213,13 @@ def save_highlights(eng: Engine, listing):
         return
 
 
-def save_imperfections(eng: Engine, listing):
-    vin = listing['vin']
+def save_imperfections(eng: Engine, listing: dict):
+    vin = listing.get('vin')
     imps = listing.get('imperfections', [])
-    if type(imps) != list or len(imps) < 1:
+    if type(vin) != str or type(imps) != list or len(imps) < 1:
         return
+
+    imps = filter(lambda i: len(i.get("desc", "")) > 0, imps)
 
     try:
         with eng.connect() as conn:
@@ -245,7 +247,7 @@ def save_imperfections(eng: Engine, listing):
                     {
                         'vin': vin,
                         'id': i.get('id'),
-                        'description': i.get('desc'),
+                        'description': i["desc"] if len(i["desc"]) < 256 else i["desc"][:255],
                         'loc': i.get('loc'),
                         'title': i.get('title'),
                         'zone': i.get('zone'),
@@ -254,11 +256,13 @@ def save_imperfections(eng: Engine, listing):
         return
 
 
-def save_options(eng: Engine, listing):
-    vin = listing['vin']
+def save_options(eng: Engine, listing: dict):
+    vin = listing.get('vin')
     opts = listing.get('options', [])
-    if type(opts) != list or len(opts) < 1:
+    if type(vin) != str or type(opts) != list or len(opts) < 1:
         return
+
+    opts = filter(lambda i: len(i.get("name", "")) > 0, opts)
 
     try:
         with eng.connect() as conn:
@@ -279,17 +283,17 @@ def save_options(eng: Engine, listing):
                     '''), [
                     {
                         'vin': vin,
-                        'name': o.get('name'),
+                        'name': o["name"] if len(o["name"]) < 256 else o["name"][:255],
                         'price': o.get('price')
                     } for o in opts])
     except IntegrityError:
         return
 
 
-def save_std_equipment(eng: Engine, listing):
+def save_std_equipment(eng: Engine, listing: dict):
     vin = listing['vin']
     se = listing.get('std_equipment', [])
-    if type(se) != list or len(se) < 1:
+    if type(vin) != str or type(se) != list or len(se) < 1:
         return
 
     try:

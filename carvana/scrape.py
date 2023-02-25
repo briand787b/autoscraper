@@ -112,7 +112,7 @@ def build_listing(vehicle: dict, dbug=False):
     try:
         listing = {
             'body': vehicle.get('bodyType'),
-            'carvana_id': vehicle.get('vehicleId'),
+            'carvana_id': vehicle['vehicleId'],
             'city': vehicle.get('location', {}).get('city'),
             'color': vehicle.get('exteriorColor'),
             'drive_type': vehicle.get('drivetrainDescription'),
@@ -135,13 +135,13 @@ def build_listing(vehicle: dict, dbug=False):
                 } for i in vehicle.get('vexVdpImageData', {}).get('imperfections', [])
             ],
             'kbb_value': vehicle.get('kbbValue'),
-            'make': vehicle.get('make'),
+            'make': vehicle['make'],
             'mfg_basic_warranty_miles': vehicle.get("manufacturerBasicWarrantyMiles"),
             'mfg_basic_warranty_months': vehicle.get("manufacturerBasicWarrantyMonths"),
             'mfg_dt_warranty_miles': vehicle.get("manufacturerDriveTrainWarrantyMiles"),
             'mfg_dt_warranty_months': vehicle.get("manufacturerDriveTrainWarrantyMonths"),
             'mileage': vehicle.get('mileage'),
-            'model': vehicle.get('model'),
+            'model': vehicle['model'],
             'num_keys': vehicle.get('numberOfKeys'),
             'options': vehicle.get('installedOptions', []),
             'price': vehicle.get('price'),
@@ -154,12 +154,15 @@ def build_listing(vehicle: dict, dbug=False):
             'std_equipment': vehicle.get('standardEquipment', []),
             'transmission': vehicle.get('transmission'),
             'trim': vehicle.get('trim'),
-            'vin': vehicle.get('vin'),
-            'year': vehicle.get('year'),
+            'vin': vehicle['vin'],
+            'year': vehicle['year'],
             'zip': vehicle.get('location', {}).get('zip5'),
         }
+    except KeyError as e:
+        print(f'[id={vehicle.get("vehicleId")}] missing critical key: {e}')
+        return {}
     except Exception as e:
-        print(f'failed to build listing with id {vehicle["vehicleId"]}: {e}')
+        print(f'failed to build listing with id {vehicle.get("vehicleId")}: {e}')
         raise e
 
     return listing
