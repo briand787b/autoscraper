@@ -4,6 +4,19 @@ from sqlalchemy.engine import Engine
 from sqlalchemy.exc import IntegrityError
 
 
+def engine_from_cli():
+    '''engin_from_cli wraps the call to `engine` when using this module interactively'''
+    defaultpw = 'carvana'
+    defaultport = 35432
+    defaulthost = 'localhost'
+
+    pw = input(f'database password [default {defaultpw}]: ') or defaultpw
+    port = int(
+        input(f'database port [default {defaultport}]: ') or defaultport)
+    host = input(f'database host [default {defaulthost}]: ') or defaulthost
+    return engine(pw, host=host, port=port, echo=True)
+
+
 def engine(pw: str, host='localhost', port=5432, usr='carvana', echo=False):
     return sqlalchemy.create_engine(
         f'postgresql://{usr}:{pw}@{host}:{port}/carvana',
