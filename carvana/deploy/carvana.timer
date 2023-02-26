@@ -1,0 +1,12 @@
+[Unit]
+Description=Carvana scraping interval
+Requires=carvana.service
+
+[Timer]
+Unit=carvana.service
+OnCalendar=*-*-* 04:00:00
+# randomized to be more human-like
+RandomizedDelaySec=4h
+
+[Install]
+WantedBy=timers.target

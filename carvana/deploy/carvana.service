@@ -1,0 +1,7 @@
+[Unit]
+Description=Carvana scraper
+Wants=carvana.timer
+
+[Service]
+Type=oneshot
+ExecStart=/home/brian/autoscraper/carvana/main.sh
