@@ -118,8 +118,22 @@ def extract_inventory(htmlpage: str):
 
 def extract_inventory_item(id, dbug=False):
     '''loads and extracts a an inventory item'''
+
     with httpx.Client(timeout=120) as client:
-        resp_text = client.get(f'https://www.carvana.com/vehicle/{id}').text
+        attempt = 0
+        while True:
+            try:
+                attempt += 1
+                resp_text = client.get(f'https://www.carvana.com/vehicle/{id}').text
+                break
+            except Exception as e:
+                print(
+                    f'[attempt #{attempt}] encountered problem while sending request: {e}')
+
+                if attempt > 2:
+                    raise e
+                
+                time.sleep(5)
 
     bs = BeautifulSoup(resp_text, 'html.parser')
     vehicle_text = bs.find('script', {"id": "__NEXT_DATA__"}).text
