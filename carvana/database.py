@@ -101,7 +101,30 @@ def select_listings(eng: Engine):
     return results
 
 
+def _validate_listing(listing: dict):
+    vin = listing.get('vin', '')
+    if type(vin) != str or len(vin) < 1:
+        raise Exception('listing hust have non-empty `vin`')
+    
+    cva_id = int(listing.get('carvana_id'))
+    if cva_id < 1:
+        raise Exception('listing must have non-zero `carvana_id`')
+    
+    v_make = listing.get('make', '')
+    if type(v_make) != str or len(v_make) < 1:
+        raise Exception('listing must have non-empty `make`')
+    
+    v_model = listing.get('model', '')
+    if type(v_model) != str or len(v_model) < 1:
+        raise Exception('listing must have non-empty `model`')
+
 def save_listing(eng: Engine, listing: dict):
+    try:
+        _validate_listing(listing)
+    except Exception as e:
+        print(f'[WARNING] invalid listing cannot be saved: {listing}')
+        return
+
     with eng.connect() as conn:
         with conn.begin():
             conn.execute(sqlalchemy.text('''
@@ -175,9 +198,8 @@ def save_listing(eng: Engine, listing: dict):
 
 
 def save_features(eng: Engine, listing: dict):
-    vin = listing.get('vin')
     ftrs = listing.get('features')
-    if type(vin) != str or type(ftrs) != list or len(ftrs) < 1:
+    if type(ftrs) != list or len(ftrs) < 1:
         return
 
     try:
@@ -196,15 +218,14 @@ def save_features(eng: Engine, listing: dict):
                             :n,
                             :k_id
                         );
-                    '''), [{'vin': vin, 'n': f['name'], 'k_id': f['id']} for f in ftrs])
+                    '''), [{'vin': listing['vin'], 'n': f['name'], 'k_id': f['id']} for f in ftrs])
     except IntegrityError:
         return
 
 
 def save_highlights(eng: Engine, listing: dict):
-    vin = listing.get('vin')
     hs = listing.get('highlights', [])
-    if type(vin) != str or type(hs) != list or len(hs) < 1:
+    if type(hs) != list or len(hs) < 1:
         return
 
     try:
@@ -221,18 +242,21 @@ def save_highlights(eng: Engine, listing: dict):
                             :vin,
                             :hl
                         );
-                    '''), [{'vin': vin, 'hl': h} for h in hs])
+                    '''), [{'vin': listing['vin'], 'hl': h} for h in hs])
     except IntegrityError:
         return
 
 
 def save_imperfections(eng: Engine, listing: dict):
-    vin = listing.get('vin')
     imps = listing.get('imperfections', [])
-    if type(vin) != str or type(imps) != list or len(imps) < 1:
+    if type(imps) != list or len(imps) < 1:
         return
 
-    imps = filter(lambda i: len(i.get("desc", "")) > 0, imps)
+    # shorten descriptions over db col limit
+    for idx, imp in enumerate(imps):
+        desc = imp.get('desc', '')
+        if len(desc) > 254:
+            imps[idx]['desc'] = desc[:255]
 
     try:
         with eng.connect() as conn:
@@ -258,15 +282,18 @@ def save_imperfections(eng: Engine, listing: dict):
                         );
                     '''), [
                     {
-                        'vin': vin,
+                        'vin': listing['vin'],
                         'id': i.get('id'),
-                        'description': i["desc"] if len(i["desc"]) < 256 else i["desc"][:255],
+                        'description': i.get('desc'),
                         'loc': i.get('loc'),
                         'title': i.get('title'),
                         'zone': i.get('zone'),
                     } for i in imps])
     except IntegrityError:
         return
+    except Exception as e:
+        print(f'[ERROR] failed to save listing ({listing}) with imperfections: {imps}')
+        raise e
 
 
 def save_options(eng: Engine, listing: dict):
@@ -275,7 +302,11 @@ def save_options(eng: Engine, listing: dict):
     if type(vin) != str or type(opts) != list or len(opts) < 1:
         return
 
-    opts = filter(lambda i: len(i.get("name", "")) > 0, opts)
+    # shorten names over db col limit
+    for idx, opt in enumerate(opts):
+        name = opt.get('name', '')
+        if len(name) > 254:
+            opts[idx]['name'] = name[:255]
 
     try:
         with eng.connect() as conn:
@@ -296,12 +327,14 @@ def save_options(eng: Engine, listing: dict):
                     '''), [
                     {
                         'vin': vin,
-                        'name': o["name"] if len(o["name"]) < 256 else o["name"][:255],
+                        'name': o.get('name'),
                         'price': o.get('price')
                     } for o in opts])
     except IntegrityError:
         return
-
+    except Exception as e:
+        print(f'[ERROR] failed to save listing ({listing}) with options: {opts}')
+        raise e
 
 def save_std_equipment(eng: Engine, listing: dict):
     vin = listing['vin']

@@ -73,6 +73,7 @@ def send_req(make, model, *filters, skip=0, take=100, dbug=False):
         attempt = 0
         while True:
             try:
+                attempt += 1
                 resp = client.get(
                     f'https://www.carmax.com/cars/api/search/run?uri={search}&year=2016-2023&price=50000&skip={skip}&take={take}&radius=radius-nationwide&shipping=-1',
                     headers={
@@ -85,7 +86,7 @@ def send_req(make, model, *filters, skip=0, take=100, dbug=False):
             except Exception as e:
                 print(
                     f'[attempt #{attempt}] encountered problem while sending request: {e}')
-
+                
                 if attempt > 2:
                     raise e
 

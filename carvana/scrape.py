@@ -42,13 +42,10 @@ def models(queries=VEHICLE_QUERIES, dbug=False):
 def model(query: str, dbug=False):
     '''scrape a specific model as defined in the query parameter'''
     page = 0
-    url = f'https://www.carvana.com/cars/{query}'
 
     while True:
         page += 1
-        print(f'[DEBUG] scraping page {page} of query {query}')
-        with httpx.Client(timeout=120) as client:
-            resptext = client.get(url, params={'page': page}).text
+        resptext = _send_req(query=query, page=page, dbug=dbug)
 
         if dbug:
             with open('data/dbug_inventory.html', 'w+') as file:
@@ -64,6 +61,7 @@ def model(query: str, dbug=False):
 
         for inv_item in inventory:
             if dbug:
+
                 with open('data/dbug_inventory_item.json', 'w+') as file:
                     json.dump(inv_item, file)
 
@@ -76,8 +74,34 @@ def model(query: str, dbug=False):
 
             # sleep random time to mimic human user
             sleep_dur = random.randint(5, 15)
-            print(f'sleeping for {sleep_dur} seconds')
+            if dbug: 
+                print(f'[DEBUG] sleeping for {sleep_dur} seconds')
             time.sleep(sleep_dur)
+
+
+def _send_req(query: str, page: int, dbug=False):
+    '''
+    _send_req is a low-level wrapper around the HTTP calls.  
+    It also handles retries
+    '''
+    if dbug: 
+        print(f'[DEBUG] scraping page {page} of query {query}')
+    url = f'https://www.carvana.com/cars/{query}'
+    with httpx.Client(timeout=120) as client:
+        attempt = 0
+        while True:
+            try:
+                attempt += 1
+                resp = client.get(url, params={'page': page})
+                return resp.text
+            except Exception as e:
+                print(
+                    f'[attempt #{attempt}] encountered problem while sending request: {e}')
+
+                if attempt > 2:
+                    raise e
+                
+                time.sleep(5)
 
 
 def extract_inventory(htmlpage: str):
