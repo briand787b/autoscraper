@@ -29,7 +29,7 @@ def scrape_core(pw, host, port):
         for listing in model:
             database.save_listing(eng, listing)
 
-        print('scraped all listings for a model')
+        print(f'scraped all listings for model {model}')
 
     print('done')
 
