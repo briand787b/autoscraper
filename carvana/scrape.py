@@ -138,7 +138,10 @@ def extract_inventory_item(id, dbug=False):
     bs = BeautifulSoup(resp_text, 'html.parser')
     vehicle_text = bs.find('script', {"id": "__NEXT_DATA__"}).text
     vehicle_json = json.loads(vehicle_text)
-    vehicle = vehicle_json['props']['pageProps']['initialState']['vehicle']['details']
+    vehicle = vehicle_json.get('props', {}).get('pageProps', {}).get('initialState', {}).get('vehicle', {}).get('details', '')
+    if vehicle == '':
+        return None
+    
     return build_listing(vehicle, dbug=dbug)
 
 

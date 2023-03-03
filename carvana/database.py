@@ -122,7 +122,7 @@ def save_listing(eng: Engine, listing: dict):
     try:
         _validate_listing(listing)
     except Exception as e:
-        print(f'[WARNING] invalid listing cannot be saved: {listing}')
+        print(f'[WARNING] invalid listing ({listing})cannot be saved: {e}')
         return
 
     with eng.connect() as conn:
