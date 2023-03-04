@@ -102,6 +102,9 @@ def select_listings(eng: Engine):
 
 
 def _validate_listing(listing: dict):
+    if not listing:
+        raise Exception('listing must be a dict, is null')
+
     vin = listing.get('vin', '')
     if type(vin) != str or len(vin) < 1:
         raise Exception('listing hust have non-empty `vin`')

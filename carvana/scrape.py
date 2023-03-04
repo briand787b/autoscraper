@@ -36,7 +36,11 @@ VEHICLE_QUERIES = (
 def models(queries=VEHICLE_QUERIES, dbug=False):
     '''helper function to scrape multiple models, returns a generator'''
     for q in queries:
-        yield model(q, dbug=dbug)
+        try:
+            yield model(q, dbug=dbug)
+        except Exception as e:
+            print(f'encountered exception while iterating queries: {e}')
+            continue
 
 
 def model(query: str, dbug=False):
@@ -74,7 +78,7 @@ def model(query: str, dbug=False):
 
             # sleep random time to mimic human user
             sleep_dur = random.randint(5, 15)
-            if dbug: 
+            if dbug:
                 print(f'[DEBUG] sleeping for {sleep_dur} seconds')
             time.sleep(sleep_dur)
 
@@ -84,7 +88,7 @@ def _send_req(query: str, page: int, dbug=False):
     _send_req is a low-level wrapper around the HTTP calls.  
     It also handles retries
     '''
-    if dbug: 
+    if dbug:
         print(f'[DEBUG] scraping page {page} of query {query}')
     url = f'https://www.carvana.com/cars/{query}'
     with httpx.Client(timeout=120) as client:
@@ -100,16 +104,18 @@ def _send_req(query: str, page: int, dbug=False):
 
                 if attempt > 2:
                     raise e
-                
+
                 time.sleep(5)
 
 
 def extract_inventory(htmlpage: str):
     bs = BeautifulSoup(htmlpage, 'html.parser')
-    data = bs.find('script', text=re.compile(
-        'window.__PRELOADED_STATE__')).get_text()
+    data = bs.find('script', text=re.compile('window.__PRELOADED_STATE__'))
+    if not data:
+        return None
 
-    payload = data.split('window.__PRELOADED_STATE__ = ')[
+    data_text = data.get_text()
+    payload = data_text.split('window.__PRELOADED_STATE__ = ')[
         1].split('window.__APOLLO_STATE__')[0]
 
     jsonpayload = json.loads(payload)
@@ -124,7 +130,8 @@ def extract_inventory_item(id, dbug=False):
         while True:
             try:
                 attempt += 1
-                resp_text = client.get(f'https://www.carvana.com/vehicle/{id}').text
+                resp_text = client.get(
+                    f'https://www.carvana.com/vehicle/{id}').text
                 break
             except Exception as e:
                 print(
@@ -132,16 +139,17 @@ def extract_inventory_item(id, dbug=False):
 
                 if attempt > 2:
                     raise e
-                
+
                 time.sleep(5)
 
     bs = BeautifulSoup(resp_text, 'html.parser')
     vehicle_text = bs.find('script', {"id": "__NEXT_DATA__"}).text
     vehicle_json = json.loads(vehicle_text)
-    vehicle = vehicle_json.get('props', {}).get('pageProps', {}).get('initialState', {}).get('vehicle', {}).get('details', '')
+    vehicle = vehicle_json.get('props', {}).get('pageProps', {}).get(
+        'initialState', {}).get('vehicle', {}).get('details', '')
     if vehicle == '':
         return None
-    
+
     return build_listing(vehicle, dbug=dbug)
 
 
@@ -165,7 +173,7 @@ def build_listing(vehicle: dict, dbug=False):
                 } for kf in vehicle.get('kbbFeatures', {}) for f in kf.get('features', [])
             ],
             'fuel': vehicle.get('fuelDescription'),
-            'highlights': [ h.get('tagKey') for h in vehicle.get('highlights')],
+            'highlights': [h.get('tagKey') for h in vehicle.get('highlights')],
             'imperfections': [
                 {
                     'id': i.get('id'),
@@ -203,7 +211,8 @@ def build_listing(vehicle: dict, dbug=False):
         print(f'[id={vehicle.get("vehicleId")}] missing critical key: {e}')
         return {}
     except Exception as e:
-        print(f'failed to build listing with id {vehicle.get("vehicleId")}: {e}')
+        print(
+            f'failed to build listing with id {vehicle.get("vehicleId")}: {e}')
         raise e
 
     return listing
