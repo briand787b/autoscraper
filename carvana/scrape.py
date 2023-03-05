@@ -64,23 +64,27 @@ def model(query: str, dbug=False):
                 json.dump(inventory, file)
 
         for inv_item in inventory:
-            if dbug:
+            try:
+                if dbug:
 
-                with open('data/dbug_inventory_item.json', 'w+') as file:
-                    json.dump(inv_item, file)
+                    with open('data/dbug_inventory_item.json', 'w+') as file:
+                        json.dump(inv_item, file)
 
-            # non-listings are insterspersed with listings
-            id = inv_item.get('vehicleId')
-            if id is None:
+                # non-listings are insterspersed with listings
+                id = inv_item.get('vehicleId')
+                if id is None:
+                    continue
+
+                yield extract_inventory_item(id, dbug=dbug)
+
+                # sleep random time to mimic human user
+                sleep_dur = random.randint(5, 15)
+                if dbug:
+                    print(f'[DEBUG] sleeping for {sleep_dur} seconds')
+                time.sleep(sleep_dur)
+            except Exception as e:
+                print(f'encountered exception in inventory iteration: {e}')
                 continue
-
-            yield extract_inventory_item(id, dbug=dbug)
-
-            # sleep random time to mimic human user
-            sleep_dur = random.randint(5, 15)
-            if dbug:
-                print(f'[DEBUG] sleeping for {sleep_dur} seconds')
-            time.sleep(sleep_dur)
 
 
 def _send_req(query: str, page: int, dbug=False):
@@ -102,7 +106,7 @@ def _send_req(query: str, page: int, dbug=False):
                 print(
                     f'[attempt #{attempt}] encountered problem while sending request: {e}')
 
-                if attempt > 2:
+                if attempt > 10:
                     raise e
 
                 time.sleep(5)
@@ -137,7 +141,7 @@ def extract_inventory_item(id, dbug=False):
                 print(
                     f'[attempt #{attempt}] encountered problem while sending request: {e}')
 
-                if attempt > 2:
+                if attempt > 10:
                     raise e
 
                 time.sleep(5)
