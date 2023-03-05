@@ -291,7 +291,7 @@ def scrape_url(base_url: str, params: dict, dbug=False):
     inv_list, next_skip = scrape_doc(resp)
 
     while next_skip:
-        dur = randint(10, 30)
+        dur = randint(5, 10)
         print(f'scraping next page in {dur} secs')
         time.sleep(dur)
         params[SKIP_KEY] = next_skip
