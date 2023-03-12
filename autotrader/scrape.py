@@ -307,27 +307,38 @@ def scrape_url(base_url: str, params: dict, dbug=False):
 
 
 def send_req(base_url: str, params: dict, dbug=False):
-    client = httpx.Client(timeout=120)  # long, but not infinite
-    req = httpx.Request('GET', base_url, params=params, headers={
-        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Accept-Language': 'en-US,en;q=0.5',
+    attmpt = 0
+    while attmpt < 10:
+        try:
+            client = httpx.Client(timeout=120)  # long, but not infinite
+            req = httpx.Request('GET', base_url, params=params, headers={
+                'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Accept-Language': 'en-US,en;q=0.5',
 
-    })
-    # print(f'[DEBUG] about to send request: {req}')
-    resp = client.send(req)
-    if dbug:
-        with open('diags/response.html', 'w+') as file:
-            file.write(resp.text)
+            })
+            # print(f'[DEBUG] about to send request: {req}')
+            resp = client.send(req)
+            if dbug:
+                with open('diags/response.html', 'w+') as file:
+                    file.write(resp.text)
 
-    if resp.status_code > 299:
-        raise Exception(f'request failed with status code: {resp.status_code}')
+            if resp.status_code > 299:
+                raise Exception(
+                    f'request failed with status code: {resp.status_code}')
 
-    return resp.text
+            return resp.text
+        except Exception as e:
+            print(
+                f'[ERROR] attempt #{attmpt} failed to get response from url: {e}')
+    return None
 
 
 def scrape_doc(document: str, dbug=False):
+    if not document or document == '':
+        return
+
     '''Scrapes an AutoTrader HTML document containing vehicle search results '''
     DATA_LOC = 'window.__BONNET_DATA__'
     bs = BeautifulSoup(document, 'html.parser')
