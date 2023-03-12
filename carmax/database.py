@@ -79,64 +79,67 @@ def save_listings(eng: Engine, listings: list):
     if len(listings) < 1:
         print('no listings to save')
         return
+    
+    try:
+        with eng.connect() as conn:
+            with conn.begin():
+                conn.execute(sqlalchemy.text('''
+                    INSERT INTO listings
+                    (
+                        body,
+                        carmax_id,
+                        city,
+                        color,
+                        drive_type,
+                        engine_cyl,
+                        engine_size,
+                        engine_type,
+                        make,
+                        mileage,
+                        model,
+                        mpg_city,
+                        mpg_hwy,
+                        msrp,
+                        price,
+                        state,
+                        store_id,
+                        trim,
+                        vin,
+                        year,
+                        zip
+                    )
+                    VALUES
+                    (
+                        :body,
+                        :carmax_id,
+                        :city,
+                        :color,
+                        :drive_type,
+                        :engine_cyl,
+                        :engine_size,
+                        :engine_type,
+                        :make,
+                        :mileage,
+                        :model,
+                        :mpg_city,
+                        :mpg_hwy,
+                        :msrp,
+                        :price,
+                        :state,
+                        :store_id,
+                        :trim,
+                        :vin,
+                        :year,
+                        :zip
+                    );
+                    '''), listings)
 
-    with eng.connect() as conn:
-        with conn.begin():
-            conn.execute(sqlalchemy.text('''
-                INSERT INTO listings
-                (
-                    body,
-                    carmax_id,
-                    city,
-                    color,
-                    drive_type,
-                    engine_cyl,
-                    engine_size,
-                    engine_type,
-                    make,
-                    mileage,
-                    model,
-                    mpg_city,
-                    mpg_hwy,
-                    msrp,
-                    price,
-                    state,
-                    store_id,
-                    trim,
-                    vin,
-                    year,
-                    zip
-                )
-                VALUES
-                (
-                    :body,
-                    :carmax_id,
-                    :city,
-                    :color,
-                    :drive_type,
-                    :engine_cyl,
-                    :engine_size,
-                    :engine_type,
-                    :make,
-                    :mileage,
-                    :model,
-                    :mpg_city,
-                    :mpg_hwy,
-                    :msrp,
-                    :price,
-                    :state,
-                    :store_id,
-                    :trim,
-                    :vin,
-                    :year,
-                    :zip
-                );
-                '''), listings)
-
-    save_features(eng, listings)
-    save_packages(eng, listings)
-    save_highlights(eng, listings)
-    save_prior_uses(eng, listings)
+        save_features(eng, listings)
+        save_packages(eng, listings)
+        save_highlights(eng, listings)
+        save_prior_uses(eng, listings)
+    except Exception as e:
+        print(f'[ERROR] could not save listings {listings}: {e}')
 
 
 def save_features(eng: Engine, listings: list):
