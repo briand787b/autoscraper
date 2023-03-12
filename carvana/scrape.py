@@ -56,7 +56,7 @@ def model(query: str, dbug=False):
                 file.write(resptext)
 
         inventory = extract_inventory(resptext)
-        if len(inventory) < 1:
+        if not inventory or len(inventory) < 1:
             break
 
         if dbug:
@@ -78,7 +78,7 @@ def model(query: str, dbug=False):
                 yield extract_inventory_item(id, dbug=dbug)
 
                 # sleep random time to mimic human user
-                sleep_dur = random.randint(5, 15)
+                sleep_dur = random.randint(1, 10)
                 if dbug:
                     print(f'[DEBUG] sleeping for {sleep_dur} seconds')
                 time.sleep(sleep_dur)
@@ -113,10 +113,13 @@ def _send_req(query: str, page: int, dbug=False):
 
 
 def extract_inventory(htmlpage: str):
+    SCRIPT_TXT = 'window.__PRELOADED_STATE__'
     bs = BeautifulSoup(htmlpage, 'html.parser')
-    data = bs.find('script', text=re.compile('window.__PRELOADED_STATE__'))
+    data = bs.find('script', text=re.compile(SCRIPT_TXT))
     if not data:
-        return None
+        print(f'[WARNING] No data found in "{SCRIPT_TXT}"')
+        print(f'HTML file dump: {htmlpage}')
+        return []
 
     data_text = data.get_text()
     payload = data_text.split('window.__PRELOADED_STATE__ = ')[
