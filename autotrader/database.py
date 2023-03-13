@@ -1,3 +1,8 @@
+import sys
+sys.path.append('..')
+
+from dbutil import dbutil
+
 import csv
 import sqlalchemy
 from sqlalchemy.engine import Engine
@@ -71,8 +76,7 @@ def select_listings(eng: Engine):
 
 
 def save_listings(eng: Engine, listings: list):
-    if not listings or len(listings) < 1:
-        return
+    dbutil.trim_fields(_db_field_size(), listings)
 
     print(f'saving {len(listings)} listings')
     with eng.connect() as conn:
@@ -236,3 +240,20 @@ def create_tables(eng: Engine):
                     updated_at          TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
                 );             
             '''))
+
+def _db_field_size():
+    return {
+        "autotrader_id": 9,
+        "color":         55,
+        "condition":     16,
+        "drive_type":    55,
+        "engine":        55,
+        "make":          55,
+        "model":         55,
+        "owner":         255,
+        "trim":          55,
+        "truck_bed":     55,
+        "truck_cab":     55,
+        "vin":           17,
+        "zip":           5,
+    }
