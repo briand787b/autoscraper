@@ -1,7 +1,7 @@
-import sys
-sys.path.append('..')
+# import sys
+# sys.path.append('..')
 
-from dbutil import dbutil
+# from dbutil import dbutil
 
 import csv
 import sqlalchemy
@@ -76,7 +76,7 @@ def select_listings(eng: Engine):
 
 
 def save_listings(eng: Engine, listings: list):
-    dbutil.trim_fields(_db_field_size(), listings)
+    # dbutil.trim_fields(_db_field_size(), listings)
 
     print(f'saving {len(listings)} listings')
     with eng.connect() as conn:
