@@ -118,7 +118,11 @@ def extract_inventory(htmlpage: str):
     data = bs.find('script', text=re.compile(SCRIPT_TXT))
     if not data:
         print(f'[WARNING] No data found in "{SCRIPT_TXT}"')
-        print(f'HTML file dump: {htmlpage}')
+        try:
+            with open('/var/opt/autoscraper/carvana/listings.html', 'w+') as file:
+                file.write(data.get_text())
+        except:
+            print('could not save /var/opt/autoscraper/carvana/listings.html')
         return []
 
     data_text = data.get_text()
