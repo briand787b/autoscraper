@@ -357,17 +357,18 @@ def next_skip(bs: BeautifulSoup):
     Calculates how many records to skip, if any, in next HTTP request.
     Returns None when no more records can be retrieved
     '''
-    tag_txt = bs.find('div',
-                      {'class': 'results-text-container'},
-                      text=re.compile('Results$'),
-                      ).get_text()
-
-    counts = tag_txt.strip().split('Results')[
-        0].strip().replace(',', '').split(' of ')
-    max = int(counts[1])
-    end = int(counts[0].split('-')[1])
-    if end < max:
-        return end
+    tag = bs.find('div', {'class': 'results-text-container'},
+                  text=re.compile('Results$'))
+    try:
+        tag_txt = tag.get_text()
+        counts = tag_txt.strip().split('Results')[
+            0].strip().replace(',', '').split(' of ')
+        max = int(counts[1])
+        end = int(counts[0].split('-')[1])
+        if end < max:
+            return end
+    except Exception as e:
+        print(f'[ERROR]  next_skip not found: {e}')
 
 
 if __name__ == '__main__':
