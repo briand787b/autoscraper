@@ -28,7 +28,7 @@ def all_queries():
     )
 
 
-def api(queries: list, chunk_size=100):
+def api(queries: list, chunk_size=100, dbug=False):
     '''
     scrapes the carmax API.  
         `queries` must be a 3-tuple with the following components:
@@ -37,7 +37,7 @@ def api(queries: list, chunk_size=100):
             [2]: filters to search on
     '''
     for q in queries:
-        yield model(q[0], q[1], *q[2], chunk_size=chunk_size)
+        yield model(q[0], q[1], *q[2], chunk_size=chunk_size, dbug=dbug)
 
 
 def model(make, model, *filters, chunk_size=100, dbug=False):
@@ -48,8 +48,7 @@ def model(make, model, *filters, chunk_size=100, dbug=False):
     '''
     skip = 0
     while True:
-        resp = send_req(make, model, *filters, skip=skip,
-                        take=chunk_size, dbug=dbug)
+        resp = send_req(make, model, *filters, skip=skip, take=chunk_size, dbug=dbug)
         listings = parse_resp(resp)
         yield listings
         if len(listings) < chunk_size:

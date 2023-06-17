@@ -139,6 +139,7 @@ def save_listings(eng: Engine, listings: list):
         save_highlights(eng, listings)
         save_prior_uses(eng, listings)
     except Exception as e:
+        # TODO: save errors in a file with relevant data
         print(f'[ERROR] could not save listings {listings}: {e}')
 
 
@@ -254,10 +255,10 @@ def create_tables(eng: Engine):
                     carmax_id       INTEGER,
                     city            VARCHAR(55),
                     color           VARCHAR(16),
-                    drive_type      VARCHAR(8),
+                    drive_type      VARCHAR(25),
                     engine_cyl      SMALLINT,
-                    engine_size     VARCHAR(8),
-                    engine_type     VARCHAR(8),
+                    engine_size     VARCHAR(18),
+                    engine_type     VARCHAR(19),
                     make            VARCHAR(55),
                     mileage         INTEGER,
                     model           VARCHAR(55),

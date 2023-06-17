@@ -14,18 +14,19 @@ def cli():
 @click.option('--password', help='database password')
 @click.option('--host', default='localhost', help='database host [default: localhost]')
 @click.option('--port', default=5432, help='database port [default: 5432]')
-def scrape(password, host, port):
+@click.option('--debug', default=False, help='run with verbose logging')
+def scrape(password, host, port, debug):
     '''scrapes the carmax site for listings'''
     if not password:
         raise Exception('missing mandatory password')
 
-    scrape_core(pw=password, host=host, port=port)
+    scrape_core(pw=password, host=host, port=port, debug=debug)
 
 
-def scrape_core(pw, host, port):
+def scrape_core(pw, host, port, debug):
     '''core for scrape cmd'''
     eng = database.engine(pw, host=host, port=port)
-    for model_listings in sc.api(sc.all_queries()):
+    for model_listings in sc.api(sc.all_queries(), dbug=debug):
         for listings in model_listings:
             print('saving listings for one page')
             database.save_listings(eng, listings)
